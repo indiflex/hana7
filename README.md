@@ -2,6 +2,15 @@
 
 ## release note
 
+### 0.3.0
+
+1. regist
+- google regist
+1. login
+- email login
+
+1. board
+
 ### 0.2.0
 
 1. sdfdsa
