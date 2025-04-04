@@ -45,3 +45,34 @@ const undef__nil = undef == nil;
 const undef___nil = undef === nil;
 console.log('🚀 undef__nil:', undef__nil);
 console.log('🚀 undef___nil:', undef___nil);
+console.log('===================');
+
+const hong = { id: 1, name: 'Hong' };
+let kim = { id: Symbol(), name: 'Kim' };
+console.log(hong === kim);
+kim = hong;
+console.log(hong === kim);
+
+const o1 = new Object();
+const o2 = {};
+console.log('o1 === o2', o1 === o2);
+
+const nStr = n.toString();
+const nStr2 = new Number(n).toString();
+console.log('🚀 nStr:', nStr, nStr2, typeof n);
+
+const nStr16 = n.toString(16);
+console.log('🚀 nStr16:', nStr16);
+const nStr16d = parseInt(nStr16, 16);
+console.log('🚀 nStr16d:', nStr16d);
+
+console.log('-------------------');
+const d1 = Date();
+const d2 = new Date();
+console.log(d1 == d2);
+console.log('-------------------');
+let a = 1;
+const b = ((a.b = 5), console.log('xx>>', a.b));
+console.log(a, b);
+
+console.log('xx>>', a.b, a.toString() === '1');
