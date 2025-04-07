@@ -45,14 +45,14 @@ function calc(signFlag, ...args) {
   ret = ret / p;
   console.log(args.join(` ${signFlag > 0 ? '+' : '-'} `), '=', ret);
 }
-addPoints1(22, 23);
-// subPoints(0.45, 0.12);
-// addPoints(0.21354, 0.1, 0.2); // 0.51354
-// addPoints(0.14, 0.28, 0.3, 0.5, 0.92); // 0.42
-// addPoints(0.34, 0.226); // 0.566
-// addPoints(10.34, 200.226); // 210.566
-// addPoints(0.143, -10.28); // -10.137
-// addPoints(0.143, -10); // -9.857
+addPoints(22, 23);
+subPoints(0.45, 0.12);
+addPoints(0.21354, 0.1, 0.2); // 0.51354
+addPoints(0.14, 0.28, 0.3, 0.5, 0.92); // 0.42
+addPoints(0.34, 0.226); // 0.566
+addPoints(10.34, 200.226); // 210.566
+addPoints(0.143, -10.28); // -10.137
+addPoints(0.143, -10); // -9.857
 return;
 
 // ex3)
