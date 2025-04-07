@@ -1,3 +1,32 @@
+const prices = [
+  10.34,
+  'xxx',
+  5.678,
+  null,
+  20.9,
+  1.005,
+  0,
+  19,
+  undefined,
+  '0.5',
+];
+const P = 10 * 10;
+const PointLength = 10 ** 2;
+let sum = 0;
+let cnt = 0;
+for (const n of prices) {
+  if (n === null || isNaN(n)) continue;
+  cnt += 1;
+  sum += Math.trunc(n * P);
+}
+
+// const avg = (sum / (cnt * P)).toFixed(2);
+// (sum / P) / cnt
+// const avg = (sum / (cnt * P)).toFixed(2);
+const avg = Math.trunc(((sum / P) * PointLength) / cnt) / PointLength;
+console.log('🚀 avg:', avg);
+
+return;
 function plength(n) {
   // 0.1 ==> '0.1'
   if (Number.isInteger(n)) return 0;
@@ -53,7 +82,6 @@ addPoints(0.34, 0.226); // 0.566
 addPoints(10.34, 200.226); // 210.566
 addPoints(0.143, -10.28); // -10.137
 addPoints(0.143, -10); // -9.857
-return;
 
 // ex3)
 const today = new Date().getDay();
