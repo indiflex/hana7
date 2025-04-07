@@ -6,12 +6,12 @@ const prices = [
   20.9,
   1.005,
   0,
-  19,
+  18,
   undefined,
   '0.5',
 ];
-const P = 10 * 10;
-const PointLength = 10 ** 2;
+const P = 10 ** 10;
+const PointLength = 10 ** 3;
 let sum = 0;
 let cnt = 0;
 for (const n of prices) {
