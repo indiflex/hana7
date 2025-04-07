@@ -1,11 +1,12 @@
 function plength(n) {
   // 0.1 ==> '0.1'
-  return n.toString().length - Math.trunc(n).toString.length - 1;
+  if (Number.isInteger(n)) return 0;
+  return n.toString().length - Math.trunc(n).toString().length - 1;
 }
 function addPoints1(a, b) {
   const alen = plength(a);
   const blen = plength(b);
-  // console.log('🚀 alen:', a, b, alen, blen);
+  console.log('🚀 alen:', a, b, alen, blen);
   const ret = (a + b).toFixed(alen > blen ? alen : blen);
   console.log(a, '+', b, '= ', +ret);
 }
@@ -44,9 +45,10 @@ function calc(signFlag, ...args) {
   ret = ret / p;
   console.log(args.join(` ${signFlag > 0 ? '+' : '-'} `), '=', ret);
 }
-subPoints(0.45, 0.12);
-addPoints(0.21354, 0.1, 0.2); // 0.51354
-addPoints(0.14, 0.28, 0.3, 0.5, 0.92); // 0.42
+addPoints1(22, 23);
+// subPoints(0.45, 0.12);
+// addPoints(0.21354, 0.1, 0.2); // 0.51354
+// addPoints(0.14, 0.28, 0.3, 0.5, 0.92); // 0.42
 // addPoints(0.34, 0.226); // 0.566
 // addPoints(10.34, 200.226); // 210.566
 // addPoints(0.143, -10.28); // -10.137
