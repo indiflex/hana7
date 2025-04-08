@@ -1,9 +1,12 @@
+// 'use strict';
+
 const user = { id: 1, name: 'Hong', passwd: 'xxx', addr: 'Seoul' };
 
 const hong = { id: 1, name: 'Hong' };
 const lee = { id: 2, name: 'Lee' };
 
 function f1(obj) {
+  console.log('f1.this>>>', this);
   // const { id: id, name: name } = obj;
   const { id, name } = obj;
   console.log(id, name);
@@ -31,6 +34,9 @@ function getUserValueExceptInitial(k) {
   const [, ...result] = val;
   return result.join('');
 }
+
 console.log(getUserValueExceptInitial('name')); // 'ong'
 console.log(getUserValueExceptInitial('passwd')); // 'yz'
 console.log(getUserValueExceptInitial('addr')); // 'eoul'
+
+delete user.id;
