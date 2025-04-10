@@ -29,12 +29,13 @@ function makeArrayTCO(n, acc = []) {
   return makeArrayTCO(n - 1, [n, ...acc]);
 }
 console.log('-------------------');
-
+let loopRunCnt = 0;
 function loopFibonacci(n) {
   if (n <= 1) return n;
   let prev = 0;
   let curr = 1;
   for (let i = 2; i <= n; i += 1) {
+    loopRunCnt++;
     // let t = prev;
     // prev = curr;
     // curr = t + curr;
@@ -44,24 +45,24 @@ function loopFibonacci(n) {
   return curr;
 }
 
+let recurRunCnt = 0;
 function recurFibonacci(n) {
+  recurRunCnt++;
   if (n <= 1) return n;
   return recurFibonacci(n - 2) + recurFibonacci(n - 1);
 }
 
+let memoRunCnt = 0;
 const memoFibonacci = memoized(function (n) {
+  memoRunCnt++;
   if (n <= 1) return n;
   return memoFibonacci(n - 2) + memoFibonacci(n - 1);
 });
 
-const lf3 = loopFibonacci(3);
-console.log('🚀 lf3:', lf3);
-const lf5 = loopFibonacci(5); // 5
-console.log('🚀 lf5:', lf5);
-const lf7 = loopFibonacci(7); // 13
-console.log('🚀 lf7:', lf7);
-console.log('---------------- recursive');
-assert.equal(recurFibonacci(3), 2);
+assert.equal(loopFibonacci(5), 5);
+assert.equal(loopFibonacci(7), 13);
+assert.equal(loopFibonacci(30), 832040);
+
 assert.equal(recurFibonacci(5), 5);
 assert.equal(recurFibonacci(7), 13);
 assert.equal(recurFibonacci(30), 832040);
@@ -69,6 +70,10 @@ assert.equal(recurFibonacci(30), 832040);
 assert.equal(memoFibonacci(5), 5);
 assert.equal(memoFibonacci(7), 13);
 assert.equal(memoFibonacci(30), 832040);
+
+console.log('🚀 loopRunCnt:', loopRunCnt);
+console.log('🚀 recurRunCnt:', recurRunCnt);
+console.log('🚀 memoRunCnt:', memoRunCnt);
 
 function memoized(fn) {
   const cache = {};
