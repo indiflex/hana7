@@ -22,6 +22,25 @@ let obj = {
     // bad!! ==> this=전역(browser)/module(node)
     console.log('bark2=', this.name, self.name),
 };
+console.log('QQQQ>>', obj.toString());
+// console.log('QQQQ>>', obj instanceof Object);
+// console.log('QQQQ>>', af instanceof Function);
+const o1 = Object.assign({}, obj);
+const o2 = Object.create(obj);
+Object.prototype.xxx = 'XXX';
+console.log('🚀 o1:', o1, o1.toString(), o1.xxx);
+console.log('🚀 o2:', o2, o2.name, o2.xxx);
+Array.prototype.xxx = function () {
+  return this.length ** 2;
+};
+
+const arr = [1, 2, 3];
+console.log('🚀 arr:', arr.length, arr.xxx());
+Array.prototype.firstObject = function () {
+  return this[0];
+};
+const fo = arr.firstObject();
+console.log('🚀 fo:', fo);
 
 obj.bark();
 obj.bark2();
@@ -29,21 +48,33 @@ const ob = obj.bark;
 obj = null;
 ob();
 
+console.log(' - - - - - - - - - - - - - - ');
+
+const hong = { id: 1, name: 'Hong' };
 const expressFn = function (name) {
-  'use strict';
+  // 'use strict';
   // if(this?.name)
   // this.name = name;
-  console.log(new.target, this.name, name, this instanceof expressFn);
+  console.log('efn -->', this.name, name, this instanceof expressFn);
 };
 
 const arrowFn = name => {
-  this.name = name;
-  console.log('-->', this, this.name, name);
+  // this.name = name;
+  console.log('afn -->', this, this.name, name);
 };
 
+const kim = { id: 2, name: 'Kim' };
+
 // expressFn('expfn');
-expressFn.bind({})('expfn');
-arrowFn('afn');
+const y = expressFn.bind(hong);
+y('expfn');
+
+expressFn.call(hong, 'expfn');
+expressFn.apply(hong, ['expfn']);
+// arrowFn.bind(kim)('afn');
+arrowFn.apply(kim, ['afn']);
+
+return;
 
 // class Dog {
 //   constructor(nm) {
