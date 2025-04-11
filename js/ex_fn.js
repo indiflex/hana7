@@ -57,10 +57,19 @@ const throttle = (cb, delay) => {
   let timer;
   return (...args) => {
     if (timer) return;
-    timer = setTimeout(cb, delay, ...args);
-    timer = null;
+    timer = setTimeout(() => {
+      cb(...args);
+      timer = null;
+    }, delay);
   };
 };
+
+const aa = throttle(a => console.log(a + 1), 1000);
+setInterval(() => {
+  aa(100);
+}, 10);
+
+return;
 
 Array.prototype.mapx = function (f) {
   const results = [];
