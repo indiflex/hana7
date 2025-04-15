@@ -50,7 +50,7 @@ ob();
 
 console.log(' - - - - - - - - - - - - - - ');
 
-const hong = { id: 1, name: 'Hong' };
+const hongx = { id: 1, name: 'Hong' };
 const expressFn = function (name) {
   // 'use strict';
   // if(this?.name)
@@ -63,16 +63,16 @@ const arrowFn = name => {
   console.log('afn -->', this, this.name, name);
 };
 
-const kim = { id: 2, name: 'Kim' };
+const kimx = { id: 2, name: 'Kim' };
 
 // expressFn('expfn');
-const y = expressFn.bind(hong);
+const y = expressFn.bind(hongx);
 y('expfn');
 
-expressFn.call(hong, 'expfn');
-expressFn.apply(hong, ['expfn']);
+expressFn.call(hongx, 'expfn');
+expressFn.apply(hongx, ['expfn']);
 // arrowFn.bind(kim)('afn');
-arrowFn.apply(kim, ['afn']);
+arrowFn.apply(kimx, ['afn']);
 
 return;
 
