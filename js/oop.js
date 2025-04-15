@@ -4,7 +4,17 @@ class Animal {
   constructor(name) {
     this.name = name;
   }
+
+  feed(nutrient) {
+    console.log(`feed to ${this.name} :`, nutrient);
+  }
 }
+
+const petMixin = {
+  likePeople() {
+    console.log(`${this.name} likes people…`);
+  },
+};
 
 class Dog extends Animal {
   #age = 0;
@@ -50,6 +60,13 @@ dog.setName('Maxx');
 // dog.name = 'Maxx';
 dog.age = 9;
 console.log('🚀 name:', dog.name, dog.age);
+dog.feed('VC');
+// Object.assign(dog, petMixin);
+Object.assign(Dog.prototype, petMixin);
+dog.likePeople();
+
+const marry = new Dog('Marry');
+marry.likePeople();
 
 // ----------------------
 function wrapFullname(user) {
@@ -86,14 +103,41 @@ const hongOrg = {
   // },
 };
 
-const hong = wrapFullname(hongOrg);
+const hongx = wrapFullname(hongOrg);
 
-console.log('🚀 fullname11:', hong.id, hong.fullname);
-hong.fullname = 'Jhon Hong';
-console.log('🚀 fullname22:', hong.fullname);
+console.log('🚀 fullname11:', hongx.id, hongx.fullname);
+hongx.fullname = 'Jhon Hong';
+console.log('🚀 fullname22:', hongx.fullname);
 
-const kim = wrapFullname({ id: 2, firstName: 'Kildong', lastName: 'Kim' });
-console.log('🚀 kim:', kim.id, kim.fullname);
-kim.id = 5;
-kim.fullname = 'Jhon Kim';
-console.log('🚀 kim:', kim.id, kim.fullname);
+const kimx = wrapFullname({ id: 2, firstName: 'Kildong', lastName: 'Kim' });
+console.log('🚀 kim:', kimx.id, kimx.fullname);
+kimx.id = 5;
+kimx.fullname = 'Jhon Kim';
+console.log('🚀 kim:', kimx.id, kimx.fullname);
+
+// ---------------------------
+const arr = [1, 2, 3, 4, 5];
+const hong = { id: 1, name: 'Hing' };
+const kim = { id: 2, name: 'Kim' };
+const lee = { id: 3, name: 'Lee' };
+const users = [hong, lee, kim];
+
+// Object.defineProperty(Array.prototype, 'len', {get: function() { return this.length; }});
+Object.defineProperties();
+
+assert.deepStrictEqual([arr.firstObject, arr.lastObject], [1, 5]);
+assert.deepStrictEqual(users.mapBy('id'), [1, 3, 2]);
+assert.deepStrictEqual(users.mapBy('name'), ['Hing', 'Lee', 'Kim']);
+assert.deepStrictEqual(users.filterBy('id', 2), [kim]);
+assert.deepStrictEqual(users.filterBy('name', 'i', true), [hong, kim]); // key, value일부, isInclude
+assert.deepStrictEqual(users.rejectBy('id', 2), [hong, lee]);
+assert.deepStrictEqual(users.rejectBy('name', 'i', true), [lee]);
+assert.deepStrictEqual(users.findBy('name', 'Kim'), kim);
+assert.deepStrictEqual(users.sortBy('name:desc'), [lee, kim, hong]);
+assert.deepStrictEqual(users.sortBy('name'), [hong, kim, lee]);
+assert.deepStrictEqual(users.firstObject, hong);
+assert.deepStrictEqual(users.lastObject, lee);
+users.firstObject = kim;
+assert.deepStrictEqual(users.firstObject, kim);
+users.lastObject = hong;
+assert.deepStrictEqual(users.lastObject, hong);
