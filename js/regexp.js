@@ -73,12 +73,12 @@ const swapCase정답 = str =>
   );
 
 const swapCase = str =>
-  str?.replace(/([A-Z\s]*)([a-z]*)/g, (foundStr, upper, lower) => {
+  (' ' + str).replace(/([\sA-Z]+)([a-z]*)/g, (foundStr, upper, lower) => {
     // if (!foundStr?.trim()) return '';
     console.log('***>>', foundStr, upper, lower);
     return `${upper.toLowerCase()}${lower.toUpperCase()}`;
   });
-console.log(swapCase('Senior abc Coding Learning JS'));
+console.log(swapCase('abc Senior efg Coding Learning JS'));
 return;
 
 assert.equal(
