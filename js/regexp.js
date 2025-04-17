@@ -58,17 +58,31 @@ function fmt(txts, value) {
   return `${txts[0]}${value.toLocaleString().padStart(8)}${txts[1]}`;
 }
 
+console.log('--------------------');
 // ex1
 const upperToLower = str =>
-  str.replace(/[A-Z]/g, foundStr => foundStr.toLowerCase());
+  str.replace(/[A-Z]+/g, foundStr => foundStr.toLowerCase());
 
-const low = upperToLower('Senior Coding Learning JS');
+const low = upperToLower('Senior BIG Coding Learning JS');
 console.log('🚀 low:', low);
 
-const swapCase = str => ...
-  
+const swapCase정답 = str =>
+  str?.replace(
+    /([A-Z]+)([a-z]*)/g,
+    (foundStr, upper, lower) => `${upper.toLowerCase()}${lower.toUpperCase()}`
+  );
+
+const swapCase = str =>
+  str?.replace(/([A-Z\s]*)([a-z]*)/g, (foundStr, upper, lower) => {
+    // if (!foundStr?.trim()) return '';
+    console.log('***>>', foundStr, upper, lower);
+    return `${upper.toLowerCase()}${lower.toUpperCase()}`;
+  });
+console.log(swapCase('Senior abc Coding Learning JS'));
+return;
+
 assert.equal(
-  swapCase('Senior Coding Learning JS'),
+  swapCase('Senior abc Coding Learning JS'),
   'sENIOR cODING lEARNING js'
 );
 assert.equal(swapCase('Hanaro 7 Class'), 'hANARO 7 cLASS');
