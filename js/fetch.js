@@ -4,12 +4,18 @@ const res = myFetch(sampleUrl);
 // console.log('🚀 res:', res);
 // res.then(console.log);
 
-const myFetchAsync = async url => {
+const myFetchAsyncBad = async url => {
   const res = await fetch(url);
   const data = await res.json();
   console.log('🚀 data:', data);
   return data;
 };
+
+const myFetchAsync = async url => {
+  const res = await fetch(url);
+  return res.json();
+};
+
 (async () => {
   const res2 = await myFetchAsync(sampleUrl);
   console.log('🚀 res2:', res2);
