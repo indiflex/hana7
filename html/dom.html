@@ -40,10 +40,12 @@
       dom.addEventListener('click', (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
-        console.log(dom, evt.target);
+        console.log('--------->', dom);
+        console.log('target=', evt.target);
+        console.log('currentTarget=', evt.currentTarget);
         dom.classList.toggle('border');
         // dom.classList.remove('p-2');
-      }, false);
+      }, { once: false, capture: true });
     });
 
     div.appendChild(
