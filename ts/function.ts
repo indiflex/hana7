@@ -121,10 +121,32 @@ const b = [4, 5, '6'];
 const c = [...a, ...b];
 // const d = a.concat(b);
 
-type A = {
-  name: string;
-  age: number;
-};
+// type A = {
+//   name: string;
+//   age: number;
+// };
+type OrgA = { name: string };
+type A = { age: number } & OrgA;
+
+// interface OrgA {
+//   name: string;
+// }
+
+// interface A extends OrgA{
+//   age: number;
+// }
+
+const yarr: Array<number> = [];
+const zarr: number[] = [];
+
+class AA implements A {
+  name: string = 'abc';
+  age: number = 0;
+}
+
+// class A {
+//   constructor(name: string, age: number) {}
+// }
 
 type B = {
   name: string;
