@@ -44,10 +44,12 @@ type Member = {
   name: string;
   addr: string;
   discountRate: number;
+  kind: 'M';
 };
 type Guest = {
   name: string;
   age: number;
+  kind: 'G';
 };
 
 type Customer = Member | Guest;
@@ -70,22 +72,25 @@ cust = {
   name: '홍길동',
   addr: '용산구',
   discountRate: 0.1,
+  kind: 'M',
 };
 
-if (cust instanceof Object) cust = { name: '', age: 0 };
+if (cust instanceof Object) cust = { name: '', age: 0, kind: 'G' };
 
 mg = cust;
 
 cust = {
   name: '',
   age: 33,
+  kind: 'G',
 };
 
 cust = {
   name: '홍길동',
   addr: '용산구',
   discountRate: 0.1,
-  age: 26,
+  // age: 26,
+  kind: 'M',
 };
 mg = cust;
 
@@ -94,12 +99,14 @@ mg = cust;
 
 if ('addr' in cust) m = cust;
 
-if ('age' in cust) g = cust;
+// if ('age' in cust) g = cust;
+// if (cust.kind === 'G') g = cust;
 
 cust = {
   name: '홍길동',
-  addr: '용산구',
+  // addr: '용산구',
   age: 55,
+  kind: 'G',
 };
 
 let arr: number[];
