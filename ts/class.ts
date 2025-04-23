@@ -162,8 +162,18 @@ const navee: Cat = new Cat('Navee');
 let animal: Animal = maxx;
 animal.feed('banana').print(12);
 
-const jake: Dog = new Dog('Jake');
+let jake: Dog = new Dog('Jake');
 jake.feed('apple').print();
+// jake = 123 as unknown as Dog;
 
 animal = navee;
 animal.feed('fish').print(123);
+
+// ------------------------------
+const isString = (value: unknown): value is string => typeof value === 'string';
+
+const f1 = (value: number | string | boolean | [string, number]) => {
+  if (isString(value)) {
+    console.log(value.toUpperCase());
+  }
+};
