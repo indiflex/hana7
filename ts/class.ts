@@ -109,3 +109,55 @@ class ContinuedGradesTally extends GradeTally {
     console.log('Starting with length', this.grades.length);
   }
 }
+
+// --------------------------------
+class Assignment {
+  grade!: number | string; // 기본 클래스에서 number | undefined로 선언
+  // grade : number | undefined; // cf. 이것도 OK??
+}
+
+class GradedAssignment extends Assignment {
+  grade: number | string;
+
+  // 하위 클래스에서 grade를 필수(항상 존재하는) number 타입으로 선언
+  constructor(grade: number) {
+    super();
+    this.grade = grade;
+  }
+}
+
+//--------------
+
+class Animal {
+  constructor(public name: string, public mouse: string = 'x') {
+    this.mouse = mouse;
+  }
+
+  feed(food: string): this {
+    this.mouse = food;
+    console.log(food, 'feed to', this.name);
+    return this;
+  }
+
+  print(age: number) {
+    console.log('Animal Name is', this.name, age);
+  }
+}
+
+class Dog extends Animal {
+  print() {
+    console.log('Dog Name is', this.name);
+  }
+}
+class Cat extends Animal {
+  print() {
+    console.log(this.constructor.name, 'Name is', this.name);
+  }
+}
+
+console.log('---------------------------');
+const jake: Dog = new Dog('Jake');
+jake.feed('apple').print();
+
+animal = navee;
+animal.feed('fish').print(123);
