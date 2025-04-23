@@ -61,21 +61,21 @@ declare global {
   // interface console {
   //   bulb: (s: string) => string;
   // }
-  interface Array<T> {
-    // Array interface 병합
-    first(): T;
-    mapBy: (prop: string) => any;
-  }
+  // interface Array<T> {
+  //   // Array interface 병합
+  //   first(): T;
+  //   mapBy: (prop: string) => any;
+  // }
 }
 
-Array.prototype.mapBy = function (prop: string) {
-  return this.map(a => a[prop]);
-};
+// Array.prototype.mapBy = function (prop: string) {
+//   return this.map(a => a[prop]);
+// };
 
-const users = [
-  { id: 1, name: 'Hong' },
-  { id: 2, name: 'Kim' },
-];
-console.log('mapBy=', users.mapBy('name')); // ['Hong', 'Kim']
+// const users = [
+//   { id: 1, name: 'Hong' },
+//   { id: 2, name: 'Kim' },
+// ];
+// console.log('mapBy=', users.mapBy('name')); // ['Hong', 'Kim']
 
 export {};
