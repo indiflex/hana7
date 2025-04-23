@@ -156,6 +156,12 @@ class Cat extends Animal {
 }
 
 console.log('---------------------------');
+const maxx: Dog = new Dog('Maxx');
+const navee: Cat = new Cat('Navee');
+
+let animal: Animal = maxx;
+animal.feed('banana').print(12);
+
 const jake: Dog = new Dog('Jake');
 jake.feed('apple').print();
 
