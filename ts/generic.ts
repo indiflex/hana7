@@ -79,18 +79,6 @@ BothLogger.staticLog<string[]>(['a', 'b', 'c']);
 BothLogger.staticLog([true, false, false]);
 
 // ------------------------------
-interface IUser {
-  id: number;
-  age: number;
-  name: string;
-}
-
-interface IDept {
-  id: number;
-  age: string;
-  dname: string;
-  captain: string;
-}
 
 type Except<T, U> = T extends U ? never : T; // never는 씹힌다!(같으면 제외)
 type Ex0 = Except<IUser, IDept>; // IUser
@@ -130,5 +118,27 @@ type X<T> = {
 };
 
 type XDept = X<IDept>;
+type KKK = keyof IUser; // 'id' | 'age' | ...
+type XX = (string | number) & (string | boolean);
+type XO = keyof IUser & keyof IDept;
+type XO1 = keyof (IUser & IDept);
+type XO2 = { id: number } & { name: string };
+
+const xo2: XO2 = { id: 1, name: 'Hong' };
+
+interface IUser {
+  id: number;
+  age: number;
+  name: string;
+}
+
+type ValueOf<T> = T[keyof T];
+
+interface IDept {
+  id: number;
+  age: string;
+  dname: string;
+  captain: string;
+}
 
 export {};
