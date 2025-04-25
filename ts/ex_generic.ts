@@ -1,6 +1,15 @@
+import { Jade, jadeX } from 'jade';
+import { Factory } from './generic';
+import DATA from './data.json';
+
 type Change<T, K extends keyof T, U> = {
   [k in keyof T]: k extends K ? U : T[k];
 };
+
+let x: Hana7 = { id: 1, name: 'Hong' };
+let ft: Factory<string>;
+let xxxx = DATA.USER_NAMES;
+console.log('🚀 xxxx:', xxxx);
 
 type DeptCaptain = Change<IDept, 'captain', IUser>;
 // type Err = Change<IDept, 'xxx', IUser>; // 존재하지 않는 키는 Error!!!

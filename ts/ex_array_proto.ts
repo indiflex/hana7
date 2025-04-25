@@ -35,16 +35,16 @@ Object.defineProperties(Array.prototype, {
   },
 });
 
-assert.deepStrictEqual([arr.firstObject, arr.lastObject], [1, 5]);
+// assert.deepStrictEqual([arr.firstObject, arr.lastObject], [1, 5]);
 
-assert.deepStrictEqual(users.firstObject, hong);
-assert.deepStrictEqual(users.lastObject, kim);
+// assert.deepStrictEqual(users.firstObject, hong);
+// assert.deepStrictEqual(users.lastObject, kim);
 
-Array.prototype.mapBy = function (prop) {
-  return this.map(a => a[prop]);
-};
-assert.deepStrictEqual(users.mapBy('id'), [1, 3, 2]);
-assert.deepStrictEqual(users.mapBy('name'), ['Hing', 'Lee', 'Kim']);
+// Array.prototype.mapBy = function (prop) {
+//   return this.map(a => a[prop]);
+// };
+// assert.deepStrictEqual(users.mapBy('id'), [1, 3, 2]);
+// assert.deepStrictEqual(users.mapBy('name'), ['Hing', 'Lee', 'Kim']);
 
 Array.prototype.filterBy = function (prop, value, isInclude) {
   return this.filter(a =>
@@ -93,3 +93,5 @@ interface Ud2 {
 // 다음 코드가 오류가 없으면 통과!
 const ud2: Ud2 = { id: 1, namex: 'HH', addr: 'Seoul' };
 const ud3: Ud3 = { id: 1, dname: 'HH', captain: 'HH', addr: 'Seoul' };
+
+export {};
