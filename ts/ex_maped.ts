@@ -11,22 +11,31 @@ interface IDept {
   captain: string;
 }
 
-type Combine<T, U> = < 이 부분을 작성하세요 >;
+type Combine<T, U> = {
+  [k in keyof (T & U)]: k extends keyof T & keyof U
+    ? T[k] | U[k]
+    : k extends keyof T
+    ? T[k]
+    : (T & U)[k];
+};
+
+type CombineGood<T, U> = {
+  [k in keyof (T & U)]: k extends keyof T & keyof U ? T[k] | U[k] : (T & U)[k];
+};
 
 type ICombined = Combine<IUser, IDept>;
-
 
 let combineX: ICombined = {
   id: 0,
   age: 33,
   name: 'aaa',
   dname: 'bbb',
-  captain: 'ccc'
-}
+  captain: 'ccc',
+};
 let combineY: ICombined = {
   id: 0,
   age: '33세',
   name: 'aaa',
   dname: 'bbb',
-  captain: 'ccc'
-}
+  captain: 'ccc',
+};
