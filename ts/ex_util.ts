@@ -57,9 +57,12 @@ const debounce = <T extends (...args: Parameters<T>) => ReturnType<T>>(
   };
 };
 
-const throttle = <T>(cb: (...args: T[]) => any, delay: number = 1) => {
+const throttle = <T extends unknown[]>(
+  cb: (...args: T) => any,
+  delay: number = 1
+) => {
   let timer: ReturnType<typeof setTimeout> | null;
-  return (...args: T[]) => {
+  return (...args: T) => {
     if (timer) return;
     timer = setTimeout(() => {
       cb(...args);
@@ -73,5 +76,29 @@ for (let i = 10; i < 15; i++) debo(i, 'abc'); // 15, 'abc'
 
 const thro = throttle((a: number) => console.log(a + 1), 1000);
 for (let i = 10; i < 15; i++) thro(i); // 11
+
+//--------------------------------------
+function memoized<T extends (...args: Parameters<T>) => ReturnType<T>>(fn: T) {
+  const cache: Record<string, any> = {};
+  return function (...args: Parameters<T>) {
+    const k = [...args].join();
+    // const k = [...args].sort().join();
+    // {"1,2": 0}
+    return k in cache ? cache[k] : (cache[k] = fn(...args));
+  };
+}
+
+const memoizeAdd = memoized((a: number, b: number) => {
+  return a + b;
+});
+
+console.log(memoizeAdd(1, 2)); // 3
+console.log(memoizeAdd(3, 4)); // 7
+
+const memoizeFactorial = memoized((n: number): number => {
+  if (n <= 1) return 1;
+
+  return n * memoizeFactorial(n - 1);
+});
 
 export {};
