@@ -17,3 +17,11 @@ CREATE TABLE `T` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+select * from Emp;
+select * from EmpBackup;
+create table EmpBackup AS select * from Emp;
+truncate table Emp;
+insert into Emp select * from EmpBackup;
+drop table EmpBackup;
+
+rename table T to TT;
