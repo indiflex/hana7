@@ -37,3 +37,20 @@ insert into Emp select * from EmpBackup;
 drop table EmpBackup;
 
 rename table T to TT;
+
+desc Emp;
+select * from Emp;
+
+alter table Emp add column auth tinyint(1) unsigned not null default 9
+     comment '0:sysadmin, 1:superuser, 3: manager, 5:employee, 7:temporary, 9:guest';
+     
+alter table Emp modify column auth tinyint(1) unsigned not null default 9
+     comment '0:sysadmin, 1:superuser, 3: manager, 5:employee, 7:temporary, 9:guest'
+     after dept;
+     
+alter table Emp add column auth2
+ enum('sysadmin','superuser',' manager','employee','temporary','guest');
+ 
+alter table Emp drop column auth2;
+     
+
