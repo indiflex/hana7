@@ -4,3 +4,4 @@ ttt
 *.local
 c.txt
 /linux/data*
+/sql/mysql
