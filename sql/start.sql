@@ -18,6 +18,18 @@ CREATE TABLE `T` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 select * from Emp;
+select * from Dept where id=4;
+
+explain select e.*, d.dname
+  from Emp e inner join Dept d on e.dept = d.id
+ where e.id = 2;
+ 
+desc Dept;
+ 
+select * from Emp where id = 2;
+select * from Emp where ename = '유세혜';
+select * from Dept where id = PreResult.dept;
+ 
 select * from EmpBackup;
 create table EmpBackup AS select * from Emp;
 truncate table Emp;
