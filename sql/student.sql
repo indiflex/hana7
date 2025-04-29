@@ -26,3 +26,5 @@ create table Student (
 alter table Student modify column name varchar(25) not null comment '학생이름';
 desc Student;
 show create table Student;
+
+alter table Student add constraint foreign key (major) references Major(id);
