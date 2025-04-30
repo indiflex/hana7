@@ -116,6 +116,28 @@ select * from Student where major between 1 and 3 order by id;
 
 select * from Subject;
 select * from Prof;
+select * from Enroll order by subject, student;
+select * from Student;
+
+alter table Enroll add column iscaptain boolean default 0 comment '반장여부';
+
+select * from;
+-- 
+-- Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'update    (select en.subject,          (case subject when 1 then max(s.id) when ' at line 4
+
+update 
+  (select en.subject, 
+        (case subject when 1 then max(s.id) when 2 then min(s.id) else 6 end) captain
+         from Enroll en inner join Student s on en.student = s.id
+        where s.name like '김%'
+        group by en.subject) sub inner join Enroll en
+                                 on sub.subject = en.subject and sub.captain = en.student
+ set en.iscaptain = 1;
+ 
+select * from Enroll where iscaptain = 1;
+
+insert into Enroll(subject, student)
+ select 3, id from Student where id not in (select student from Enroll where subject = 3);
 
 select * from Subject s inner join Prof p on s.prof = p.id;
 select * from Subject s, Prof p 
