@@ -90,6 +90,12 @@ SELECT deptId as dept, d.dname, max.id AS id, ename, max.salary
 ON d.id = max.deptId
 ORDER BY deptId ASC;
 
+SELECT deptId,id,ename,sub.salary, (select dname from Dept where id = e.dept) dept_name
+          FROM Emp e
+			JOIN (SELECT dept AS deptId, MAX(salary) AS salary
+			        FROM Emp
+			       GROUP BY dept) sub
+			  ON e.salary = sub.salary;
 -- moon
 select e.dept, yoyo.dname,e.id, e.ename, e.salary
   from Emp e 
