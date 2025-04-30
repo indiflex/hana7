@@ -47,9 +47,33 @@ insert into Student(name, birthdt, major, mobile, email)
             
 insert ignore into Student(name, birthdt, major, mobile, email)
                    values ('김오수', '19990523', 2, '01012340005', 'kim5@gmail.com');
+                   
+insert ignore into Student(name, birthdt, major, mobile, email)
+                   values ('김육수', '19990623', 4, '01012340006', 'kim6@gmail.com');
 
 select * from Major;
+select * from Prof;
 select * from Student;
 select * from Enroll;
+select * from Subject;
 
-select id from Major order by rand();
+select name, substring(name, 1, 1) from Student
+ where name not like '김%';
+
+insert into Major(name) values ('경제학'), ('경영학');
+
+insert into Prof(name, likecnt)
+  select concat(substring(name, 1, 1), '교수'), id from Student
+   where name not like '김%';
+   
+insert into Subject(name, prof)
+  select concat('과목', id), id from Prof order by rand();
+  
+insert into Enroll(subject, student)
+  select id, (select id from Student order by rand() limit 1) from Subject;
+
+select * from Student order by rand() limit 1;
+
+
+desc Prof;
+desc Subject;
