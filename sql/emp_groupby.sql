@@ -11,9 +11,7 @@ select * from Emp;
 select max(salary) from Emp;
 select dept, max(salary) from Emp group by dept;
 select * from Emp where salary = (select max(salary) from Emp);
-
--- update Emp set salary = 900 where id in (152, 97,18,80,133,47,128);
-
+  
 select (select max(dname) from Dept where id = Emp.dept) dept_name,
     dept, count(*), sum(salary) totsal, avg(salary) avgsal 
   from Emp group by dept;
@@ -48,3 +46,56 @@ select * from Emp
 -- update Emp set dept = 100
  where id = 3;
 
+-- ex. 43)
+update Emp set salary = 901 + dept where id in (152, 97,18,80,133,47,128);
+select * from Emp where id in (152, 97,18,80,133,47,128) order by dept;
+
+-- 1) 평균 급여보다 높은 급여자 (부서id, 부서명, 직원id, 직원명, 급여)
+select e.dept, d.dname, e.id, e.ename, e.salary
+  from Emp e inner join Dept d on e.dept = d.id
+ where e.salary > (select avg(salary) from Emp);
+ 
+-- 2) 부서 별 최고 급여자
+select e.dept, DeptMaxSal.dname, e.id, e.ename, e.salary
+  from Emp e
+    inner join
+      (select d.dname, e.dept, max(salary) maxsal
+         from Emp e inner join Dept d on e.dept = d.id
+        group by dept) DeptMaxSal
+    on e.dept = DeptMaxSal.dept and e.salary = DeptMaxSal.maxsal
+ order by e.dept;
+
+-- no
+select e.dept, d.dname, e.id,e.ename,e.salary
+  from emp e join dept d on e.dept = d.id
+ where (e.dept, e.salary) in (select dept, max(salary) as maxSalary
+                                from emp group by dept)
+ order by dept;
+
+-- woo
+select d.id dept, d.dname, e.id, e.ename, auth, salary
+  from Emp e join Dept d on d.id = e.dept
+ where salary in (select max(salary) from emp e group by e.dept)
+ order by d.id asc;
+
+-- jung
+SELECT deptId as dept, d.dname, max.id AS id, ename, max.salary
+  FROM Dept d
+  JOIN (SELECT deptId,id,ename,sub.salary
+          FROM Emp e
+			JOIN (SELECT dept AS deptId, MAX(salary) AS salary
+			        FROM Emp
+			       GROUP BY dept) sub
+			  ON e.salary = sub.salary ) AS max
+ON d.id = max.deptId
+ORDER BY deptId ASC;
+
+-- moon
+select e.dept, yoyo.dname,e.id, e.ename, e.salary
+  from Emp e 
+  join 
+       (select d.dname,dept, MAX(salary) as salary
+          from Emp e join Dept d on e.dept = d.id group by dept) as yoyo
+    on e.dept = yoyo.dept AND e.salary = yoyo.salary
+ order by e.dept;
+ 
