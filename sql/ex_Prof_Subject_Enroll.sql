@@ -53,6 +53,17 @@ insert ignore into Student(name, birthdt, major, mobile, email)
 
 select * from Major;
 select * from Prof;
+
+-- a ? b : (c > 0 ? x : y);
+select *, 
+   if(likecnt > 5, 'Best',  if(likecnt <= 2, 'Worst', 'Good')) as level from Prof;
+
+select *, 
+    (case likecnt when 2 then 'two' when 3 then 'three' else 'seven' end) as num,
+    (case when likecnt > 5 then 'Best' when likecnt <= 2 then 'Worst' else 'Good' end)
+     as level
+  from Prof;
+  
 select * from Student;
 select * from Enroll;
 select * from Subject;
@@ -64,7 +75,7 @@ insert into Major(name) values ('경제학'), ('경영학');
 
 insert into Prof(name, likecnt)
   select concat(substring(name, 1, 1), '교수'), id from Student
-   where name not like '김%';
+   where name not like '%김%';
    
 insert into Subject(name, prof)
   select concat('과목', id), id from Prof order by rand();
@@ -74,6 +85,48 @@ insert into Enroll(subject, student)
 
 select * from Student order by rand() limit 1;
 
+update Student set graduatedat = curdate()
+ order by rand() limit 1;
 
+
+select ifnull(graduatedat, '재학중') state, name, mobile phone, email as 'email address' from Student;
+
+select e.id, (select name from Subject where id = e.subject) as subject_name
+  from Enroll e
+ where e.id = 1;
+ 
+select e.id, s.name, s.id as subjectid
+  from Enroll e join Subject s on e.subject = s.id
+ where e.id = 1;
+  
+select * from Prof where id < ANY(select id from Prof);
+select * from Prof where id <= SOME(select id from Prof);
+select * from Prof where id <= ALL(select id from Prof);
+
+select * from Student where major not in (1,2,3);
+select * from Student where name like '김사_';
+select * from Student where name like '김사%';
+select * from Student where major between 1 and 3;
+select distinct major from Student where major between 1 and 3;
+explain select * from Student where major between 1 and 3 order by name;
+show index from Student;
+show create table Student;
+
+select * from Student where major between 1 and 3 order by id;
+
+select * from Subject;
+select * from Prof;
+
+select * from Subject s inner join Prof p on s.prof = p.id;
+select * from Subject s, Prof p 
+ where s.prof = p.id;
+
+select p.*, ifnull(s.name, '담당 교과 없음') subject_name
+  from Prof p left outer join Subject s on p.id = s.prof;
+  
+insert into Prof(name) values('김교수');
+
+
+desc Student;
 desc Prof;
 desc Subject;
