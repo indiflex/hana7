@@ -66,11 +66,14 @@ select e.dept, DeptMaxSal.dname, e.id, e.ename, e.salary
  order by e.dept;
 
 -- no
-select e.dept, d.dname, e.id,e.ename,e.salary
+select e.dept, max(d.dname), max(e.id), min(e.ename), max(e.salary)
   from emp e join dept d on e.dept = d.id
  where (e.dept, e.salary) in (select dept, max(salary) as maxSalary
                                 from emp group by dept)
+ group by dept, salary
  order by dept;
+ 
+select * from Emp where salary >=900 order by dept;
 
 -- woo
 select d.id dept, d.dname, e.id, e.ename, auth, salary
