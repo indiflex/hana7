@@ -46,7 +46,7 @@ insert into Student(name, birthdt, major, mobile, email)
     on duplicate key update birthdt = '19990425', major = 1, email = 'kim5@gmail.com';
             
 insert ignore into Student(name, birthdt, major, mobile, email)
-                   values ('김사수', '19990423', 1, '01012340004', 'kim4@gmail.com');
+                   values ('김오수', '19990523', 2, '01012340005', 'kim5@gmail.com');
 
 select * from Major;
 select * from Student;
