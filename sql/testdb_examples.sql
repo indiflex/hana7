@@ -31,7 +31,7 @@ update Dept d
   set d.captain = sub.id
  where d.id > 0;
   
-select * from Dept where captain is not null;
+select * from Dept where captain is null;
 
 select *, (select ename from Emp where id = d.captain) ename from Dept d;
 

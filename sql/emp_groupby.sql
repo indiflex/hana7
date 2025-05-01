@@ -107,4 +107,29 @@ select e.dept, yoyo.dname,e.id, e.ename, e.salary
           from Emp e join Dept d on e.dept = d.id group by dept) as yoyo
     on e.dept = yoyo.dept AND e.salary = yoyo.salary
  order by e.dept;
+
+select * from Emp where dept = 1 order by ename;
+update Emp set ename='김바순' where id = 207;
+
+-- Dept 테이블에 이름이 가장 빠른 직원(가나다 순)을 captain으로 update
+select dept, min(ename) from Emp group by dept;
+
+select * from Emp
+ where ename = ANY(select min(ename) from Emp group by dept)
+ order by dept;
  
+select e1.dept, e1.id
+  from Emp e1 left outer join Emp e2 on e1.dept = e2.dept and e1.ename > e2.ename
+ where e2.id is null order by e1.dept;
+
+start transaction;
+
+select * from Dept d
+-- update Dept d 
+    inner join (select e1.dept, e1.id, e1.ename
+  from Emp e1 left outer join Emp e2 on e1.dept = e2.dept and e1.ename > e2.ename
+ where e2.id is null) sub
+    on d.id = sub.dept
+  -- set d.captain = sub.id
+  ;
+
