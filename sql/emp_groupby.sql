@@ -114,6 +114,12 @@ update Emp set ename='김바순' where id = 207;
 -- Dept 테이블에 이름이 가장 빠른 직원(가나다 순)을 captain으로 update
 select dept, min(ename) from Emp group by dept;
 
+select dept, min(ename) minName, max(ename) maxName, 
+    sum(salary) totsal, avg(salary) avgsal
+  from Emp group by dept;
+  
+select * from v_emp_groupby_dept;
+
 select * from Emp
  where ename = ANY(select min(ename) from Emp group by dept)
  order by dept;

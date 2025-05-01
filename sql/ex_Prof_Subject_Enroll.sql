@@ -147,8 +147,35 @@ select p.*, ifnull(s.name, '담당 교과 없음') subject_name
   from Prof p left outer join Subject s on p.id = s.prof;
   
 insert into Prof(name) values('김교수');
+insert into Subject(name, prof) values('김과목', 4);
+insert into Subject(name, prof) values('과목5', 4), ('과목6', 2);
 
+update Subject set prof = null where id = 2;
+
+select s.*, p.name
+  from Subject s left outer join Prof p on s.prof = p.id;
+
+select * from v_subject where profName = '이교수';
+-- update v_subject set prof = 4 where id = 2;
 
 desc Student;
 desc Prof;
 desc Subject;
+
+-- ex) trigger
+alter table Prof add column subjectcnt tinyint unsigned not null default 0;
+
+select * from Subject;
+select * from Prof;
+update Prof p
+   set subjectcnt = (select count(*) from Subject where prof = p.id)
+ where p.id > 0;
+   
+select count(*) from Subject where prof = 1;
+
+insert into Subject(name, prof) values('과목7', 3);
+delete from Subject where id = 7;
+update Subject set prof=2 where id = 5;
+
+select count(*) from Subject where prof=2;
+show triggers;
