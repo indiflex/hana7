@@ -57,9 +57,17 @@ update Emp e left outer join Dept d on e.id = d.captain
    set e.outdt = curdate(), e.outdt2 = curdate(),
        d.captain = null
  where e.id in (14, 26);
+ 
+desc Emp;
+desc Dept;
+
+select id, f_empinfo(id) from Emp limit 10;
+select * from Emp;
 
 commit;
 rollback;
 
 select * from Emp where id in (3,5,14,26);
 select * from Dept;
+
+SHOW PROCEDURE STATUS WHERE Db = 'testdb';
