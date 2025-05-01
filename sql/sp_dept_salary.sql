@@ -13,6 +13,13 @@ BEGIN
     Declare _cur CURSOR FOR
         select id, dname, captain from Dept;
         
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        SHOW ERRORS;
+        SELECT '에러발생' as 'Result';
+        -- ROLLBACK;
+    END;
+
     Declare Continue Handler
         For Not Found SET _done := True;
         
@@ -25,7 +32,7 @@ BEGIN
         captain varchar(31),
         captainsal int
     );
-        
+    
     OPEN _cur;
         cur_loop: LOOP
             Fetch _cur into _id, _dname, _captain;
