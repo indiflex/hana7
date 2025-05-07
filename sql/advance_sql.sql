@@ -28,6 +28,8 @@ WITH AvgSal AS
 select * from Dept where pid = 0;
 select * from Dept where pid in (1, 2);
 select * from Dept where pid in (3,4,5,6,7);
+select * from Dept where pid between 3 and 700;
+select * from Dept where pid > 0 or pid < 10;
 
 insert into Dept(pid, dname) values(6, '인프라셀');
 insert into Dept(pid, dname) values(6, 'DB셀');
@@ -137,4 +139,3 @@ select '최대급여',
    format(max(IF(dept = 7, salary, 0)) * 10000, 0)
  from Emp
  ;
-
