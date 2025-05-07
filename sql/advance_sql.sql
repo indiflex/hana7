@@ -78,14 +78,32 @@ select p.id pid, d.id did,
  with rollup;
  
 -- pivot
-select max(d.dname) '부서', 
+select e.dept, max(d.dname) '부서', 
     format(round(avg(e.salary) * 10000), 0) '평균급여', 
     format(sum(e.salary) * 10000, 0) '총 급여', 
     format(min(e.salary) * 10000, 0) '최소급여', 
     format(max(e.salary) * 10000, 0) '최대급여'
   from Emp e inner join Dept d on e.dept = d.id
+ where d.pid <> 0
  group by e.dept
  order by d.id;
+ 
+select ename, dept, (case when dept = 3 then salary else 0 end)
+  from Emp;
+ 
+select '평균급여' as '구분', 
+    format(avg(case when dept = 3 then salary end) * 10000, 0) '영업1팀',
+    avg(case when dept = 4 then salary end) '영업2팀'
+  from Emp
+ UNION
+select '급여합계', sum(case when dept = 3 then salary end),
+            sum(case when dept = 4 then salary end) from Emp
+ UNION
+select '최소급여', min(case when dept = 3 then salary end),
+            min( if(dept = 4, salary, ~0)) from Emp
+ UNION
+select '최대급여', max(case when dept = 3 then salary end),
+        max(case when dept = 4 then salary end) from Emp;
  
 select '평균급여' as '구분',
    format(avg(case when dept = 3 then salary end) * 10000, 0) '영업1팀',
@@ -119,6 +137,4 @@ select '최대급여',
    format(max(IF(dept = 7, salary, 0)) * 10000, 0)
  from Emp
  ;
- 
-select 0, +0, ~0;
 
