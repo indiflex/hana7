@@ -46,3 +46,24 @@ WITH RECURSIVE CteDept(id, pid, pname, dname, dx, h) AS
 select concat(repeat('↳', dx), dname), id, dname, h from CteDept order by h;
 
 show variables like '%max%';
+
+select dept, ename, salary, avg(salary) avgsal, sum(salary) totsal
+  from Emp where ename like '박%'
+  group by dept, ename, salary
+  order by dept, salary desc;
+  
+select dept, ename, salary
+  from Emp
+ where ename like '박%'
+ order by dept, salary desc;
+ 
+select * from Emp where id=184;
+ 
+select row_number() over (order by dept, salary desc) '순번',
+    dept, salary, ename, id,
+    lead(dept, 1) over w next_dept,
+    lead(dept, 2) over w next_dept2,
+    round(avg(salary) over w) avgsal,
+    sum(salary) over w sumsal
+  from Emp e where ename like '박%'
+  window w as (partition by dept order by salary);
