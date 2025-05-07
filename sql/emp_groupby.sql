@@ -64,6 +64,15 @@ select e.dept, DeptMaxSal.dname, e.id, e.ename, e.salary
         group by dept) DeptMaxSal
     on e.dept = DeptMaxSal.dept and e.salary = DeptMaxSal.maxsal
  order by e.dept;
+ 
+with DeptMaxSal as
+        (select d.dname, e.dept, max(salary) maxsal
+           from Emp e inner join Dept d on e.dept = d.id
+          group by dept)
+select e.dept, DeptMaxSal.dname, e.id, e.ename, e.salary
+  from Emp e inner join DeptMaxSal
+    on e.dept = DeptMaxSal.dept and e.salary = DeptMaxSal.maxsal
+ order by e.dept;
 
 -- no
 select e.dept, max(d.dname), max(e.id), min(e.ename), max(e.salary)
