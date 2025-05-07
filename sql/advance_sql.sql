@@ -67,3 +67,58 @@ select row_number() over (order by dept, salary desc) '순번',
     sum(salary) over w sumsal
   from Emp e where ename like '박%'
   window w as (partition by dept order by salary);
+
+select p.id pid, d.id did, 
+        (case when p.id is not null then max(p.dname) else '-총계-' end) '상위부서', 
+        (case when d.id is not null then max(d.dname) else '-소계-' end) '하위부서',
+    format(sum(e.salary), 0) '급여합'
+  from Dept p inner join Dept d on p.id = d.pid
+       inner join Emp e on e.dept = d.id
+ group by p.id, d.id
+ with rollup;
+ 
+-- pivot
+select max(d.dname) '부서', 
+    format(round(avg(e.salary) * 10000), 0) '평균급여', 
+    format(sum(e.salary) * 10000, 0) '총 급여', 
+    format(min(e.salary) * 10000, 0) '최소급여', 
+    format(max(e.salary) * 10000, 0) '최대급여'
+  from Emp e inner join Dept d on e.dept = d.id
+ group by e.dept
+ order by d.id;
+ 
+select '평균급여' as '구분',
+   format(avg(case when dept = 3 then salary end) * 10000, 0) '영업1팀',
+   format(avg(case when dept = 4 then salary end) * 10000, 0) '영업2팀',
+   format(avg(case when dept = 5 then salary end) * 10000, 0) '영업3팀',
+   format(avg(case when dept = 6 then salary end) * 10000, 0) '서버팀',
+   format(avg(case when dept = 7 then salary end) * 10000, 0) '클라팀'
+ from Emp
+UNION
+select '급역합계',
+   format(sum(salary * (dept = 3)) * 10000, 0),
+   format(sum(salary * (dept = 4)) * 10000, 0),
+   format(sum(salary * (dept = 5)) * 10000, 0),
+   format(sum(salary * (dept = 6)) * 10000, 0),
+   format(sum(salary * (dept = 7)) * 10000, 0)
+ from Emp
+UNION
+select '최소급여',   
+   format(min(IF(dept = 3, salary, ~0)) * 10000, 0),
+   format(min(IF(dept = 4, salary, ~0)) * 10000, 0),
+   format(min(IF(dept = 5, salary, ~0)) * 10000, 0),
+   format(min(IF(dept = 6, salary, ~0)) * 10000, 0),
+   format(min(IF(dept = 7, salary, ~0)) * 10000, 0)
+ from Emp
+UNION
+select '최대급여',   
+   format(max(IF(dept = 3, salary, 0)) * 10000, 0),
+   format(max(IF(dept = 4, salary, 0)) * 10000, 0),
+   format(max(IF(dept = 5, salary, 0)) * 10000, 0),
+   format(max(IF(dept = 6, salary, 0)) * 10000, 0),
+   format(max(IF(dept = 7, salary, 0)) * 10000, 0)
+ from Emp
+ ;
+ 
+select 0, +0, ~0;
+
