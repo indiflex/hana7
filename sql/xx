@@ -1,0 +1,45 @@
+# The proper term is pseudo_replica_mode, but we use this compatibility alias
+# to make the statement usable on server versions 8.0.24 and older.
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#250508 14:50:12 server id 1  end_log_pos 126 CRC32 0x519f0328 	Start: binlog v 4, server v 8.0.34 created 250508 14:50:12 at startup
+ROLLBACK/*!*/;
+BINLOG '
+FEYcaA8BAAAAegAAAH4AAAAAAAQAOC4wLjM0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAURhxoEwANAAgAAAAABAAEAAAAYgAEGggAAAAICAgCAAAACgoKKioAEjQA
+CigAASgDn1E=
+'/*!*/;
+# at 126
+#250508 14:50:12 server id 1  end_log_pos 157 CRC32 0x5427eda3 	Previous-GTIDs
+# [empty]
+# at 157
+#250508 14:50:12 server id 1  end_log_pos 234 CRC32 0x162e05bf 	Anonymous_GTID	last_committed=0	sequence_number=1	rbr_only=no	original_committed_timestamp=1746683412994607	immediate_commit_timestamp=1746683412994607	transaction_length=172
+# original_commit_timestamp=1746683412994607 (2025-05-08 14:50:12.994607 KST)
+# immediate_commit_timestamp=1746683412994607 (2025-05-08 14:50:12.994607 KST)
+/*!80001 SET @@session.original_commit_timestamp=1746683412994607*//*!*/;
+/*!80014 SET @@session.original_server_version=80034*//*!*/;
+/*!80014 SET @@session.immediate_server_version=80034*//*!*/;
+SET @@SESSION.GTID_NEXT= 'ANONYMOUS'/*!*/;
+# at 234
+#250508 14:50:12 server id 1  end_log_pos 329 CRC32 0x6887708d 	Query	thread_id=7	exec_time=0	error_code=0
+SET TIMESTAMP=1746683412/*!*/;
+SET @@session.pseudo_thread_id=7/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=1168113696/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8mb4 *//*!*/;
+SET @@session.character_set_client=224,@@session.collation_connection=255,@@session.collation_server=255/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
+optimize table testdb.Notice;
+/*!*/;
+# at 329
+#250508 15:03:17 server id 1  end_log_pos 352 CRC32 0x34078edc 	Stop
+SET @@SESSION.GTID_NEXT= 'AUTOMATIC' /* added by mysqlbinlog */ /*!*/;
+DELIMITER ;
+# End of log file
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
