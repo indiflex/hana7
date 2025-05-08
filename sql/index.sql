@@ -90,3 +90,74 @@ select hash(100);
 select * from Notice where match(title, contents) against('무신* 문신*' IN BOOLEAN MODE);
 select * from Notice where match(title, contents) against('무신* 문신* -후기*' IN BOOLEAN MODE);
 select * from Notice where match(title, contents) against('무신* 문신* +중기*' IN BOOLEAN MODE);
+
+-- partitioning
+create table PartiRangeTest (
+  studentno varchar(7) not null,
+  enteryear smallint not null,
+  studentname varchar(31) not null 
+)
+Partition by RANGE(enteryear) (
+    partition p1 values less than(2000),
+    partition p2 values less than(2010),
+    partition p3 values less than MAXVALUE
+);
+
+select * from PartiRangeTest;
+select * from information_schema.partitions where table_name='PartiRangeTest';
+
+alter table PartiRangeTest drop partition p2;
+
+insert into PartiRangeTest(studentno, enteryear, studentname)
+  values ('8809080', 1988, '팔팔학번'),
+         ('0809080', 2008, '공팔학번'),
+         ('1809080', 2018, '일팔학번');
+
+explain select * from PartiRangeTest where enteryear = 2024;
+
+insert into PartiRangeTest(studentno, enteryear, studentname) 
+   values('2409080', 2024, '이사학번');
+   
+select * from PartiRangeTest where enteryear=2024;
+update PartiRangeTest set enteryear=2004 where enteryear=2024;
+explain select * from PartiRangeTest where enteryear = 2004;
+
+create table EmpTest AS select * from Emp;
+drop table EmpTest;
+show create table EmpTest;
+
+-- EmpTest partitioning
+create table EmpTest AS select * from Emp;
+select * from EmpTest;
+show create table EmpTest;
+show index from EmpTest;
+select e.*, d.dname from EmpTest e inner join Dept d on e.dept = d.id;
+
+alter table EmpTest partition by range(id) (
+    partition p1 values less than (100),
+    partition p2 values less than (200),
+    partition p3 values less than MaxValue
+);
+
+desc EmpTest;
+
+select * from information_schema.partitions where table_name='EmpTest';
+
+explain select * from EmpTest where id = 150;
+alter table EmpTest drop partition p2;
+
+insert into EmpTest(id, ename, dept, auth, salary, mobile)
+ select 150, '김150수', dept, auth, salary, '0101234150' from EmpTest where id = 2;
+ 
+alter table EmpTest
+  REORGANIZE Partition p3 INTO (
+    partition p2 values less than (200),
+    partition p3 values less than MAXVALUE
+  );
+  
+rename table Emp to EmpBackup;
+rename table EmpBackup to Emp;
+rename table EmpTest to Emp;
+
+show create table Dept;
+show index from Dept;
