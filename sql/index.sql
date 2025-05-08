@@ -15,3 +15,16 @@ alter table Emp add index (
 
 show index from Emp;
 alter table Emp drop index idx_Emp_eamil;
+
+alter table Emp add column mobile varchar(11) not null default '';
+alter table Emp modify column mobile varchar(11) not null default '' after salary;
+
+select id, concat('0101234', lpad(id, 4, '0')) from Emp order by id;
+update Emp set mobile = concat('0101234', lpad(id, 4, '0')) where id > 0;
+
+explain select * from Emp where substring(mobile, 8, 4) = '0252';
+
+alter table Emp add index (
+    (substring(mobile, 8, 4))
+);
+ 
