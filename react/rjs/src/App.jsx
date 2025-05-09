@@ -29,8 +29,13 @@ import './App.css';
 //   return [obj.x, obj.setX];
 // }
 
-function MyButton({ onClick }) {
-  return <button onClick={onClick}>MyButton</button>;
+// { onClick: () => setIsLoggedIn(!isLoggedIn) }
+function MyButton({ onClick, className }) {
+  return (
+    <button className={className} onClick={onClick}>
+      MyButton
+    </button>
+  );
 }
 
 const hong = { name: 'Hong', hobbies: ['Bike', 'Tennis'] };
@@ -39,14 +44,14 @@ const AboutMe = ({ myinfo }) => {
   // const { myinfo } = prop;
   const { name, hobbies } = myinfo;
   return (
-    <>
+    <div>
       <h1>{name}</h1>
       <ul style={{ listStyle: 'none' }}>
         {hobbies.map(hobby => (
           <li key={hobby}>{hobby}</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
@@ -54,11 +59,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <>
-      <h1>Vite + React {version}</h1>
-      <MyButton onClick={() => setIsLoggedIn(!isLoggedIn)} />
+    <div className='flex flex-col justify-center items-center mt-5 h-[500px]'>
+      <h1 className='text-3xl font-bold my-4'>Vite + React {version}</h1>
+      <MyButton
+        onClick={() => setIsLoggedIn(!isLoggedIn)}
+        className='bg-blue-300 text-white px-6 py-4 rounded hover:bg-blue-500 mb-56'
+      />
       {isLoggedIn ? <AboutMe myinfo={hong} /> : <h3>Login Form</h3>}
-    </>
+    </div>
   );
 }
 
