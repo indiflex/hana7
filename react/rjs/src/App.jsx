@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, version } from 'react';
 import './App.css';
 
 // const StatePool = {};
@@ -21,7 +21,7 @@ import './App.css';
 //         StatePool._x = newValueOrFn;
 //       }
 
-//       React.rerender();
+//       // React.rerender();
 //       App();
 //     },
 //   };
@@ -29,32 +29,35 @@ import './App.css';
 //   return [obj.x, obj.setX];
 // }
 
-function App() {
-  const [count, setCount] = useState(1);
-  let x = 100;
-  console.log('*****************', count, x);
-  const str = `${x}`;
-  console.log('🚀 str:', str, count, StatePool);
+function MyButton({ onClick }) {
+  return <button onClick={onClick}>MyButton</button>;
+}
 
-  const plusCount = () => {
-    console.log('🚀 x1:', x, count);
-    setCount(count => count + 1);
-    x = x + 1;
-    console.log('🚀 x2:', x, count);
-  };
+const hong = { name: 'Hong', hobbies: ['Bike', 'Tennis'] };
+
+const AboutMe = ({ myinfo }) => {
+  // const { myinfo } = prop;
+  const { name, hobbies } = myinfo;
+  return (
+    <>
+      <h1>{name}</h1>
+      <ul style={{ listStyle: 'none' }}>
+        {hobbies.map(hobby => (
+          <li key={hobby}>{hobby}</li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
-      <h1>Vite React {x}</h1>
-      <div className='card'>
-        <button onClick={plusCount}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Vite + React {version}</h1>
+      <MyButton onClick={() => setIsLoggedIn(!isLoggedIn)} />
+      {isLoggedIn ? <AboutMe myinfo={hong} /> : <h3>Login Form</h3>}
     </>
   );
 }
