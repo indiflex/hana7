@@ -161,3 +161,8 @@ rename table EmpTest to Emp;
 
 show create table Dept;
 show index from Dept;
+
+explain select captain from Dept where captain is not null;
+
+select * from Emp where id in (select captain from Dept where captain is not null);
+select * from Emp e where exists (select * from Dept where captain = e.id);
