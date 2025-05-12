@@ -27,7 +27,7 @@ export default function My({
         <ul>
           {cart.map(item => (
             <li key={item.id}>
-              {item.name}
+              {item.id}. {item.name} ({item.price.toLocaleString()})
               <button onClick={() => removeItem(item.id)}>x</button>
             </li>
           ))}

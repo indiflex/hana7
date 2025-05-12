@@ -1,38 +1,41 @@
-import { useState } from 'react';
+import { useRef, type FormEvent } from 'react';
 import type { LoginFn } from '../App';
 
 type Props = { login: LoginFn };
 
 export default function Login({ login }: Props) {
-  const [id, setId] = useState(0);
-  const [name, setName] = useState('');
+  const idRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
 
-  const makeLogin = () => {
-    if (!id || isNaN(id) || !name) {
-      alert('Input the id and name!');
+  const makeLogin = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const id = Number(idRef.current?.value);
+    const name = nameRef.current?.value;
+    if (!id || isNaN(id)) {
+      alert('Input the id!');
+      if (idRef.current) idRef.current.focus();
+      return;
+    } else if (!name) {
+      alert('Input the name!');
+      if (nameRef.current) nameRef.current.focus();
       return;
     }
+
     login(id, name);
   };
 
-  // const submitHandler = () => {
-
-  // }
-
   return (
-    <>
+    <form onSubmit={makeLogin}>
       <div>
         LoginID:
-        <input
-          type='number'
-          onChange={evt => setId(+evt.currentTarget.value)}
-        />
+        <input ref={idRef} type='number' />
       </div>
       <div>
         LoginName:
-        <input type='text' onChange={evt => setName(evt.currentTarget.value)} />
+        <input type='text' ref={nameRef} />
       </div>
-      <button onClick={makeLogin}>Login</button>
-    </>
+      <button type='reset'>Cancel</button>
+      <button type='submit'>Login</button>
+    </form>
   );
 }
