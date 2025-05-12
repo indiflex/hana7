@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Hello from './components/Hello';
 import My from './components/My';
@@ -7,6 +7,8 @@ export type LoginUser = {
   id: number;
   name: string;
 };
+
+export type LoginFn = (id: number, name: string) => void;
 
 type Cart = {
   id: number;
@@ -34,7 +36,10 @@ function App() {
   const [count, setCount] = useState(0);
 
   const plusCount = () => setCount(c => c + 1);
-  const login = () => {};
+  const login = (id: number, name: string) => {
+    setSession({ ...session, loginUser: { id, name } });
+  };
+
   const logout = () => {
     // session.loginUser = null; // non-pure function!
     setSession({ ...session, loginUser: null });

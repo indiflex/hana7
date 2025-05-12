@@ -1,10 +1,10 @@
-import type { Session } from '../App';
+import type { LoginFn, Session } from '../App';
 import Login from './Login';
 import Profile from './Profile';
 
 type Props = {
   session: Session;
-  login: () => void;
+  login: LoginFn;
   logout: () => void;
   removeItem: (id: number) => void;
 };
