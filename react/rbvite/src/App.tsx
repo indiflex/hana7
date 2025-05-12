@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import './App.css';
 import Hello from './components/Hello';
 import My from './components/My';
@@ -40,10 +40,22 @@ function App() {
     setSession({ ...session, loginUser: null });
   };
 
+  const removeItem = (id: number) => {
+    setSession({
+      ...session,
+      cart: session.cart.filter(item => item.id !== id),
+    });
+  };
+
   return (
     <>
       <h2>count: {count}</h2>
-      <My session={session} login={login} logout={logout} />
+      <My
+        session={session}
+        login={login}
+        logout={logout}
+        removeItem={removeItem}
+      />
       <Hello name={'홍길동'} age={33} plusCount={plusCount}>
         반갑습니다!
       </Hello>

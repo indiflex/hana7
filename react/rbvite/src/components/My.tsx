@@ -6,12 +6,14 @@ type Props = {
   session: Session;
   login: () => void;
   logout: () => void;
+  removeItem: (id: number) => void;
 };
 
 export default function My({
   session: { loginUser, cart },
   login,
   logout,
+  removeItem,
 }: Props) {
   return (
     <>
@@ -24,7 +26,10 @@ export default function My({
       <div>
         <ul>
           {cart.map(item => (
-            <li key={item.id}>{item.name}</li>
+            <li key={item.id}>
+              {item.name}
+              <button onClick={() => removeItem(item.id)}>x</button>
+            </li>
           ))}
         </ul>
       </div>
