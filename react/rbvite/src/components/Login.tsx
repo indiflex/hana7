@@ -13,11 +13,11 @@ export default function Login({ login }: Props) {
     const name = nameRef.current?.value;
     if (!id || isNaN(id)) {
       alert('Input the id!');
-      if (idRef.current) idRef.current.focus();
+      idRef.current?.focus();
       return;
     } else if (!name) {
       alert('Input the name!');
-      if (nameRef.current) nameRef.current.focus();
+      nameRef.current?.focus();
       return;
     }
 
