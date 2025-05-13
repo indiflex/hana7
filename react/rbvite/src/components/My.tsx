@@ -1,5 +1,5 @@
 import type { Cart, LoginFn, Session } from '../App';
-import Login from './Login';
+import Login, { type LoginHandler } from './Login';
 import Profile from './Profile';
 import Item from './Item';
 import { useState, type RefObject } from 'react';
@@ -12,6 +12,7 @@ type Props = {
   addItem: (name: string, price: number) => void;
   editItem: (item: Cart) => void;
   logoutButtonRef: RefObject<HTMLButtonElement | null>;
+  loginHandlerRef: RefObject<LoginHandler | null>;
 };
 
 export default function My({
@@ -22,6 +23,7 @@ export default function My({
   addItem,
   editItem,
   logoutButtonRef,
+  loginHandlerRef,
 }: Props) {
   const [isAdding, setAdding] = useState(false);
   const toggleAdding = () => setAdding(!isAdding);
@@ -35,7 +37,7 @@ export default function My({
           logoutButtonRef={logoutButtonRef}
         />
       ) : (
-        <Login login={login} />
+        <Login login={login} loginHandlerRef={loginHandlerRef} />
       )}
 
       <div>
