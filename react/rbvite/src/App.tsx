@@ -98,7 +98,7 @@ function App() {
         Logout in App
       </button>
 
-      <button onClick={() => helloHandlerRef.current?.sayHello()}>
+      <button onClick={() => console.log(helloHandlerRef.current?.xx)}>
         sayHello
       </button>
     </>
