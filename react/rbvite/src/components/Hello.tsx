@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 export type HelloHandler = {
+  xx: string;
   sayHello: () => void;
 };
 
@@ -27,12 +28,13 @@ export default function Hello({
   refx,
 }: PropsWithChildren<Props>) {
   const helloHandler = {
+    xx: 'XXXX',
     sayHello() {
       alert(`Hello, Mr.${name}!`);
     },
   };
 
-  // ref.current = helloHandler;
+  // refx.current = helloHandler;
   useImperativeHandle(refx, () => helloHandler);
 
   return (
