@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export const useTimeout = <T extends (...args: Parameters<T>) => ReturnType<T>>(
+export const useTimeout = <T extends (...args: unknown[]) => ReturnType<T>>(
   cb: T,
   delay: number,
   ...args: Parameters<T>
@@ -14,9 +14,7 @@ export const useTimeout = <T extends (...args: Parameters<T>) => ReturnType<T>>(
   }, [delay, ...args]);
 };
 
-export const useInterval = <
-  T extends (...args: Parameters<T>) => ReturnType<T>
->(
+export const useInterval = <T extends (...args: unknown[]) => ReturnType<T>>(
   cb: T,
   delay: number,
   ...args: Parameters<T>
