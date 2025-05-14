@@ -1,4 +1,10 @@
-import { useImperativeHandle, useRef, useState, type FormEvent } from 'react';
+import {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react';
 import { useSession } from '../contexts/session/SessionContext';
 
 export type LoginHandler = {
@@ -54,18 +60,27 @@ export default function Login() {
     login(id, name);
   };
 
+  useEffect(() => {
+    const intl = setInterval(() => setX(x => x + 1), 1000);
+
+    return () => clearInterval(intl);
+  }, []);
+
   return (
-    <form onSubmit={makeLogin}>
-      <div>
-        LoginID({x}):
-        <input ref={idRef} type='number' />
-      </div>
-      <div>
-        LoginName:
-        <input type='text' ref={nameRef} />
-      </div>
-      <button type='reset'>Cancel</button>
-      <button type='submit'>Login</button>
-    </form>
+    <>
+      <form onSubmit={makeLogin}>
+        <div>
+          LoginID({x}):
+          <input ref={idRef} type='number' />
+        </div>
+        <div>
+          LoginName:
+          <input type='text' ref={nameRef} />
+        </div>
+        <button type='reset'>Cancel</button>
+        <button type='submit'>Login</button>
+      </form>
+      <button onClick={() => setX(x => x + 1)}>Set X</button>
+    </>
   );
 }
