@@ -1,4 +1,5 @@
-import { useRef, useState, type PropsWithChildren } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useRef, useState, type PropsWithChildren } from 'react';
 import { SessionContext, type Cart, type Session } from './SessionContext';
 import type { LoginHandler } from '../../components/Login';
 
@@ -18,24 +19,24 @@ export default function SessionProvider({ children }: PropsWithChildren) {
   const loginHandler = useRef<LoginHandler>(null);
 
   // const plusCount = () => setCount(c => c + 1);
-  const login = (id: number, name: string) => {
+  const login = useCallback((id: number, name: string) => {
     if (!loginHandler.current) return;
     const { getName, validate, str } = loginHandler.current;
     console.log('login>>>>', getName(), str);
     if (validate()) setSession({ ...session, loginUser: { id, name } });
-  };
+  }, []);
 
   const logout = () => {
     // session.loginUser = null; // non-pure function!
     setSession({ ...session, loginUser: null });
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = useCallback((id: number) => {
     setSession({
       ...session,
       cart: session.cart.filter(item => item.id !== id),
     });
-  };
+  }, []);
 
   const addItem = (name: string, price: number) => {
     const id = Math.max(...session.cart.map(item => item.id), 0) + 1;

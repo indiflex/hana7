@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback, useEffect, useRef } from 'react';
 
 export const useTimeout = <T extends (...args: Parameters<T>) => ReturnType<T>>(
   cb: T,
@@ -7,22 +8,20 @@ export const useTimeout = <T extends (...args: Parameters<T>) => ReturnType<T>>(
 ) => {
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const setTheTimer = () => {
+  const setTheTimer = useCallback(() => {
     timerRef.current = setTimeout(() => cb(...args), delay);
-  };
-  const clear = () => clearTimeout(timerRef.current);
-  const reset = () => {
+  }, []);
+  const clear = useCallback(() => clearTimeout(timerRef.current), []);
+  const reset = useCallback(() => {
     clear();
     setTheTimer();
-  };
+  }, []);
 
   useEffect(() => {
     setTheTimer();
 
     return clear;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [delay, ...args]);
-  // }, [cb, delay, ...args]); // ToDo append cb
+  }, [cb, delay, ...args]);
 
   return { reset, clear };
 };
@@ -37,28 +36,27 @@ export const useInterval = <
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
   console.log('SET-INTERVAL', timerRef.current, delay);
 
-  const clear = () => {
+  const clear = useCallback(() => {
     console.log('Clear!!', timerRef.current, delay);
     clearInterval(timerRef.current);
-  };
+  }, []);
 
-  const setTheTimer = () => {
+  const setTheTimer = useCallback(() => {
     timerRef.current = setInterval(() => cb(...args), delay);
     console.log('**************', timerRef.current, delay);
-  };
+  }, []);
 
   useEffect(() => {
     setTheTimer();
 
     return clear;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, ...args]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     console.log('RESET!!', timerRef.current, delay);
     clear();
     setTheTimer();
-  };
+  }, []);
 
   return { reset, clear };
 };
@@ -77,7 +75,6 @@ export const useTimeoutOld = <T extends unknown[]>(
     timerRef.current = setTimeout(cb, delay, ...args);
 
     return clear;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, ...args]);
 
   const reset = () => {
