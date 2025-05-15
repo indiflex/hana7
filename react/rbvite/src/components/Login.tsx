@@ -1,6 +1,7 @@
 import {
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
   type FormEvent,
@@ -82,6 +83,8 @@ export default function Login() {
   // reset(); // call every render
   useTimeout(reset, 2000);
   useTimeout(clear, 5000);
+
+  useEffect(() => idRef.current?.focus(), []);
 
   return (
     <>
