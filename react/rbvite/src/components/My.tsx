@@ -1,9 +1,10 @@
 import Login from './Login';
 import Profile from './Profile';
 import Item from './Item';
-import { useEffect, useMemo, useState, type RefObject } from 'react';
+import { memo, useMemo, type RefObject } from 'react';
 import { useSession } from '../contexts/session/SessionContext';
 import { useToggle } from '../hooks/useToggle';
+import ColorTitle from './ColorTitle';
 
 type Props = {
   logoutButtonRef: RefObject<HTMLButtonElement | null>;
@@ -11,6 +12,12 @@ type Props = {
 
 // type Post = { id: number; title: string };
 // const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts?userId=1';
+
+// const MemoColorTitle = memo(ColorTitle, () => true);
+const MemoColorTitle = memo(
+  ColorTitle,
+  (preProp, newProp) => preProp.color === newProp.color
+);
 
 export default function My({ logoutButtonRef }: Props) {
   const {
@@ -21,11 +28,10 @@ export default function My({ logoutButtonRef }: Props) {
   // const toggleAdding = () => setAdding(!isAdding);
   const [isAdding, toggleAdding] = useToggle();
 
-  const array = useMemo(() => [1, 2, 3], []);
-  useEffect(() => {
-    const sum = array.reduce((acc, a) => acc + a, 0);
-    console.log('effect Array@@@', sum);
-  }, [array]);
+  // observer
+  const totalPrice = useMemo(() => {
+    return cart.reduce((acc, item) => acc + item.price, 0);
+  }, [cart]);
 
   // const [posts, setPosts] = useState<Post[]>([]);
   // const [error, setError] = useState(null);
@@ -50,8 +56,9 @@ export default function My({ logoutButtonRef }: Props) {
   return (
     <>
       {loginUser ? <Profile logoutButtonRef={logoutButtonRef} /> : <Login />}
-
-      <h3>Total: {array}</h3>
+      <MemoColorTitle color={cart.length % 2 === 1 ? 'blue' : 'yellow'}>
+        Total: {totalPrice.toLocaleString()}
+      </MemoColorTitle>
       <div>
         <ul>
           {cart.map(item => (
