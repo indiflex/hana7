@@ -80,7 +80,7 @@ export default function Login() {
   console.log('xxxxxx>>', x);
   const { reset, clear } = useInterval(() => setX(x => x + 1), 1000);
   // reset(); // call every render
-  useTimeout(reset, 2000);
+  // useTimeout(reset, 2000);
   useTimeout(clear, 5000);
 
   useEffect(() => idRef.current?.focus(), []);
