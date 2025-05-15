@@ -5,21 +5,24 @@ export const useTimeout = <T extends (...args: Parameters<T>) => ReturnType<T>>(
   delay: number,
   ...args: Parameters<T>
 ) => {
-  // console.log('🚀 Timeout.args:', args);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const setTheTimer = () => {
+    timerRef.current = setTimeout(() => cb(...args), delay);
+  };
   const clear = () => clearTimeout(timerRef.current);
+  const reset = () => {
+    clear();
+    setTheTimer();
+  };
 
   useEffect(() => {
-    timerRef.current = setTimeout(() => cb(...args), delay);
+    setTheTimer();
 
-    return () => clearTimeout(timerRef.current);
+    return clear;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, ...args]);
-
-  const reset = () => {
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(cb, delay, ...args);
-  };
+  // }, [cb, delay, ...args]); // ToDo append cb
 
   return { reset, clear };
 };
@@ -32,26 +35,29 @@ export const useInterval = <
   ...args: Parameters<T>
 ) => {
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
-  // console.log('SET-INTERVAL', timerRef.current, delay);
+  console.log('SET-INTERVAL', timerRef.current, delay);
 
   const clear = () => {
-    // console.log('Clear!!', timerRef.current, delay);
+    console.log('Clear!!', timerRef.current, delay);
     clearInterval(timerRef.current);
   };
 
+  const setTheTimer = () => {
+    timerRef.current = setInterval(() => cb(...args), delay);
+    console.log('**************', timerRef.current, delay);
+  };
+
   useEffect(() => {
-    timerRef.current = setInterval(cb, delay, ...args);
-    // console.log('**************', timerRef.current, delay);
+    setTheTimer();
 
     return clear;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, ...args]);
 
   const reset = () => {
-    // console.log('RESET!!', timerRef.current, delay);
+    console.log('RESET!!', timerRef.current, delay);
     clear();
-    timerRef.current = setInterval(cb, delay, ...args);
-    // console.log('RESET22!!', timerRef.current, delay);
+    setTheTimer();
   };
 
   return { reset, clear };

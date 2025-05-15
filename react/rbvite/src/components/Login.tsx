@@ -72,14 +72,16 @@ export default function Login() {
   // useTimeout(console.log, 1000, 'Hong', x);
   // useTimeout(console.log, 1000, 'Kim', 99);
 
+  // const f = useCallback(() => {
+  //   setX(x => x + 1);
+  // }, []);
+
   // interval도 만들었다면,
-  // console.log('xxxxxx>>', x);
-  const { reset, clear } = useInterval(() => {
-    setX(x => x + 1);
-  }, 1000);
+  console.log('xxxxxx>>', x);
+  const { reset, clear } = useInterval(() => setX(x => x + 1), 1000);
   // reset(); // call every render
   useTimeout(reset, 2000);
-  useTimeout(clear, 3000);
+  useTimeout(clear, 5000);
 
   return (
     <>
