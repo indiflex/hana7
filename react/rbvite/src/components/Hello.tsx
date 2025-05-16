@@ -8,6 +8,7 @@ import {
 import { CounterContext } from '../contexts/counter/CounterContext';
 import { useFetch } from '../hooks/useFetch';
 import { useToggle } from '../hooks/useToggle';
+import LabelInput from './LabelInput';
 
 export type HelloHandler = {
   xx: string;
@@ -67,6 +68,8 @@ export default function Hello({
         count + 1
       </button>
       <button onClick={toggleReload}>Reload</button>
+      <LabelInput label='email' />
+      <LabelInput label='nickname' />
     </div>
   );
 }
