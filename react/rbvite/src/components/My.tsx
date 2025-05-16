@@ -1,10 +1,17 @@
 import Login from './Login';
 import Profile from './Profile';
 import Item from './Item';
-import { memo, useMemo, useReducer, useState, type RefObject } from 'react';
+import {
+  memo,
+  useDeferredValue,
+  useMemo,
+  useReducer,
+  useState,
+  type RefObject,
+} from 'react';
 import { useSession } from '../contexts/session/SessionContext';
 import ColorTitle from './ColorTitle';
-import { useThrottle } from '../hooks/useTimer';
+import SlowList from './SlowList';
 
 type Props = {
   logoutButtonRef: RefObject<HTMLButtonElement | null>;
@@ -47,10 +54,11 @@ export default function My({ logoutButtonRef }: Props) {
   // -------- search
   const [searchStr, setSearchStr] = useState('');
   const [query, setQuery] = useState('');
+  const deferedQuery = useDeferredValue(searchStr);
 
   // const search = useCallback(() => setQuery(searchStr), [searchStr]);
   // useDebounce(setQuery, 1000, [searchStr], searchStr);
-  useThrottle(setQuery, 1000, [searchStr], searchStr);
+  // useThrottle(setQuery, 1000, [searchStr], searchStr);
 
   // const [posts, setPosts] = useState<Post[]>([]);
   // const [error, setError] = useState(null);
@@ -88,6 +96,10 @@ export default function My({ logoutButtonRef }: Props) {
             onChange={evt => setSearchStr(evt.target.value)}
           />
         </label>
+        <h1>
+          {deferedQuery} vs {searchStr}
+        </h1>
+        <SlowList text={deferedQuery} />
         <ul>
           {cart
             .filter(item => item.name.includes(query))
