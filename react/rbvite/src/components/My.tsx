@@ -80,8 +80,14 @@ export default function My({ logoutButtonRef }: Props) {
       </MemoColorTitle>
       <h4>Expect: {totalExpectPrice.toLocaleString()}</h4>
       <div>
-        {searchStr}({query}):
-        <input type='text' onChange={evt => setSearchStr(evt.target.value)} />
+        <label htmlFor='search-str'>
+          검색{searchStr}({query}):
+          <input
+            type='text'
+            id='search-str'
+            onChange={evt => setSearchStr(evt.target.value)}
+          />
+        </label>
         <ul>
           {cart
             .filter(item => item.name.includes(query))
