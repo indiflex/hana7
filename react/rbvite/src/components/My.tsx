@@ -1,9 +1,8 @@
 import Login from './Login';
 import Profile from './Profile';
 import Item from './Item';
-import { memo, useMemo, type RefObject } from 'react';
+import { memo, useMemo, useReducer, type RefObject } from 'react';
 import { useSession } from '../contexts/session/SessionContext';
-import { useToggle } from '../hooks/useToggle';
 import ColorTitle from './ColorTitle';
 
 type Props = {
@@ -24,14 +23,25 @@ export default function My({ logoutButtonRef }: Props) {
     session: { loginUser, cart },
   } = useSession();
 
+  // 1)
   // const [isAdding, setAdding] = useState(false);
   // const toggleAdding = () => setAdding(!isAdding);
-  const [isAdding, toggleAdding] = useToggle();
+
+  // 2)
+  // const [isAdding, toggleAdding] = useToggle();
+
+  // 3)
+  const [isAdding, toggleAdding] = useReducer(pre => !pre, false);
 
   // observer
   const totalPrice = useMemo(() => {
     return cart.reduce((acc, item) => acc + item.price, 0);
   }, [cart]);
+
+  const [totalExpectPrice, addExpectPrice] = useReducer(
+    (prePrice, newPrice) => totalPrice + newPrice + prePrice * 0,
+    totalPrice
+  );
 
   // const [posts, setPosts] = useState<Post[]>([]);
   // const [error, setError] = useState(null);
@@ -59,11 +69,12 @@ export default function My({ logoutButtonRef }: Props) {
       <MemoColorTitle color={cart.length % 2 === 1 ? 'blue' : 'yellow'}>
         Total: {totalPrice.toLocaleString()}
       </MemoColorTitle>
+      <h4>Expect: {totalExpectPrice.toLocaleString()}</h4>
       <div>
         <ul>
           {cart.map(item => (
             <li key={item.id}>
-              <Item item={item} />
+              <Item item={item} addExpectPrice={addExpectPrice} />
             </li>
           ))}
           {isAdding ? (
@@ -71,6 +82,7 @@ export default function My({ logoutButtonRef }: Props) {
               <Item
                 item={{ id: 0, name: '', price: 3000 }}
                 toggleAdding={toggleAdding}
+                addExpectPrice={addExpectPrice}
               />
             </li>
           ) : (
