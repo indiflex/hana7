@@ -1,9 +1,10 @@
 import Login from './Login';
 import Profile from './Profile';
 import Item from './Item';
-import { memo, useMemo, useReducer, type RefObject } from 'react';
+import { memo, useMemo, useReducer, useState, type RefObject } from 'react';
 import { useSession } from '../contexts/session/SessionContext';
 import ColorTitle from './ColorTitle';
+import { useThrottle } from '../hooks/useTimer';
 
 type Props = {
   logoutButtonRef: RefObject<HTMLButtonElement | null>;
@@ -43,6 +44,14 @@ export default function My({ logoutButtonRef }: Props) {
     totalPrice
   );
 
+  // -------- search
+  const [searchStr, setSearchStr] = useState('');
+  const [query, setQuery] = useState('');
+
+  // const search = useCallback(() => setQuery(searchStr), [searchStr]);
+  // useDebounce(setQuery, 1000, [searchStr], searchStr);
+  useThrottle(setQuery, 1000, [searchStr], searchStr);
+
   // const [posts, setPosts] = useState<Post[]>([]);
   // const [error, setError] = useState(null);
   // useEffect(() => {
@@ -71,12 +80,16 @@ export default function My({ logoutButtonRef }: Props) {
       </MemoColorTitle>
       <h4>Expect: {totalExpectPrice.toLocaleString()}</h4>
       <div>
+        {searchStr}({query}):
+        <input type='text' onChange={evt => setSearchStr(evt.target.value)} />
         <ul>
-          {cart.map(item => (
-            <li key={item.id}>
-              <Item item={item} addExpectPrice={addExpectPrice} />
-            </li>
-          ))}
+          {cart
+            .filter(item => item.name.includes(query))
+            .map(item => (
+              <li key={item.id}>
+                <Item item={item} addExpectPrice={addExpectPrice} />
+              </li>
+            ))}
           {isAdding ? (
             <li>
               <Item
