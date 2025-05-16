@@ -63,7 +63,7 @@ export default function Hello({
       <div>
         {children} ({id})
       </div>
-      <button ref={helloButtonRef} onClick={plusCount}>
+      <button ref={helloButtonRef} onClick={() => plusCount()}>
         count + 1
       </button>
       <button onClick={toggleReload}>Reload</button>
