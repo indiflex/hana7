@@ -80,6 +80,8 @@ export default function My({ logoutButtonRef }: Props) {
   //   return () => controller.abort();
   // }, []);
 
+  const isSlow = false;
+
   return (
     <>
       {loginUser ? <Profile logoutButtonRef={logoutButtonRef} /> : <Login />}
@@ -99,7 +101,7 @@ export default function My({ logoutButtonRef }: Props) {
         <h1>
           {deferedQuery} vs {searchStr}
         </h1>
-        <SlowList text={deferedQuery} />
+        {isSlow && <SlowList text={deferedQuery} />}
         <ul>
           {cart
             .filter(item => item.name.includes(query))
