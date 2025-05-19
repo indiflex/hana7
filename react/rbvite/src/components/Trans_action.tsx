@@ -1,5 +1,5 @@
-import { useActionState, useState } from 'react';
-type User = { id: number; name: string };
+import { useState, useTransition } from 'react';
+type Comp = { id: number; name: string };
 
 // async function searchUser(userId: string) {
 //   return fetch<Comp>(
@@ -14,16 +14,28 @@ async function searchUser(userId: string) {
 
 export default function Trans() {
   const [str, setStr] = useState('');
-  const [list, search, isPending] = useActionState(
-    async (preList: User[], formData: FormData) => {
-      const value = formData.get('value')?.toString() ?? '';
-      setStr(value);
-      const data = (await searchUser(value)) as User;
-      console.log('🚀 data:', data, preList);
-      return [data];
-    },
-    []
-  );
+  const [list, setList] = useState<Comp[]>([]);
+
+  const [isPending, startTransition] = useTransition();
+
+  const search = (formData: FormData) => {
+    const value = formData.get('value')?.toString() ?? '';
+    setStr(value);
+    startTransition(async () => {
+      const data = (await searchUser(value)) as Comp;
+      console.log('🚀 data:', data);
+      setList([data]);
+    });
+    // startTransition(() => {
+    //   const comps = [];
+    //   for (let i = 0; i < 20000; i++) comps.push({ id: i, name: value });
+    //   setList(comps);
+    // });
+  };
+
+  // const search = (evt: FormEvent<HTMLFormElement>) => {
+  //   evt.preventDefault();
+  // }
 
   return (
     <>

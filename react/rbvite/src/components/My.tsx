@@ -53,7 +53,8 @@ export default function My({ logoutButtonRef }: Props) {
 
   // -------- search
   const [searchStr, setSearchStr] = useState('');
-  const [query, setQuery] = useState('');
+  // const [query, setQuery] = useState('');
+  const [query] = useState('');
   const deferedQuery = useDeferredValue(searchStr);
 
   // const search = useCallback(() => setQuery(searchStr), [searchStr]);
@@ -84,7 +85,11 @@ export default function My({ logoutButtonRef }: Props) {
 
   return (
     <>
-      {loginUser ? <Profile logoutButtonRef={logoutButtonRef} /> : <Login />}
+      {loginUser ? (
+        <Profile logoutButtonRef={logoutButtonRef} />
+      ) : (
+        <Login title={'Login Title'} />
+      )}
       <MemoColorTitle color={cart.length % 2 === 1 ? 'blue' : 'yellow'}>
         Total: {totalPrice.toLocaleString()}
       </MemoColorTitle>
