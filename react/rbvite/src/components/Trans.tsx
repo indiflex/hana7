@@ -1,17 +1,17 @@
-import { useActionState, useOptimistic, useState } from 'react';
+import { use, useActionState, useEffect, useOptimistic, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 type User = { id: number; name: string };
 
-// async function searchUser(userId: string) {
-//   return fetch<Comp>(
-//     `https://jsonplaceholder.typicode.com/users/${userId.at(-1)}`
-//   ).then(res => res.json());
-// }
 async function searchUser(userId: string) {
-  return new Promise(resolve => {
-    setTimeout(() => resolve({ id: userId, name: 'Sampler' }), 2000);
-  });
+  return fetch<Comp>(
+    `https://jsonplaceholder.typicode.com/users/${userId.at(-1)}`
+  ).then(res => res.json());
 }
+// async function searchUser(userId: string) {
+//   return new Promise(resolve => {
+//     setTimeout(() => resolve({ id: userId, name: 'Sampler' }), 2000);
+//   });
+// }
 
 type Msg = { text: string; sending?: boolean };
 
