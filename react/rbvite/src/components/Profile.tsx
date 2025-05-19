@@ -1,4 +1,4 @@
-import type { RefObject } from 'react';
+import { useEffect, type RefObject } from 'react';
 import { useSession } from '../contexts/session/SessionContext';
 import Trans from './Trans';
 import Posts from './Posts';
@@ -12,6 +12,13 @@ export default function Profile({ logoutButtonRef }: Props) {
     session: { loginUser },
     logout,
   } = useSession();
+
+  console.log('ffffffffff');
+  const f = () => console.log('sss>>>', loginUser?.name);
+  const arr = [1, 2, 3];
+  useEffect(() => {
+    f();
+  }, [f, arr]);
 
   return (
     <>
