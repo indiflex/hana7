@@ -4,6 +4,7 @@ import Item from './Item';
 import ColorTitle from './ColorTitle';
 import SlowList from './SlowList';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
 export default function Items() {
   const {
@@ -50,16 +51,12 @@ export default function Items() {
           .filter(item => item.name.includes(query))
           .map(item => (
             <li key={item.id}>
-              <Item item={item} addExpectPrice={addExpectPrice} />
+              <Link to={`/items/${item.id}`}>{item.name}</Link>
             </li>
           ))}
         {isAdding ? (
           <li>
-            <Item
-              item={{ id: 0, name: '', price: 3000 }}
-              toggleAdding={toggleAdding}
-              addExpectPrice={addExpectPrice}
-            />
+            <Item toggleAdding={toggleAdding} addExpectPrice={addExpectPrice} />
           </li>
         ) : (
           <button onClick={() => toggleAdding()}>ADD</button>

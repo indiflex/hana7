@@ -9,6 +9,8 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Posts from './components/Posts';
 import { NotFound } from './NotFound';
+import Items from './components/Items';
+import Item from './components/Item';
 
 function App() {
   const helloButtonRef = useRef<HTMLButtonElement>(null);
@@ -37,6 +39,8 @@ function App() {
             }
           />
           <Route path='/posts' element={<Posts />} />
+          <Route path='/items' element={<Items />} />
+          <Route path='/items/:id' element={<Item />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </SessionProvider>
