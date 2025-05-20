@@ -5,9 +5,9 @@ const 내이름 = 'Sico';
 function printName(nm) {
   console.log(1, nm);
 
-  // const myName = 'Hanaro';
+  const myName = 'Hanaro';
   {
-    var myName = 'True';
+    const myName = 'True';
     console.log(22, myName);
   }
   console.log(2, myName, typeof myName);
