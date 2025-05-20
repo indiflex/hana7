@@ -10,7 +10,8 @@ import Home from './components/Home';
 import Posts from './components/Posts';
 import { NotFound } from './NotFound';
 import Items from './components/Items';
-import Item from './components/Item';
+import ItemLayout from './components/ItemLayout';
+import ItemDetail from './components/ItemDetail';
 
 function App() {
   const helloButtonRef = useRef<HTMLButtonElement>(null);
@@ -39,8 +40,13 @@ function App() {
             }
           />
           <Route path='/posts' element={<Posts />} />
-          <Route path='/items' element={<Items />} />
-          <Route path='/items/:id' element={<Item />} />
+          <Route path='/items' element={<ItemLayout />}>
+            <Route index element={<Items />} />
+            <Route path=':id' element={<ItemDetailLayout />}>
+              <Route index element={<ItemDetail />} />
+              <Route path='edit' element={<ItemEdit />} />
+            </Route>
+          </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>
       </SessionProvider>
