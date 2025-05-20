@@ -114,7 +114,7 @@ export default function SessionProvider({ children }: PropsWithChildren) {
   };
 
   return (
-    <SessionContext.Provider
+    <SessionContext
       value={{
         session,
         login,
@@ -126,6 +126,6 @@ export default function SessionProvider({ children }: PropsWithChildren) {
       }}
     >
       {children}
-    </SessionContext.Provider>
+    </SessionContext>
   );
 }

@@ -4,6 +4,7 @@ import Hello, { type HelloHandler } from './components/Hello';
 import My from './components/My';
 import { useCounter } from './contexts/counter/useCounter';
 import SessionProvider from './contexts/session/SessioinProvider';
+import { FaBeer } from 'react-icons/fa';
 
 function App() {
   // const [session, setSession] = useState<Session>(SampleSession);
@@ -23,7 +24,9 @@ function App() {
 
   return (
     <>
-      <h2>count: {count}</h2>
+      <h2>
+        <FaBeer /> count: {count}
+      </h2>
 
       <SessionProvider>
         <My logoutButtonRef={logoutButtonRef} />

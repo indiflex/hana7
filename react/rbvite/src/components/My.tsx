@@ -12,6 +12,7 @@ import {
 import { useSession } from '../contexts/session/SessionContext';
 import ColorTitle from './ColorTitle';
 import SlowList from './SlowList';
+import clsx from 'clsx';
 
 type Props = {
   logoutButtonRef: RefObject<HTMLButtonElement | null>;
@@ -103,7 +104,8 @@ export default function My({ logoutButtonRef }: Props) {
             onChange={evt => setSearchStr(evt.target.value)}
           />
         </label>
-        <h1>
+        {/* <h1 className={`${cart.length % 2 === 0 ? '' : 'red'}`}> */}
+        <h1 className={clsx({ red: cart.length % 2 }, 'underline', 'xxx')}>
           {deferedQuery} vs {searchStr}
         </h1>
         {isSlow && <SlowList text={deferedQuery} />}
