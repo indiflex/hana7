@@ -7,6 +7,7 @@ type Props = {
   toggleAdding?: () => void;
 };
 
+// /items/:id  <-  /items/2
 export default function Item({ addExpectPrice, toggleAdding }: Props) {
   const {
     session: { cart },

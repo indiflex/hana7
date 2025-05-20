@@ -43,6 +43,9 @@ export default function Nav() {
         <li>
           <NavLink to='/hello'>About</NavLink>
         </li>
+        <li>
+          <NavLink to='/sadfdsafafds'>NotFound</NavLink>
+        </li>
       </ul>
     </>
   );
