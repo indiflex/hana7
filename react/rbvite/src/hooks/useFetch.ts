@@ -26,8 +26,6 @@ export const useFetch = <T>(url: string, depArr: unknown[] = []) => {
       .finally(() => setLoading(false));
 
     return () => controller.abort();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, depArr);
 
   return { data, error, isLoading };
