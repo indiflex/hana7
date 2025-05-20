@@ -1,4 +1,10 @@
+.DS_Store
+.vscode
 node_modules
+dist
 ttt
 *.local
 c.txt
+/linux/data*
+/sql/mysql
+tmp

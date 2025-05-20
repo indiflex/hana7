@@ -10,7 +10,6 @@ const students = [
   '우재현',
   '윤서연',
   '이건희',
-  '이서우',
   '이지민',
   '임소민',
   '임아현',
@@ -18,6 +17,7 @@ const students = [
   '최수빈',
   '허건',
 ];
+const setStudents = [];
 const inps = document.getElementsByTagName('input');
 console.log('***********', inps);
 
@@ -31,12 +31,17 @@ function set(student) {
   const seat = Math.floor(Math.random() * seats.length);
   // console.log('🚀  seat:', seat);
   seats[seat].value = student;
+  setStudents.push(student);
 }
 
 function start() {
   let idx = 0;
   const intl = setInterval(() => {
-    set(students[idx++]);
-    if (idx >= students.length) clearInterval(intl);
+    const sts = students.filter(s => !setStudents.includes(s));
+    if (!sts?.length) clearInterval(intl);
+    // set(students[idx++]);
+    idx = Math.floor(sts.length * Math.random());
+    set(sts[idx]);
+    // if (idx >= students.length) clearInterval(intl);
   }, 1000);
 }
