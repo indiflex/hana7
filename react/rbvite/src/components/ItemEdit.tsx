@@ -1,6 +1,6 @@
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { useSession, type Cart } from '../contexts/session/SessionContext';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ItemEdit() {
