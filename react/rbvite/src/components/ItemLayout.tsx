@@ -15,6 +15,13 @@ export default function ItemLayout() {
 
   const [curItem, setCurItem] = useState<Cart>();
 
+  // useEffect(() => {
+
+  //   Socket.on('sync', ({ item }) => setCurItem(item));
+
+  //   return () => Socket.close();
+  // }, []);
+
   const goItemDetail = (item: Cart) => {
     setCurItem(item);
     navigate(item.id.toString()); // /items/:id
