@@ -1,30 +1,10 @@
-'use client';
-
+import HelloSearchParams from '@/app/components/HelloSearchParams';
 import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { PropsWithChildren, Suspense, useLayoutEffect, useState } from 'react';
+import { PropsWithChildren, Suspense } from 'react';
 
 export default function HelloLayout({ children }: PropsWithChildren) {
-  const [state, setState] = useState('');
-  const sparams = useSearchParams();
-  // console.log('🚀 sparams:', sparams.get('q'));
-  useLayoutEffect(() => {
-    setState(sparams.get('q') ?? '');
-  }, [sparams]);
-
-  const router = useRouter();
-  const pathname = usePathname();
-  console.log('🚀 pathname:', pathname);
-  const setSearchParams = () => {
-    const urlParams = new URLSearchParams(sparams.toString());
-    urlParams.set('q', `${new Date()}`); // q=****
-    urlParams.set('r', `rrr`);
-    router.push(`/hello?${urlParams.toString()}`);
-  };
-
   return (
     <>
-      <h1>This is Hello Layout: {state}</h1>
       <ul className='flex gap-3'>
         <li>
           <Link href='/hello/morning'>Morning</Link>
@@ -37,10 +17,10 @@ export default function HelloLayout({ children }: PropsWithChildren) {
         </li>
       </ul>
       <hr />
-      <Suspense>
-        <div>{children}</div>
+      <Suspense fallback={<h1>..........</h1>}>
+        <HelloSearchParams />
       </Suspense>
-      <button onClick={setSearchParams}>SetParam</button>
+      <div>{children}</div>
     </>
   );
 }
