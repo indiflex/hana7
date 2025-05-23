@@ -32,7 +32,9 @@ export default function RootLayout({
           Root
           <Link href='/hello'>Hello</Link>
           <Link href='/hi'>Hi</Link>
+          <Link href='/hi/night'>Hi Night</Link>
           <Link href='/parallel'>Parallel</Link>
+          <Link href='/intercept'>Intercept</Link>
         </div>
         <div>{children}</div>
         <hr />

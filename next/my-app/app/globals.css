@@ -10,6 +10,9 @@ button:hover {
 }
 
 a {
+  color: skyblue;
+  /* text-decoration: underline; */
+}
+a:hover {
   color: blue;
-  text-decoration: underline;
 }
