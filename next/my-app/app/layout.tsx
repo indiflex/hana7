@@ -35,6 +35,7 @@ export default function RootLayout({
           <Link href='/hi/night'>Hi Night</Link>
           <Link href='/parallel'>Parallel</Link>
           <Link href='/intercept'>Intercept</Link>
+          <Link href='/photos'>Photos</Link>
         </div>
         <div>{children}</div>
         <hr />
