@@ -27,6 +27,13 @@ export async function GET(request: NextRequest) {
   res.cookies.set('x', '123');
   res.cookies.set('y', '456');
 
+  const dbPasswd = process.env.DB_PASSWD;
+  const { DEV_X } = process.env;
+  console.log('🚀 dbPasswd:', dbPasswd);
+  console.log('🚀 DEV_X:', DEV_X);
+  console.log('🚀 NEXT_PUBLIC_x:', process.env.NEXT_PUBLIC_X);
+  console.log('🚀 NEXT_PUBLIC_URL:', process.env.NEXT_PUBLIC_URL);
+
   const expireDate = new Date();
   expireDate.setTime(expireDate.getTime() + 24 * 60 * 60 * 1000);
   res.cookies.set('otherCookies', 'ooxx', {
