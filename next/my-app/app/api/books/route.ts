@@ -9,3 +9,13 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(results);
 }
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  const id = Math.max(...books.map(({ id }) => id), 0) + 1;
+  const newBook = { id, ...body };
+  books.push(newBook);
+
+  return NextResponse.json(newBook);
+}
