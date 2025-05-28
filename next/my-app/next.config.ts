@@ -5,16 +5,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
         hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
       },
       {
-        protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
-        port: '',
-        pathname: '/**',
+      },
+      {
+        hostname: 'avatars.githubusercontent.com',
       },
     ],
   },
