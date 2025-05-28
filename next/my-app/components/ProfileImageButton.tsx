@@ -13,8 +13,14 @@ export default function ProfileImageButton({
   logoutAction,
 }: Props) {
   return (
-    <button onClick={logoutAction} className='btn'>
-      <Image alt={name} src={image} width={100} height={100} />
+    <button onClick={logoutAction} className='cursor-pointer hover:scale-105'>
+      <Image
+        alt={name}
+        src={image}
+        width={100}
+        height={100}
+        className='rounded-full'
+      />
     </button>
   );
 }

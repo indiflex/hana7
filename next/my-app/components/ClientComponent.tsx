@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { PropsWithChildren, useState } from 'react';
 import { Folder } from '@/lib/folders';
 
@@ -13,6 +14,10 @@ export default function ClientComponent({
   fAction,
   children,
 }: PropsWithChildren<Props>) {
+  const {
+    data: { user },
+  } = useSession();
+  console.log('🚀 session:', user);
   const [folders, setFolders] = useState<Folder[]>([]);
 
   // const plusCount = () => console.log('plus!!!');
@@ -20,6 +25,7 @@ export default function ClientComponent({
   return (
     <>
       <h1 className='text-2xl'>Client Component: {name}</h1>
+      <h2 className='text-xl'>{user.name} loged in</h2>
       <button
         onClick={async () => {
           const folders = await fAction();
