@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
   console.log('🚀 middleware - pathname:', pathname);
   if (pathname.startsWith('/hello/')) {
     const path = pathname.substring(pathname.lastIndexOf('/'));
-    console.log('🚀 paths:', path);
+    // console.log('🚀 paths:', path);
     return NextResponse.redirect(new URL(`/hi${path}?x=000`, req.url));
   }
 
