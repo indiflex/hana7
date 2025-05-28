@@ -14,10 +14,8 @@ export default function ClientComponent({
   fAction,
   children,
 }: PropsWithChildren<Props>) {
-  const {
-    data: { user },
-  } = useSession();
-  console.log('🚀 session:', user);
+  const { data: session } = useSession();
+  console.log('🚀 session:', session);
   const [folders, setFolders] = useState<Folder[]>([]);
 
   // const plusCount = () => console.log('plus!!!');
@@ -25,7 +23,9 @@ export default function ClientComponent({
   return (
     <>
       <h1 className='text-2xl'>Client Component: {name}</h1>
-      <h2 className='text-xl'>{user.name} loged in</h2>
+      {!!session?.user && (
+        <h2 className='text-xl'>{session.user.name} loged in</h2>
+      )}
       <button
         onClick={async () => {
           const folders = await fAction();

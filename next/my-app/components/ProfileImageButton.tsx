@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 type Props = {
   name: string;
-  image: string;
+  image?: string | null;
   logoutAction: () => void;
 };
 export default function ProfileImageButton({
@@ -14,13 +14,17 @@ export default function ProfileImageButton({
 }: Props) {
   return (
     <button onClick={logoutAction} className='cursor-pointer hover:scale-105'>
-      <Image
-        alt={name}
-        src={image}
-        width={100}
-        height={100}
-        className='rounded-full'
-      />
+      {image ? (
+        <Image
+          alt={name}
+          src={image}
+          width={100}
+          height={100}
+          className='rounded-full'
+        />
+      ) : (
+        name
+      )}
     </button>
   );
 }
