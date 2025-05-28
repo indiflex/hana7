@@ -30,9 +30,11 @@ export default async function Home() {
       )}
 
       <div className='flex space-x-3'>
-        <form action={login}>
-          <Button>SignIn</Button>
-        </form>
+        {!user && (
+          <form action={login}>
+            <Button>SignIn</Button>
+          </form>
+        )}
 
         <ActionButton
           action={async () => {
