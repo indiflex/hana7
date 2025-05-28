@@ -36,7 +36,7 @@ export default async function Home() {
 
         <ActionButton action={login}>Kakao Login</ActionButton>
 
-        <Link href='/api/auth/signin'>Go Login</Link>
+        <Link href='/api/auth/signin?callbackUrl=/hi'>Go Login</Link>
         <span>|</span>
         <Link href='/api/auth/signout'>Go Logout</Link>
         <span>|</span>
