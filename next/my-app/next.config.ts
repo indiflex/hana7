@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
       {
         hostname: 'avatars.githubusercontent.com',
       },
+      {
+        hostname: 'k.kakaocdn.net',
+      },
+      {
+        hostname: 'phinf.pstatic.net',
+      },
     ],
   },
 };
