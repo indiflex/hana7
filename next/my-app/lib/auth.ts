@@ -30,9 +30,9 @@ export const {
 
         const user = {
           id: 1,
-          name: 'Hong',
-          email: credentials.email,
-          image: null,
+          name: 'Cred. Hong',
+          email: String(credentials.email),
+          image: '/globe.svg',
         };
 
         if (!user) {
@@ -50,6 +50,7 @@ export const {
         return {
           id: String(user.id),
           name: user.name,
+          email: user.email,
           image: user.image,
         };
       },
@@ -63,7 +64,12 @@ export const {
     signIn: '/auth/signin', // Customize sign-in page..
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      console.log('🚀 signIn - user:', user, account, profile);
+      return true;
+    },
     async jwt({ token, user }) {
+      // console.log('🚀 jwt - token:', token, user);
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -71,14 +77,14 @@ export const {
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-        session.user.name = token.name;
-        session.user.phone = token.phone;
-      }
-      return session;
-    },
+    // async session({ session, token }) {
+    //   console.log('🚀 cb - session:', session, token);
+    //   if (token) {
+    //     session.user.id = String(token.id);
+    //     session.user.email = token.email as string;
+    //     session.user.name = token.name;
+    //   }
+    //   return session;
+    // },
   },
 });
