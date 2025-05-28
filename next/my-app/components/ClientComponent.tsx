@@ -2,7 +2,6 @@
 
 import { PropsWithChildren, useState } from 'react';
 import { Folder } from '@/lib/folders';
-import ServerComponent from './ServerComponent';
 
 type Props = {
   name: string;

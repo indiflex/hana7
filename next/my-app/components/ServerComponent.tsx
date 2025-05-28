@@ -1,4 +1,3 @@
-import { createPost } from '@/lib/actions/post-actioins';
 import { Folder } from '@/lib/folders';
 
 type Props = {
