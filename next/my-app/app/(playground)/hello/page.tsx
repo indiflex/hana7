@@ -10,6 +10,7 @@ type Props = {
 export default function Hello({ searchParams }: Props) {
   const { q } = use(searchParams);
   // console.log('🚀 q:', q);
+  // if (!q) throw new Error('QQQQQQQQQQQQ');
 
   return (
     <div className='border m-1 p-1'>
