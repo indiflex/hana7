@@ -14,20 +14,26 @@ const getTodo = async (todoId: string) => {
   return data;
 };
 
+type Params = {
+  params: Promise<{ todoId: string }>;
+};
+
 const TODOS = ['1', '100'];
 export const generateStaticParams = () => TODOS.map((todoId) => ({ todoId }));
 
-export default function TodoPage({
-  params,
-}: {
-  params: Promise<{ todoId: string }>;
-}) {
+export async function generateMetadata({ params }: Params) {
+  const { todoId } = await params;
+  const { title } = await getTodo(todoId);
+  return { title };
+}
+
+export default function TodoPage({ params }: Params) {
   const { todoId } = use(params);
   const { id, title } = use(getTodo(todoId));
 
   return (
     <>
-      <h1 className='text-2xl'>Todo: {id}</h1>
+      <h1 className='text-2xl'>Todo - {id}</h1>
       {title}
     </>
   );
