@@ -1,6 +1,4 @@
-import { describe, expect, it } from 'vitest';
-// import { sum } from '@/lib/calc';
-import { sum } from './calc';
+import { sum } from '@/lib/calc';
 
 describe('calc - sum', () => {
   it('sum(0)', () => {
