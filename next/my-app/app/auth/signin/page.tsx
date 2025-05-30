@@ -1,8 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { use } from 'react';
 import { snsLogin } from '@/lib/actions/sign';
+import { credentialValidator } from '@/lib/validator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -13,14 +15,21 @@ type Props = {
 export default function SignIn({ searchParams }: Props) {
   const { callbackUrl } = use(searchParams);
 
+  const router = useRouter();
+
   const login = async (formData: FormData) => {
     const email = formData.get('email');
     const password = formData.get('password');
 
-    // if (!email || !password) {
-    //   alert('Email and Password is required!');
-    //   return;
-    // }
+    const validator = credentialValidator.safeParse({
+      email,
+      password,
+    });
+    if (!validator.success) {
+      console.log('EEE>>', validator.error.errors[0].message);
+      alert(validator.error.errors[0].message);
+      return;
+    }
 
     let redirectTo = callbackUrl;
     if (!callbackUrl || callbackUrl.endsWith('signin')) redirectTo = '/';
@@ -29,14 +38,21 @@ export default function SignIn({ searchParams }: Props) {
     const sign = await signIn('credentials', {
       email,
       password,
-      redirectTo,
+      redirect: false,
     });
 
     console.log('🚀 sign:', sign);
+    if (!sign.error) {
+      router.push(redirectTo);
+    } else {
+      router.push(`/auth/regist?email=${email}`);
+    }
   };
 
   const myLogin = async (service: string) => {
-    await snsLogin(service, callbackUrl ?? '/');
+    let redirectTo = callbackUrl;
+    if (!callbackUrl || callbackUrl.endsWith('signin')) redirectTo = '/';
+    await snsLogin(service, redirectTo);
   };
 
   return (

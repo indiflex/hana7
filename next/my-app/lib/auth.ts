@@ -1,9 +1,12 @@
-import NextAuth from 'next-auth';
+import { compare } from 'bcryptjs';
+import NextAuth, { User } from 'next-auth';
 import Credential from 'next-auth/providers/credentials';
 import Github from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import Kakao from 'next-auth/providers/kakao';
 import Naver from 'next-auth/providers/naver';
+import { createUser, findUserByEmail, UserData } from './actions/auth-actions';
+import { credentialValidator } from './validator';
 
 export const {
   handlers: { GET, POST },
@@ -24,34 +27,15 @@ export const {
       },
       async authorize(credentials) {
         console.log('🚀 credentials:', credentials);
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Email and password are required.');
-        }
+        const validator = credentialValidator.safeParse(credentials);
 
-        const user = {
-          id: 1,
-          name: 'Cred. Hong',
-          email: String(credentials.email),
-          image: '/globe.svg',
-        };
+        if (!validator.success) return null;
 
-        if (!user) {
-          throw new Error('Invalid email or password.');
-        }
-
-        // const isPasswordValid = await bcrypt.compare(
-        //   credentials.password,
-        //   user.password
-        // );
-        // if (!isPasswordValid) {
-        //   throw new Error('Invalid email or password.');
-        // }
+        const { email, password } = validator.data;
 
         return {
-          id: String(user.id),
-          name: user.name,
-          email: user.email,
-          image: user.image,
+          email,
+          password,
         };
       },
     }),
@@ -62,10 +46,40 @@ export const {
   },
   pages: {
     signIn: '/auth/signin', // Customize sign-in page..
+    // error: '/ssss'
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log('🚀 signIn - user:', user, account, profile);
+      console.log('🚀 signIn - user:', user, account?.provider, profile);
+      if (!user.email) return false;
+
+      const hasPasswordUser = (
+        user: User
+      ): user is User & { password: string } => 'password' in user;
+
+      const { email } = user;
+      const userData = await findUserByEmail(email);
+      if (account?.provider === 'credentials') {
+        const isValidPassword =
+          userData?.passwd &&
+          hasPasswordUser(user) &&
+          (await compare(userData.passwd, user.password));
+
+        if (!userData || !isValidPassword) return false;
+        user.id = String(userData.id);
+        user.name = userData.name;
+        user.image = userData.image;
+      } else {
+        if (!userData) {
+          delete user.id;
+          const newer = await createUser(user as UserData);
+          console.log('🚀 newer:', newer);
+          user.id = String(newer.id);
+          if (isAdminUser(user)) user.isadmin = newer.isadmin;
+        }
+      }
+
+      if (userData && isAdminUser(user)) user.isadmin = userData.isadmin;
       return true;
     },
     async jwt({ token, user }) {
@@ -88,3 +102,6 @@ export const {
     // },
   },
 });
+
+const isAdminUser = (user: User): user is User & { isadmin: boolean } =>
+  'isadmin' in user;
