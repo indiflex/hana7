@@ -8,85 +8,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model Dept {
-  id                    Int    @id @default(autoincrement()) @db.UnsignedTinyInt
-  pid                   Int    @default(0) @db.UnsignedTinyInt
-  dname                 String @db.VarChar(31)
-  captain               Int?   @db.UnsignedInt
-  Emp_Dept_captainToEmp Emp?   @relation("Dept_captainToEmp", fields: [captain], references: [id], map: "fk_Dept_captain_Emp")
-  Emp_Emp_deptToDept    Emp[]  @relation("Emp_deptToDept")
-
-  @@index([captain], map: "fk_Dept_captain_Emp")
+model User {
+  id      Int     @id @default(autoincrement()) @db.UnsignedInt
+  name    String  @db.VarChar(31)
+  email   String  @unique(map: "uniq_User_email") @db.VarChar(255)
+  image   String? @db.VarChar(255)
+  passwd  String? @db.VarChar(256)
+  isadmin Boolean @default(false)
+  Post    Post[]
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model EmailLog {
-  id       Int     @id @default(autoincrement()) @db.UnsignedInt
-  sender   Int     @db.UnsignedInt
-  receiver String  @db.VarChar(1024)
-  subject  String  @default("") @db.VarChar(255)
-  body     String? @db.Text
-
-  @@index([sender], map: "fk_EmailLog_sender_Emp")
+model Folder {
+  id    Int     @id @default(autoincrement()) @db.UnsignedTinyInt
+  title String? @db.VarChar(31)
+  Post  Post[]
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model Emp {
-  id                     Int       @id @default(autoincrement()) @db.UnsignedInt
-  ename                  String    @db.VarChar(31)
-  dept                   Int       @db.UnsignedTinyInt
-  auth                   Int       @default(9) @db.UnsignedTinyInt
-  salary                 Int       @default(0)
-  mobile                 String    @default("") @db.VarChar(11)
-  outdt                  DateTime? @db.Date
-  outdt2                 String?   @db.VarChar(10)
-  remark                 Json?
-  email                  String?   @db.VarChar(255)
-  Dept_Dept_captainToEmp Dept[]    @relation("Dept_captainToEmp")
-  Dept_Emp_deptToDept    Dept      @relation("Emp_deptToDept", fields: [dept], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "emp_ibfk_1")
-  Notice                 Notice[]
+model Post {
+  id      Int     @id @default(autoincrement()) @db.UnsignedInt
+  folder  Int     @db.UnsignedTinyInt
+  title   String  @db.VarChar(255)
+  writer  Int     @db.UnsignedInt
+  content String? @db.Text
+  Folder  Folder  @relation(fields: [folder], references: [id], onDelete: Cascade, map: "post_ibfk_1")
+  User    User    @relation(fields: [writer], references: [id], onDelete: Cascade, map: "post_ibfk_2")
 
-  @@index([dept], map: "dept")
-}
-
-/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model EmpTest {
-  id     Int       @id @default(autoincrement()) @db.UnsignedInt
-  ename  String    @db.VarChar(31)
-  dept   Int       @db.UnsignedTinyInt
-  auth   Int       @default(9) @db.UnsignedTinyInt
-  salary Int       @default(0)
-  mobile String    @default("") @db.VarChar(11)
-  outdt  DateTime? @db.Date
-  outdt2 String?   @db.VarChar(10)
-  remark Json?
-  email  String?   @db.VarChar(255)
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model Notice {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  createdate DateTime @default(now()) @db.Timestamp(0)
-  workdate   DateTime @default(now()) @db.Timestamp(0)
-  title      String   @db.VarChar(255)
-  writer     Int?     @db.UnsignedInt
-  contents   String?  @db.Text
-  Emp        Emp?     @relation(fields: [writer], references: [id], onUpdate: NoAction, map: "fk_Notice_writer_Emp")
-
-  @@index([writer], map: "fk_Notice_writer_Emp")
-  @@fulltext([title, contents], map: "ft_idx_Notice_title_contents")
-}
-
-/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model PartiRangeTest {
-  studentno   String @db.VarChar(7)
-  enteryear   Int    @db.SmallInt
-  studentname String @db.VarChar(31)
-
-  @@ignore
+  @@index([folder], map: "fk_Post_folder")
+  @@index([writer], map: "fk_Post_writer_User")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -94,18 +42,4 @@ model StopWord {
   value String @db.VarChar(31)
 
   @@ignore
-}
-
-model Test {
-  id   Int    @id @default(autoincrement()) @db.UnsignedInt
-  ttt  String @db.VarChar(31)
-  dept Int    @db.UnsignedTinyInt
-}
-
-model User {
-  id     Int     @id @default(autoincrement()) @db.UnsignedInt
-  name   String  @db.VarChar(31)
-  email  String  @unique(map: "uniq_User_email") @db.VarChar(255)
-  image  String? @db.VarChar(255)
-  passwd String? @db.VarChar(256)
 }

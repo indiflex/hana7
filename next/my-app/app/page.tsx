@@ -1,4 +1,5 @@
 import Link from 'next/link';
+// import { getAllFolders, getFolder } from '@/lib/actions/post-actioins';
 import { login, logout } from '@/lib/actions/sign';
 import { auth } from '@/lib/auth';
 import ProfileImageButton from '@/components/ProfileImageButton';
@@ -8,6 +9,11 @@ import { Button } from '@/components/ui/button';
 export default async function Home() {
   const session = await auth();
   console.debug('🚀 session:', session);
+
+  // const folders = await getAllFolders();
+  // const folder = await getFolder(folders[0].id);
+  // console.log('🚀 folder:', folder, folder?.Post.length);
+  // const posts = await getPosts(folders[0].id);
 
   // const login = async () => {
   //   'use server';
