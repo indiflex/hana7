@@ -5,6 +5,7 @@ import { auth } from '@/lib/auth';
 import ProfileImageButton from '@/components/ProfileImageButton';
 import ActionButton from '@/components/ui/action-button';
 import { Button } from '@/components/ui/button';
+import LinkButton from '@/components/ui/link-button';
 
 export default async function Home() {
   const session = await auth();
@@ -40,7 +41,7 @@ export default async function Home() {
 
         <ActionButton action={login}>Google Login</ActionButton>
 
-        <ActionButton action={login}>Kakao Login</ActionButton>
+        <LinkButton href='/auth/signin'>Go SignIn</LinkButton>
 
         <Link href='/api/auth/signin?callbackUrl=/hi'>Go Login</Link>
         <span>|</span>
