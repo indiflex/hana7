@@ -1,5 +1,8 @@
 'use server';
 
+import { existsSync, mkdirSync } from 'fs';
+import { writeFile } from 'fs/promises';
+import path from 'path';
 import { auth } from '../auth';
 import prisma from '../db';
 import { userUpdateValidator, zinfer } from '../validator';
@@ -29,6 +32,17 @@ export const createUser = async (user: UserData) => {
 export const updateUser = async (formData: FormData) => {
   const session = await auth();
   if (!session?.user.id) throw new Error('Need Login!');
+
+  const file = formData.get('file') as File;
+  if (file && file.size) {
+    const fileName = `${session.user.id}_${file.name}`;
+    const uploadDir = path.join(process.cwd(), 'public/profiles');
+    if (!existsSync(uploadDir)) mkdirSync(uploadDir);
+    const filePath = path.join(uploadDir, fileName);
+    const buffer = Buffer.from(await file.arrayBuffer());
+    await writeFile(filePath, buffer);
+    formData.set('image', `/profiles/${fileName}`);
+  }
 
   const formEntries = Object.fromEntries(formData.entries());
   const validator = userUpdateValidator.safeParse(formEntries);
