@@ -1,35 +1,22 @@
-'use client';
-
-import { createPost } from '@/lib/actions/post-actioins';
-import FolderDropdown from '@/components/FolderDropdown';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { use } from 'react';
+import { getAllFolders } from '@/lib/actions/post-actioins';
+import RecentPosts from './RecentPosts';
+import WritePost from './WritePost';
 
 export default function Board() {
+  const folders = use(getAllFolders());
+
   return (
-    <form action={createPost} className='m-3 space-y-3'>
-      <div className='flex space-x-2'>
-        <FolderDropdown />
-        <Input name='title' type='text' placeholder='title...' />
-      </div>
-
+    <>
+      <h1 className='text-2xl'>최신 글</h1>
       <div>
-        <Textarea
-          name='content'
-          rows={12}
-          placeholder='content...'
-          className='min-h-32'
-        ></Textarea>
+        {folders.map(({ id }) => (
+          <RecentPosts key={id} folderId={id} />
+        ))}
       </div>
-
-      <div className='flex justify-around'>
-        <Button type='reset'>Cancel</Button>
-        <Button variant='destructive'>Remove</Button>
-        <Button type='submit' variant='primary'>
-          Save
-        </Button>
+      <div>
+        <WritePost />
       </div>
-    </form>
+    </>
   );
 }
