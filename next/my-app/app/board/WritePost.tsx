@@ -1,12 +1,16 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { createPost } from '@/lib/actions/post-actioins';
+import { socket } from '@/lib/socket-client';
 import FolderDropdown from '@/components/FolderDropdown';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+
+const MsgCreatePost = 'created-post';
 
 export default function WritePost() {
   const { data } = useSession();
@@ -14,11 +18,24 @@ export default function WritePost() {
 
   const [, creatingPost, isPending] = useActionState(
     async (_pre: number, formData: FormData) => {
-      await createPost(formData);
+      const data = await createPost(formData);
+      socket.emit('message', { type: MsgCreatePost, data });
       return 0;
     },
     0
   );
+
+  const router = useRouter();
+  useEffect(() => {
+    socket.on('message', (data) => {
+      console.log('🚀 data:', data);
+      if (data.type === MsgCreatePost) router.refresh();
+    });
+
+    return () => {
+      socket.off('message');
+    };
+  }, []);
 
   return (
     <form action={creatingPost} className='m-3 space-y-3'>
