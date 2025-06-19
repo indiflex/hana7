@@ -94,7 +94,7 @@ export const {
       return token;
     },
     async session({ session, token }) {
-      console.log('🚀 cb - session:', session, token);
+      // console.log('🚀 cb - session:', session, token);
       if (token) {
         session.user.id = String(token.id);
         session.user.email = token.email as string;

@@ -29,7 +29,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className='flex gap-3 dark:gap-5'>
+            <div className='flex gap-3 dark:gap-5 justify-around'>
               <Link href='/' className='dark:text-red-500'>
                 Home
               </Link>
@@ -40,6 +40,7 @@ export default async function RootLayout({
               <Link href='/intercept'>Intercept</Link>
               <Link href='/photos'>Photos</Link>
               <Link href='/todos'>Todos</Link>
+              <Link href='/board'>Board</Link>
               {session?.user?.email && <Link href='/my'>My</Link>}
               {session?.user.name}
               <ModeToggle />

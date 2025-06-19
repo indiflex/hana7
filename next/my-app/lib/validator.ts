@@ -13,3 +13,11 @@ const UserValidator = {
   image: z.nullable(z.string()),
 };
 export const userUpdateValidator = z.object(UserValidator);
+
+const PostCreateValidator = {
+  title: z.string().min(1),
+  folder: z.string().transform(Number),
+  writer: z.string().transform(Number),
+  content: z.nullable(z.string()),
+};
+export const postCreateValidator = z.object(PostCreateValidator);
