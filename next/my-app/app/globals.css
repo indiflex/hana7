@@ -16,6 +16,10 @@ a {
   /* text-decoration: underline; */;
 }
 
+input[type='file'] {
+  cursor: pointer;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
 

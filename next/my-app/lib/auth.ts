@@ -1,5 +1,5 @@
 import { compare } from 'bcryptjs';
-import NextAuth, { User } from 'next-auth';
+import NextAuth from 'next-auth';
 import Credential from 'next-auth/providers/credentials';
 import Github from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
@@ -53,16 +53,12 @@ export const {
       console.log('🚀 signIn - user:', user, account?.provider, profile);
       if (!user.email) return false;
 
-      const hasPasswordUser = (
-        user: User
-      ): user is User & { password: string } => 'password' in user;
-
       const { email } = user;
       const userData = await findUserByEmail(email);
       if (account?.provider === 'credentials') {
         const isValidPassword =
           userData?.passwd &&
-          hasPasswordUser(user) &&
+          user.password &&
           (await compare(userData.passwd, user.password));
 
         if (!userData || !isValidPassword) return false;
@@ -75,33 +71,41 @@ export const {
           const newer = await createUser(user as UserData);
           console.log('🚀 newer:', newer);
           user.id = String(newer.id);
-          if (isAdminUser(user)) user.isadmin = newer.isadmin;
+          user.isadmin = newer.isadmin;
+        } else {
+          user.id = String(userData?.id);
         }
       }
 
-      if (userData && isAdminUser(user)) user.isadmin = userData.isadmin;
+      user.isadmin = userData?.isadmin;
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      console.log('🚀 trigger:', trigger, session);
       // console.log('🚀 jwt - token:', token, user);
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
+      const userData = trigger === 'update' ? session : user;
+      if (userData) {
+        token.id = userData.id;
+        token.email = userData.email;
+        token.name = userData.name;
+        token.picture = userData.image;
+        token.isadmin = userData.isadmin;
       }
       return token;
     },
-    // async session({ session, token }) {
-    //   console.log('🚀 cb - session:', session, token);
-    //   if (token) {
-    //     session.user.id = String(token.id);
-    //     session.user.email = token.email as string;
-    //     session.user.name = token.name;
-    //   }
-    //   return session;
-    // },
+    async session({ session, token }) {
+      console.log('🚀 cb - session:', session, token);
+      if (token) {
+        session.user.id = String(token.id);
+        session.user.email = token.email as string;
+        session.user.name = token.name;
+        session.user.image = token.picture;
+        session.user.isadmin = token.isadmin;
+      }
+      return session;
+    },
   },
 });
 
-const isAdminUser = (user: User): user is User & { isadmin: boolean } =>
-  'isadmin' in user;
+// const isAdminUser = (user: User): user is User & { isadmin: boolean } =>
+//   'isadmin' in user;

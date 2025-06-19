@@ -40,6 +40,8 @@ export default async function RootLayout({
               <Link href='/intercept'>Intercept</Link>
               <Link href='/photos'>Photos</Link>
               <Link href='/todos'>Todos</Link>
+              {session?.user?.email && <Link href='/my'>My</Link>}
+              {session?.user.name}
               <ModeToggle />
             </div>
 
