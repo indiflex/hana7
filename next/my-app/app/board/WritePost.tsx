@@ -35,7 +35,7 @@ export default function WritePost() {
     return () => {
       socket.off('message');
     };
-  }, []);
+  }, [router]);
 
   return (
     <form action={creatingPost} className='m-3 space-y-3'>

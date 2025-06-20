@@ -19,6 +19,7 @@ const eslintConfig = [
     rules: {
       // 'no-unused-vars': 'error',
     },
+    ignorePatterns: ['lib/generated/prisma/**'],
     overrides: [
       {
         files: ['**/*.d.ts'],
