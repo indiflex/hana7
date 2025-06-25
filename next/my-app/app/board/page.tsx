@@ -9,6 +9,9 @@ export default function Board() {
   return (
     <>
       <h1 className='text-2xl'>최신 글</h1>
+      <p className='boarder'>
+        <RandomData />
+      </p>
       <div>
         {folders.map(({ id }) => (
           <RecentPosts key={id} folderId={id} />
@@ -19,4 +22,9 @@ export default function Board() {
       </div>
     </>
   );
+}
+
+async function RandomData() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return Math.random();
 }
