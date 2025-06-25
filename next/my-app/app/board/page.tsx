@@ -9,7 +9,7 @@ export default function Board() {
   return (
     <>
       <h1 className='text-2xl'>최신 글</h1>
-      <p className='boarder'>
+      <p className='border m-3 p-3'>
         <RandomData />
       </p>
       <div>
@@ -25,6 +25,7 @@ export default function Board() {
 }
 
 async function RandomData() {
+  'use cache';
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return Math.random();
 }
