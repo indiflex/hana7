@@ -105,6 +105,7 @@ export const {
       return session;
     },
   },
+  trustHost: true,
 });
 
 // const isAdminUser = (user: User): user is User & { isadmin: boolean } =>

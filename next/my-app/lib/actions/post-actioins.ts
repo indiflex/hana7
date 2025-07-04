@@ -12,13 +12,29 @@ export const getAllFolders = async () =>
     },
   });
 
-export const getFolder = async (id: number) =>
-  prisma.folder.findUnique({
+export const getFolder = async (id: number) => {
+  const rs = await prisma.folder.findUnique({
     where: { id },
     include: {
       Post: true,
     },
   });
+
+  return rs;
+};
+
+export const reval = async (url: string) => {
+  console.log('++++++++++++++', url);
+  revalidatePath(url);
+};
+
+export const incrementReadCnt = async (id: number) => {
+  return prisma.folder.update({
+    select: { readcnt: true },
+    data: { readcnt: { increment: 1 } },
+    where: { id },
+  });
+};
 
 export const getPosts = async (folder: number) =>
   prisma.post.findMany({
