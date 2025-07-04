@@ -4,7 +4,7 @@ import { folders } from './folderdata';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
-  console.log('********', searchParams.get('q'));
+  // console.log('********', searchParams.get('q'));
 
   const results = folders.filter((f) =>
     f.title.includes(searchParams.get('q') ?? '')

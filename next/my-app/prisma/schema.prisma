@@ -19,9 +19,10 @@ model User {
 }
 
 model Folder {
-  id    Int     @id @default(autoincrement()) @db.UnsignedTinyInt
-  title String? @db.VarChar(31)
-  Post  Post[]
+  id      Int     @id @default(autoincrement()) @db.UnsignedTinyInt
+  title   String? @db.VarChar(31)
+  readcnt Int     @default(0) @db.SmallInt
+  Post    Post[]
 }
 
 model Post {

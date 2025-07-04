@@ -24,7 +24,7 @@ export default function FolderDropdown({ dataField }: Props) {
   useEffect(() => {
     (async function () {
       const flds = await getFolders();
-      console.log('🚀 flds:', flds);
+      // console.log('🚀 flds:', flds);
       setFolders(flds);
       setFolder(flds[0]);
     })();
