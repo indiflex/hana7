@@ -13,6 +13,15 @@ public class Ex1 {
 		System.out.print("height=");
 		float height = scanner.nextFloat();
 
-		System.out.printf("- name: %s%n - addr: %s%n - age: %d%n", name, addr, age);
+		System.out.println("""
+		<html>
+		  <body></body>
+		</html>""");
+
+		System.out.printf("""
+    Your profile:
+     - name: %s
+     - addr: %s
+     - age: %d""", name, addr, age);
 	}
 }
