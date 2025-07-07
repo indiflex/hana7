@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Ex5 {
 	public static void main(String[] args) {
 		short dan = 11;
@@ -12,7 +14,7 @@ public class Ex5 {
 		String str = "   Hello World   ";
 		String result = str.trim();
 		System.out.println("'" + result + "'");    // 'Hello World'
-		String str2 = "\u2000\u2001  Hello World  \u2002\u2003";
+		String str2 = "\u2000\u2001 \u0000 Hello World  \u2002\u2003";
 		System.out.println(":" + str2 + ":");
 		System.out.println("trim(): '" + str2.trim() + "'");     // 유니코드 공백 제거 안됨!
 		System.out.println("strip(): '" + str2.strip() + "'");   // 모든 공백 제거됨
@@ -20,7 +22,19 @@ public class Ex5 {
 		char s = 33;
 		System.out.println(":" + s + ":");
 
-		String s1 = new String("Abcdefg");
-		System.out.println(s1.replace("cde", "CDE"));
+		String e1 = "  ";
+		String e2 = " \u2000 ";
+		System.out.println(e1.isEmpty() + ", " + e1.isBlank());
+		System.out.println(e2.isEmpty() + ", " + e2.isBlank());
+
+		String testStr = "Abcdefg";
+		System.out.println(testStr.replace("cde", "CDE"));
+
+		// Scanner scanner = new Scanner(System.in);
+		// while(true) {
+		// 	System.out.println("item price stock sold?");
+		// 	String inputStr = scanner.next();
+		// 	if (inputStr.strip().isEmpty())
+		// }
 	}
 }
