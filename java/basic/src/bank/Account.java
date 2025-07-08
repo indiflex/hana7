@@ -1,3 +1,6 @@
+package bank;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Account {
@@ -26,7 +29,7 @@ public class Account {
 
 	void withdraw(double amt) {
 		if (amt > this.balance) {
-			System.out.println("잔액이 부족합니다!" + Account.staticValue);
+			System.out.println("잔액이 부족합니다!");
 			return;
 		}
 
@@ -48,7 +51,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account{" +
+		return "bank.Account{" +
 			"accountNo=" + accountNo +
 			", name='" + name + '\'' +
 			", balance=" + balance +
@@ -63,6 +66,8 @@ public class Account {
 		while (true) {
 			System.out.print("+: 입금, -: 출금, Q/Enter: 종료> ");
 			String action = scanner.next();
+			System.out.println();
+			List<String> lst;
 			// if (action.isBlank() || action.equalsIgnoreCase("Q"))
 			if (action.isBlank() || "Q".equalsIgnoreCase(action)) {
 				System.out.println("작업이 완료되었습니다.");
@@ -72,7 +77,7 @@ public class Account {
 
 			boolean isDeposit = "+".equals(action);
 			String actionText = isDeposit ? "입금" : "출금";
-			System.out.print("얼마를 " + actionText + "하시겠어요? " + Account.staticValue);
+			System.out.print("얼마를 " + actionText + "하시겠어요? ");
 
 			double amt = scanner.nextDouble();
 

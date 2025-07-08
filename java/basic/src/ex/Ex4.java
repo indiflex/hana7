@@ -1,3 +1,5 @@
+package ex;
+
 import java.util.Scanner;
 
 public class Ex4 {
@@ -16,7 +18,7 @@ public class Ex4 {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Score/grade?");
 		// scoreToGrade(scanner.nextInt());
-		String msg = switch(scanner.next()) {
+		String msg = switch (scanner.next()) {
 			case "A", "B" -> "Good";
 			case "C", "D" -> "So so";
 			default -> "See u again";
