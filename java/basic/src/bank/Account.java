@@ -1,6 +1,5 @@
 package bank;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Account {
@@ -67,7 +66,6 @@ public class Account {
 			System.out.print("+: 입금, -: 출금, Q/Enter: 종료> ");
 			String action = scanner.next();
 			System.out.println();
-			List<String> lst;
 			// if (action.isBlank() || action.equalsIgnoreCase("Q"))
 			if (action.isBlank() || "Q".equalsIgnoreCase(action)) {
 				System.out.println("작업이 완료되었습니다.");
