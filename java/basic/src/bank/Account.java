@@ -95,7 +95,7 @@ public class Account {
 	}
 
 	public static void main(String[] args) {
-		Account[] accounts = {
+		final Account[] accounts = {
 			new Account().insert("1111", "Conan", 30000),
 			new Account("2222", "Rose").deposit(10000),
 			new Account("3333", "Miran", 20000),
@@ -103,14 +103,16 @@ public class Account {
 
 		String accountsInfo = Arrays.toString(accounts)
 			.replace(", Account", "\nAccount")
-			.replace("[", "")
-			.replace("]", "");
+			.replaceAll("[\\[\\]]", "");
+
+		// .replace("[", "")
+		// .replace("]", "");
+		System.out.println(accountsInfo);
 
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.print("\n+: 입금, -: 출금, ^: 송금, Q/Enter: 종료> ");
 			String action = scanner.nextLine();
-			System.out.println("action = " + action);
 			// System.out.println();
 			if (action == null || action.isBlank() || "Q".equalsIgnoreCase(action)) {
 				System.out.println("작업이 완료되었습니다.");
