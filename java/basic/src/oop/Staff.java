@@ -96,7 +96,7 @@ public class Staff extends Person {
 		Gender g1 = Gender.MALE;
 		System.out.println(g1.isMale());
 		System.out.println(g1.scannerText());
-		Gender g2 = Gender.valueOf("FEMALE");
+		Gender g2 = Gender.valueOf("female");
 		System.out.println("g2 = " + g2 + ", " + (g2 == Gender.FEMALE));
 	}
 }
