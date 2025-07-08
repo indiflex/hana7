@@ -1,3 +1,5 @@
+package ex;
+
 import java.util.Scanner;
 
 public class Ex1 {
@@ -14,14 +16,14 @@ public class Ex1 {
 		float height = scanner.nextFloat();
 
 		System.out.println("""
-		<html>
-		  <body></body>
-		</html>""");
+			<html>
+			  <body></body>
+			</html>""");
 
 		System.out.printf("""
-    Your profile:
-     - name: %s
-     - addr: %s
-     - age: %d""", name, addr, age);
+			Your profile:
+			 - name: %s
+			 - addr: %s
+			 - age: %d""", name, addr, age);
 	}
 }
