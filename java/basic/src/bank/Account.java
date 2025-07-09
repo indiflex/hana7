@@ -56,11 +56,15 @@ public class Account {
 		this.targetAccount = targetAccount;
 	}
 
-	public void transferTo(int amt) {
+	public void transferTo(int amt) throws BankException {
 		this.transferTo(this.targetAccount, amt);
 	}
 
-	public void transferTo(Account targetAccount, int amt) {
+	public void transferTo(Account targetAccount, int amt) throws BankException {
+		// Objects.requireNonNull(targetAccount);
+		if (targetAccount == null)
+			throw new BankException(this, "송금 받을 계좌가 없습니다!");
+		// throw new IllegalStateException("송금 받을 계좌가 없습니다!");
 		this.withdraw(amt, Action.송금);
 		targetAccount.deposit(amt);
 	}
@@ -144,11 +148,15 @@ public class Account {
 				}
 			}
 
-			if (action == Action.조회) {
-				action.banking(targetAccount, 0);
-			} else {
-				System.out.print("얼마를 " + action + "하시겠어요? ");
-				action.banking(targetAccount, scanner.nextInt());
+			try {
+				if (action == Action.조회) {
+					action.banking(targetAccount, 0);
+				} else {
+					System.out.print("얼마를 " + action + "하시겠어요? ");
+					action.banking(targetAccount, scanner.nextInt());
+				}
+			} catch (BankException e) {
+				System.err.println(e.getMessage());
 			}
 		}
 
