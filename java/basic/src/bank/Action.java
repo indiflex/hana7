@@ -46,6 +46,7 @@ public enum Action {
 
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", this.name(), this.cmd);
+		// return String.format("%s(%s)", this.name(), this.cmd);
+		return "%s(%s)".formatted(this.name(), this.cmd);
 	}
 }
