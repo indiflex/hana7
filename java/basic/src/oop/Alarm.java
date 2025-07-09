@@ -1,15 +1,30 @@
 package oop;
 
+import java.awt.*;
+
 public interface Alarm {
 	void playMusic(String title);
 
 	abstract public void beep();
+
+	default void setTime(String time) {
+		System.out.println("Set time to " + time);
+	}
+
+	public static void main(String[] args) {
+		Alarm a = new SmartPhone();
+		a.playMusic("비의 랩소디");
+		a.beep();
+		a.setTime("12:00");
+	}
+
 }
 
 class SmartPhone implements Alarm {
 	private String phoneNumber;
 
 	void call() {
+		System.out.println("Call to " + this.phoneNumber);
 	}
 
 	@Override
@@ -20,14 +35,8 @@ class SmartPhone implements Alarm {
 	@Override
 	public void beep() {
 		for (int i = 0; i < 3; i++) {
-			System.out.print("삐이익 ~ \007");
-			System.out.flush();
+			Toolkit.getDefaultToolkit().beep();
 		}
 	}
 
-	public static void main(String[] args) {
-		Alarm a = new SmartPhone();
-		a.playMusic("비의 랩소디");
-		a.beep();
-	}
 }
