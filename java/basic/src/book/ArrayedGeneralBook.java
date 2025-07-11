@@ -27,8 +27,8 @@ public class ArrayedGeneralBook implements GeneralBook {
 
 	private String joinStrings(String[] strs) {
 		StringBuilder sb = new StringBuilder(size * 15);
-		for (String s : strs) {
-			sb.append(s);
+		for (int i = 0; i < size; i++) {
+			sb.append(strs[i]).append(' ');
 		}
 		return sb.toString();
 	}
@@ -44,7 +44,7 @@ public class ArrayedGeneralBook implements GeneralBook {
 	}
 
 	private int indexOf(String[] strs, String str) {
-		for (int i = 0; i < strs.length; i++) {
+		for (int i = 0; i < this.size; i++) {
 			if (strs[i].equals(str)) {
 				return i;
 			}
@@ -56,7 +56,7 @@ public class ArrayedGeneralBook implements GeneralBook {
 	@Override
 	public boolean nameExist(String name) {
 		int idx = indexOf(this.names, name);
-		return idx == -1;
+		return idx != -1;
 	}
 
 	private String[] cloneStrings(String[] sources) {
@@ -73,7 +73,6 @@ public class ArrayedGeneralBook implements GeneralBook {
 		// String[] tmps = new String[size + size / 2];
 		this.names = cloneStrings(this.names);
 		this.records = cloneStrings(this.names);
-
 	}
 
 	@Override
@@ -140,9 +139,17 @@ public class ArrayedGeneralBook implements GeneralBook {
 		String[] names = {"Sam", "Rhee", "Kim"};
 		String[] records = {"111", "222", "333"};
 		GeneralBook gb = new ArrayedGeneralBook(names, records);
-		System.out.println("gb.names() = " + gb.names());
-		names[1] = "LEE";
-		System.out.println("gb.names() = " + gb.names());
+		gb.print();
+		gb.add("Allan", "444");
+		System.out.println(gb.names() + ", size=" + gb.size());
+		gb.add("Alex", "55555");
+		System.out.println(gb.names() + ", size=" + gb.size());
+		System.out.println("exist=" + gb.nameExist("Alex"));
+		gb.remove("Alex");
+		System.out.println(gb.names() + ", size=" + gb.size());
+		gb.remove("Sam");
+		gb.print();
+		System.out.println("gb.get(\"Allan\") = " + gb.get("Allan"));
 
 		// String[] tmps = new String[10];
 		// int size = 3;
