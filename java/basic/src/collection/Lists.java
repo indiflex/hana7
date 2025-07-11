@@ -15,7 +15,7 @@ public class Lists {
 
 		System.out.println(al);
 
-		al.clear();
 		System.out.println(al + ", size=" + al.size());
+		al.clear();
 	}
 }
