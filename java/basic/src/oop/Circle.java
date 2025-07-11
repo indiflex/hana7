@@ -2,7 +2,7 @@ package oop;
 
 import java.util.Objects;
 
-public class Circle {
+public class Circle implements Comparable<Circle> {
 	private double radius = 1.0;
 	private String color = "red";
 
@@ -52,8 +52,14 @@ public class Circle {
 			'}';
 	}
 
+	@Override
+	public int compareTo(Circle c) {
+		return Double.compare(this.radius, c.radius);
+	}
+
 	public static void main(String[] args) {
 		Circle circle = new Circle(2);
 		System.out.println("circle = " + circle);
 	}
+
 }
