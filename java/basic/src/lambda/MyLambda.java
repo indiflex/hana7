@@ -2,6 +2,8 @@ package lambda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @FunctionalInterface
 interface MyPredicate<T> {
@@ -68,5 +70,38 @@ public class MyLambda {
 		int sum = reducer(numbers, 0, Integer::sum);
 		int sum2 = reducer(numbers, 1, Integer::sum);
 		System.out.println("sum = " + sum + ", " + sum2);
+
+		List<Integer> list = List.of(1, 10, 6, 3, 3, 5, 4, 2, 7, 7, 9, 8, 10);
+		System.out.println("짝수의 개수");
+		Stream<Integer> istream = list.stream().filter(n -> n % 2 == 0);
+		System.out.println("istream.count() = " + istream.count());
+		System.out.println("각 숫자를 제곱");
+		List<Integer> list1 = list.stream().map(n -> n * n).toList();
+		System.out.println("list1 = " + list1);
+		System.out.println("중복 제거");
+		list = list.stream().distinct().toList();
+		System.out.println("list = " + list);
+		System.out.println("기본 정렬");
+		System.out.println("list.stream().sorted().toList() = " + list.stream().sorted().toList());
+		list = list.stream().sorted().toList();
+		System.out.println("역순(내림차순) 정렬");
+		// list = list.stream().sorted(Comparator.reverseOrder()).toList();
+		System.out.println("list = " + list);
+		System.out.println("처음 5개만 출력");
+		System.out.println("list.stream().limit(5).toList() = " + list.stream().limit(5).toList());
+		System.out.println("처음 5개 건너뛰고 출력");
+		System.out.println("list.stream().skip(5).toList() = " + list.stream().skip(5).toList());
+		System.out.println("값이 5보다 큰 것만 출력");
+		System.out.println(
+			"list.stream().takeWhile(n -> n > 5).toList() = " + list.stream().dropWhile(n -> n <= 5).toList());
+		System.out.println("1~10의 합계");
+		IntStream is = IntStream.rangeClosed(1, 10);
+		System.out.println("is.sum() = " + is.sum());
+		System.out.println(
+			"list.stream().mapToInt(n -> n.intValue()).sum() = " + list.stream().mapToInt(Integer::intValue).sum());
+		System.out.println("random 5개의 평균");
+		System.out.println(
+			"Stream.generate(Math::random).limit(5).mapToDouble(Double::doubleValue).average() = " + Stream.generate(
+				Math::random).limit(5).mapToDouble(Double::doubleValue).average());
 	}
 }
