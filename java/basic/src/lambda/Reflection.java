@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Reflection extends Parent {
 	private String name;
+	private Integer deptId;
 
 	public Reflection(int id, String name) {
 		super(id);
