@@ -2,6 +2,8 @@ package lambda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -103,5 +105,16 @@ public class MyLambda {
 		System.out.println(
 			"Stream.generate(Math::random).limit(5).mapToDouble(Double::doubleValue).average() = " + Stream.generate(
 				Math::random).limit(5).mapToDouble(Double::doubleValue).average());
+
+		Optional<Integer> f5 = list.stream().filter(n -> n > 50).findFirst();
+		// if (f5.isPresent())
+		System.out.println("f5 = " + f5 + ", " + f5.isEmpty());
+
+		list.stream().filter(n -> n > 5).findFirst().ifPresent(n -> System.out.println("findFirst=" + n));
+
+		OptionalInt max = list.stream().mapToInt(Integer::intValue).max();
+		max.ifPresent(System.out::println);
+		Integer iMin = list.stream().min(Integer::compareTo).orElse(-1);
+		System.out.println("iMin = " + iMin);
 	}
 }
