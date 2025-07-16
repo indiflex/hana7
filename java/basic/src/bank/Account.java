@@ -3,7 +3,11 @@ package bank;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Account {
+	@Getter
 	private String accountNo;
 	private String name;
 	private int balance;
@@ -19,10 +23,6 @@ public class Account {
 	public Account(String accountNo, String name, int balance) {
 		this(accountNo, name);
 		this.balance = balance;
-	}
-
-	public String getAccountNo() {
-		return accountNo;
 	}
 
 	public Account insert(String accountNo, String name, int balance) {
@@ -50,11 +50,8 @@ public class Account {
 		this.action(-amt);
 	}
 
+	@Setter
 	private Account targetAccount;
-
-	public void setTargetAccount(Account targetAccount) {
-		this.targetAccount = targetAccount;
-	}
 
 	public void transferTo(int amt) throws BankException {
 		this.transferTo(this.targetAccount, amt);
