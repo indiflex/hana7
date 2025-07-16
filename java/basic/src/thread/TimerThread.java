@@ -36,7 +36,7 @@ public class TimerThread extends Thread {
 		for (int i = 0; i < 5; i++) {
 			Thread.sleep(1000);
 			if (i == 1) {
-				timer1.interrupt();
+				timer1.join();
 				timer2.join();
 			}
 			// timer2.interrupt();
