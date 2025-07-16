@@ -35,8 +35,10 @@ public class TimerThread extends Thread {
 
 		for (int i = 0; i < 5; i++) {
 			Thread.sleep(1000);
-			if (i == 1)
+			if (i == 1) {
+				timer1.interrupt();
 				timer2.join();
+			}
 			// timer2.interrupt();
 			System.out.println(i + "번 main 쓰레드.");
 		}
