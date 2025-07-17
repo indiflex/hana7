@@ -1,13 +1,14 @@
 package bank;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class Account {
-	@Getter
+@Getter
+public class Account implements Serializable {
 	private String accountNo;
 	private String name;
 	private int balance;
