@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 import bank.Account;
@@ -19,11 +20,11 @@ public class DataStream {
 	};
 
 	public static void main(String[] args) throws FileNotFoundException {
-		// try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./tmp/accounts.obj"))) {
-		// 	oos.writeObject(accounts);
-		// } catch (IOException e) {
-		// 	throw new RuntimeException(e);
-		// }
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./tmp/accounts.obj"))) {
+			oos.writeObject(accounts);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./tmp/accounts.obj"))) {
 			Account[] newAccounts = (Account[])ois.readObject();
