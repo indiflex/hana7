@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class Server {
 	public static final int PORT = 9999;
@@ -35,6 +36,11 @@ public class Server {
 		} catch (Exception e) {
 			System.out.println("Server down!!");
 		}
+
+		log("aaa", "bbb");
 	}
 
+	public static void log(String... msgs) {
+		System.out.println(Arrays.toString(msgs));
+	}
 }
