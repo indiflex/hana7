@@ -6,9 +6,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.Arrays;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bank.Account;
 
@@ -20,21 +25,65 @@ public class DataStream {
 	};
 
 	public static void main(String[] args) throws FileNotFoundException {
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./tmp/accounts.obj"))) {
-			oos.writeObject(accounts);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
+
+		// try (HttpClient client = HttpClient.newBuilder()
+		// 	.version(HttpClient.Version.HTTP_2)
+		// 	.followRedirects(HttpClient.Redirect.NORMAL).connectTimeout(Duration.ofSeconds(5)).build()) {
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(apiUrl))
+				.timeout(Duration.ofSeconds(30))
+				.header("Accept", "application/json")
+				.header("User-Agent", "Java HttpClient")
+				.GET()
+				.build();
+
+			HttpResponse<String> response = client.send(request,
+				HttpResponse.BodyHandlers.ofString());
+
+			System.out.println("상태 코드: " + response.statusCode());
+			System.out.println("응답 헤더: " + response.headers().map());
+			System.out.println("응답(body): " + response.body());
+
+			// JSON 파싱
+			if (response.statusCode() == 200) {
+				ObjectMapper objMapper = new ObjectMapper();
+				Post post = objMapper.readValue(response.body(), Post.class);
+				System.out.println(post);
+			}
+		} catch (Exception e) {
+			System.err.println("HttpClient 오류: " + e.getMessage());
 		}
 
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./tmp/accounts.obj"))) {
-			Account[] newAccounts = (Account[])ois.readObject();
-			System.out.println("newAccounts = " + Arrays.toString(newAccounts));
-		} catch (IOException | ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+		// try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./tmp/accounts.obj"))) {
+		// 	oos.writeObject(accounts);
+		// } catch (IOException e) {
+		// 	throw new RuntimeException(e);
+		// }
+		//
+		// try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./tmp/accounts.obj"))) {
+		// 	Account[] newAccounts = (Account[])ois.readObject();
+		// 	System.out.println("newAccounts = " + Arrays.toString(newAccounts));
+		// } catch (IOException | ClassNotFoundException e) {
+		// 	throw new RuntimeException(e);
+		// }
+
+		log("abc", "efg");
+		log();
+		log("aaa");
 	}
 
-	private static void dataStream() {
+	public static void log(String... strs) {
+		if (strs.length == 0)
+			System.out.println();
+		else
+			System.out.println("\\033[31m" + Arrays.toString(strs) + "\\033[0m");
+	}
+
+	public static void dataStream() {
 		Account acc = accounts[0];
 		System.out.println("acc = " + acc);
 
