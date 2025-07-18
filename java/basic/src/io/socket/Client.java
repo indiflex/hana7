@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 	public static final int PORT = 9999;
@@ -11,8 +12,17 @@ public class Client {
 		try (Socket socket = new Socket("localhost", PORT)) {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-			System.out.println("server: " + in.readUnsignedByte());
-			out.writeUTF("Hi~");
+
+			Scanner scanner = new Scanner(System.in);
+			while(true) {
+				String msg = scanner.nextLine();
+				out.writeUTF(msg);
+				System.out.println(in.readUTF());
+
+				if (msg.equalsIgnoreCase("q")) {
+					break;
+				}
+			}
 
 			in.close();
 			out.close();
