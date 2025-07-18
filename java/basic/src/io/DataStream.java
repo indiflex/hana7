@@ -12,7 +12,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bank.Account;
@@ -25,7 +27,7 @@ public class DataStream {
 	};
 
 	public static void main(String[] args) throws FileNotFoundException {
-		String apiUrl = "https://jsonplaceholder.typicode.com/posts/1";
+		String apiUrl = "https://jsonplaceholder.typicode.com/posts";
 
 		// try (HttpClient client = HttpClient.newBuilder()
 		// 	.version(HttpClient.Version.HTTP_2)
@@ -49,11 +51,13 @@ public class DataStream {
 			System.out.println("응답(body): " + response.body());
 
 			// JSON 파싱
-			if (response.statusCode() == 200) {
+			// if (response.statusCode() == 200) {
 				ObjectMapper objMapper = new ObjectMapper();
-				Post post = objMapper.readValue(response.body(), Post.class);
-				System.out.println(post);
-			}
+			// 	Post post = objMapper.readValue(response.body(), Post.class);
+			// 	System.out.println(post);
+			// }
+			List<Post> posts = objMapper.readValue(response.body(), new TypeReference<List<Post>>(){});
+			System.out.println("posts = " + posts);
 		} catch (Exception e) {
 			System.err.println("HttpClient 오류: " + e.getMessage());
 		}
