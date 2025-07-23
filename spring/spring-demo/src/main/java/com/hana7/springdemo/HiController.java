@@ -2,6 +2,7 @@ package com.hana7.springdemo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HiController {
 	@GetMapping("/hi")
-	public String hi(String name) {
+	public String hi(@RequestParam(required = true) String name) {
 		log.debug("Debug={}", name);
 		log.info("Hi! INFO!!");
 		return "Hi! " + name;
