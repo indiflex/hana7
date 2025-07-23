@@ -1,0 +1,7 @@
+2025-07-23 11:01:40 [restartedMain] INFO  c.h.springdemo.SpringDemoApplication - Starting SpringDemoApplication using Java 17.0.15 with PID 51579 (/Users/jade/workspace/hana7/spring/spring-demo/build/classes/java/main started by jade in /Users/jade/workspace/hana7/spring/spring-demo)
+2025-07-23 11:01:40 [restartedMain] DEBUG c.h.springdemo.SpringDemoApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-23 11:01:40 [restartedMain] INFO  c.h.springdemo.SpringDemoApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 11:01:40 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 11:01:40 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 11:01:40 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 11:01:40 [restartedMain] INFO  c.h.springdemo.SpringDemoApplication - Started SpringDemoApplication in 0.086 seconds (process running for 234.975)
