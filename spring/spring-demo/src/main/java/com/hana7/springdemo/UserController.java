@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hana7.springdemo.dto.User;
+import com.hana7.springdemo.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -21,10 +22,16 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/users")
 @Log4j2
 public class UserController {
+	private final UserService service;
+	public UserController(UserService service) {
+		this.service = service;
+	}
+
 	@PostMapping("")
 	public User registry(@RequestBody @Validated User user) {
 		log.debug("user={}", user);
-		user.setId(100);
+		// user.setId(100);
+		service.createUser(user);
 		return user;
 	}
 
@@ -45,12 +52,14 @@ public class UserController {
 	@GetMapping("/{id}")
 	public User findUser(@PathVariable("id") Integer id) {
 		log.info("GET={}", id);
-		return User.builder()
-			.id(id)
-			.name("Guest")
-			.email("abc@gmail.com")
-			.mobile("010-2222-3333")
-			.build();
+
+		return service.getUser(id);
+		// return User.builder()
+		// 	.id(id)
+		// 	.name("Guest")
+		// 	.email("abc@gmail.com")
+		// 	.mobile("010-2222-3333")
+		// 	.build();
 	}
 
 	@PatchMapping("/{id}")
