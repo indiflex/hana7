@@ -1,5 +1,6 @@
 package com.hana7.springdemo.jpa.member.entity;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -32,13 +33,15 @@ public class Member {
 	@ColumnDefault("'Guest'")
 	private String nickname;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	@Email
 	private String email;
 
 	@CreationTimestamp
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime createdAt;
+	// @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(updatable = false)
+	@ColumnDefault("CURRENT_TIMESTAMP(6)")
+	private Instant createdAt;
 
 	@UpdateTimestamp
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
