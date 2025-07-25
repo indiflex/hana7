@@ -20,15 +20,22 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @DynamicInsert
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+@Getter @Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class Member extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,16 +50,6 @@ public class Member {
 
 	@Enumerated(EnumType.STRING)
 	private BloodType bloodType;
-
-	@CreationTimestamp
-	// @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	@Column(updatable = false)
-	@ColumnDefault("CURRENT_TIMESTAMP(6)")
-	private Instant createdAt;
-
-	@UpdateTimestamp
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-	private LocalDateTime updatedAt;
 
 	@Transient
 	private int auth;
