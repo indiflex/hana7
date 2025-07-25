@@ -8,11 +8,20 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class Memo {
+@Builder
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class Memo extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int mno;
