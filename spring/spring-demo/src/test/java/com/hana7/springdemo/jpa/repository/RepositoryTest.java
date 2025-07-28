@@ -2,6 +2,7 @@ package com.hana7.springdemo.jpa.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;

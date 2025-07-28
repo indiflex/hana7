@@ -1,12 +1,7 @@
 package com.hana7.springdemo.jpa.entity;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,13 +14,11 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @DynamicInsert
@@ -54,5 +47,6 @@ public class Member extends BaseEntity {
 	private String passwd;
 
 	@Transient
-	private int auth;
+	@Builder.Default
+	private int auth = 9;
 }
