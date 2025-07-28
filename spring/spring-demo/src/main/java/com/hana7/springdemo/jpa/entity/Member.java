@@ -51,6 +51,8 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private BloodType bloodType;
 
+	private String passwd;
+
 	@Transient
 	private int auth;
 }
