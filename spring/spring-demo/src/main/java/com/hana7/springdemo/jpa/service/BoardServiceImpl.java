@@ -36,6 +36,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	public static BoardResponseDTO toDTO(Board board) {
-		return BoardResponseDTO.builder().id(board.getId()).title(board.getTitle()).writer(board.getWriter()).hit(board.getHit()).createdAt(board.getCreatedAt()).build();
+		return BoardResponseDTO.builder()
+			.id(board.getId())
+			.title(board.getTitle())
+			.writer(board.getWriter())
+			.hit(board.getHit())
+			.createdAt(board.getCreatedAt()).build();
 	}
 }
