@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,11 +32,17 @@ public class BoardController {
 
 	@PostMapping()
 	public BoardResponseDTO createBoard(@RequestBody @Validated BoardRequestDTO requestDTO) {
-
+		return service.createBoard(requestDTO);
 	}
 
 	@GetMapping("/{id}")
 	public BoardResponseDTO getBoard(@PathVariable int id) {
 		return service.getBoard(id);
+	}
+
+	@PatchMapping("/{id}")
+	public BoardResponseDTO chageBoard(@PathVariable int id, @RequestBody @Validated BoardRequestDTO requestDTO) {
+		requestDTO.setId(id);
+		return service.changeBoard(requestDTO);
 	}
 }

@@ -21,5 +21,6 @@ public class BoardRequestDTO {
 	@Size(min = 1, max = 30)
 	private String writer;
 
+	@NotBlank
 	private String content;
 }
