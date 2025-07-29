@@ -13,4 +13,6 @@ public interface BoardService {
 	BoardResponseDTO createBoard(BoardRequestDTO requestDTO);
 
 	BoardResponseDTO changeBoard(BoardRequestDTO requestDTO);
+
+	void removeBoard(int id);
 }

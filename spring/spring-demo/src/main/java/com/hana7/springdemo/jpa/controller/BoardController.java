@@ -3,6 +3,7 @@ package com.hana7.springdemo.jpa.controller;
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,5 +45,11 @@ public class BoardController {
 	public BoardResponseDTO chageBoard(@PathVariable int id, @RequestBody @Validated BoardRequestDTO requestDTO) {
 		requestDTO.setId(id);
 		return service.changeBoard(requestDTO);
+	}
+
+	@DeleteMapping("/{id}")
+	public int removeBoard(@PathVariable int id) {
+		service.removeBoard(id);
+		return id;
 	}
 }

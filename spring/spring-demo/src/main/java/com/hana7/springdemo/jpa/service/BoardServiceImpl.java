@@ -12,6 +12,7 @@ import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
 import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
 import com.hana7.springdemo.jpa.dto.PageResponseDTO;
 import com.hana7.springdemo.jpa.entity.Board;
+import com.hana7.springdemo.jpa.entity.BoardContent;
 import com.hana7.springdemo.jpa.repository.BoardRepository;
 
 @Service
@@ -33,18 +34,28 @@ public class BoardServiceImpl implements BoardService {
 	public BoardResponseDTO getBoard(int id) {
 		Optional<Board> byId = repository.findById(id);
 		return byId.map(BoardServiceImpl::toDTO).orElse(null);
-
 	}
 
 	@Override
 	public BoardResponseDTO createBoard(BoardRequestDTO requestDTO) {
 		Board board = toEntity(requestDTO);
+		board.setContent(new BoardContent(requestDTO.getContent()));
 		return toDTO(repository.save(board));
 	}
 
 	@Override
 	public BoardResponseDTO changeBoard(BoardRequestDTO requestDTO) {
-		return toDTO(repository.save(toEntity(requestDTO)));
+		Board board = repository.findById(requestDTO.getId()).orElseThrow();
+		board.setTitle(requestDTO.getTitle());
+		board.setWriter(requestDTO.getWriter());
+		board.getContent().setContent(requestDTO.getContent());
+
+		return toDTO(repository.save(board));
+	}
+
+	@Override
+	public void removeBoard(int id) {
+		repository.deleteById(id);
 	}
 
 	public static Board toEntity(BoardRequestDTO dto) {
@@ -61,6 +72,9 @@ public class BoardServiceImpl implements BoardService {
 			.title(board.getTitle())
 			.writer(board.getWriter())
 			.hit(board.getHit())
-			.createdAt(board.getCreatedAt()).build();
+			.content(board.getContent().getContent())
+			.createdAt(board.getCreatedAt())
+			.updatedAt(board.getUpdatedAt())
+			.build();
 	}
 }
