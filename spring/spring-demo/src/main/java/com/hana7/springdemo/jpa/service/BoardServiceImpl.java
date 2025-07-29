@@ -12,15 +12,21 @@ import com.hana7.springdemo.jpa.dto.BoardDetailResponseDTO;
 import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
 import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
 import com.hana7.springdemo.jpa.dto.PageResponseDTO;
+import com.hana7.springdemo.jpa.dto.ReplyResponseDTO;
 import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.entity.BoardContent;
+import com.hana7.springdemo.jpa.entity.Reply;
 import com.hana7.springdemo.jpa.repository.BoardRepository;
+import com.hana7.springdemo.jpa.repository.ReplyRepository;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	private final BoardRepository repository;
-	public BoardServiceImpl(BoardRepository repository) {
+	private final ReplyRepository replyRepository;
+
+	public BoardServiceImpl(BoardRepository repository, ReplyRepository replyRepository) {
 		this.repository = repository;
+		this.replyRepository = replyRepository;
 	}
 
 	@Override
@@ -33,8 +39,15 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardResponseDTO getBoard(int id) {
-		Optional<Board> byId = repository.findById(id);
-		return byId.map(BoardServiceImpl::toDetailDTO).orElse(null);
+		Board board = repository.findById(id).orElseThrow();
+		List<Reply> replies = replyRepository.findAllByBoard(board);
+
+		BoardDetailResponseDTO boardDto = toDetailDTO(board);
+		boardDto.setReplies(
+			replies.stream().map(BoardServiceImpl::toReplyDTO).toList()
+		);
+
+		return boardDto;
 	}
 
 	@Override
@@ -88,6 +101,15 @@ public class BoardServiceImpl implements BoardService {
 			.content(board.getContent().getContent())
 			.createdAt(board.getCreatedAt())
 			.updatedAt(board.getUpdatedAt())
+			.build();
+	}
+
+	public static ReplyResponseDTO toReplyDTO(Reply reply) {
+		return ReplyResponseDTO.builder()
+				.id(reply.getId())
+			    .reply(reply.getReply())
+			    .replyer(reply.getReplyer())
+				.board(toDTO(reply.getBoard()))
 			.build();
 	}
 }
