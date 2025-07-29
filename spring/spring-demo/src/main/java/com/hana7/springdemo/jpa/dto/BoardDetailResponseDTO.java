@@ -4,22 +4,10 @@ import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter @Setter
+@SuperBuilder
 public class BoardDetailResponseDTO extends BoardResponseDTO {
 	private String content;
-
-	BoardDetailResponseDTO(int id, String title, String writer, int hit, LocalDateTime createdAt,
-		LocalDateTime updatedAt,
-		String content) {
-		super(id, title, writer, hit, createdAt, updatedAt, content);
-	}
-
-	// public BoardDetailResponseDTO(int id, String title, String writer, int hit, LocalDateTime createdAt, String content) {
-	// 	super(id, title, writer, hit, createdAt, content);
-	// }
-
-	// public BoardDetailResponseDTO(BoardResponseDTO dto, String content) {
-	// 	super
-	// }
 }
