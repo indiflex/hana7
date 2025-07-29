@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder
 @Getter @Setter
 public class BoardResponseDTO {
 	private int id;
@@ -16,5 +17,5 @@ public class BoardResponseDTO {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
-	private String content;
+	// private String content;
 }
