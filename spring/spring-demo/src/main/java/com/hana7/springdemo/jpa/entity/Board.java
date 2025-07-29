@@ -48,4 +48,6 @@ public class Board extends BaseEntity {
 		this.content = content;
 		if (content != null) content.setBoard(this);
 	}
+
+	// @OneToMany
 }

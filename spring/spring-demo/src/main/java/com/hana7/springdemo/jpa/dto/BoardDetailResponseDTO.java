@@ -1,9 +1,8 @@
 package com.hana7.springdemo.jpa.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import com.hana7.springdemo.jpa.entity.Reply;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +13,6 @@ import lombok.experimental.SuperBuilder;
 public class BoardDetailResponseDTO extends BoardResponseDTO {
 	private String content;
 
+	@JsonManagedReference
 	private List<ReplyResponseDTO> replies;
 }
