@@ -2,6 +2,7 @@ package com.hana7.springdemo.jpa.entity;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Board extends BaseEntity {
 	@ColumnDefault("0")
 	private int hit;
 
-	@OneToOne(mappedBy = "board")
+	@OneToOne(mappedBy = "board", cascade = CascadeType.ALL)
 	private BoardContent content;
 
 	public void setContent(BoardContent content) {

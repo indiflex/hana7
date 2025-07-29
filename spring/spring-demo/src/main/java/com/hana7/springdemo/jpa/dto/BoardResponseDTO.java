@@ -14,4 +14,7 @@ public class BoardResponseDTO {
 	private String writer;
 	private int hit;
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+
+	private String content;
 }
