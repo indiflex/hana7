@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
 import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
 import com.hana7.springdemo.jpa.dto.PageResponseDTO;
 import com.hana7.springdemo.jpa.entity.Board;
@@ -33,6 +34,25 @@ public class BoardServiceImpl implements BoardService {
 		Optional<Board> byId = repository.findById(id);
 		return byId.map(BoardServiceImpl::toDTO).orElse(null);
 
+	}
+
+	@Override
+	public BoardResponseDTO createBoard(BoardRequestDTO requestDTO) {
+		Board board = toEntity(requestDTO);
+		return toDTO(repository.save(board));
+	}
+
+	@Override
+	public BoardResponseDTO changeBoard(BoardRequestDTO requestDTO) {
+		return toDTO(repository.save(toEntity(requestDTO)));
+	}
+
+	public static Board toEntity(BoardRequestDTO dto) {
+		return Board.builder()
+			.id(dto.getId())
+			.title(dto.getTitle())
+			.writer(dto.getWriter())
+			.build();
 	}
 
 	public static BoardResponseDTO toDTO(Board board) {
