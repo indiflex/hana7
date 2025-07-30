@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,12 +21,14 @@ import com.hana7.springdemo.jpa.service.BoardService;
 @RequestMapping("/boards")
 public class BoardController {
 	private final BoardService service;
+
 	public BoardController(BoardService service) {
 		this.service = service;
 	}
 
 	@GetMapping
-	public List<BoardResponseDTO> getPageList(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int countPerPage) {
+	public List<BoardResponseDTO> getPageList(@RequestParam(defaultValue = "1") int page,
+		@RequestParam(defaultValue = "10") int countPerPage) {
 		return service.getPageList(page, countPerPage);
 	}
 
@@ -53,7 +54,7 @@ public class BoardController {
 		return id;
 	}
 
-	@PostMapping("/{id}/replies")
-	@PatchMapping("/{id}/replies/{replyId}")
-	@DeleteMapping("/{id}/replies/{replyId}")
+	// @PostMapping("/{id}/replies")
+	// @PatchMapping("/{id}/replies/{replyId}")
+	// @DeleteMapping("/{id}/replies/{replyId}")
 }
