@@ -1,6 +1,6 @@
 insert into Member(nickname, email, bloodType)
-values ('Hongx', 'hongx@gmail.com', 'B'),
-       ('Kimx', 'kimx@gmail.com', 'A');
+values ('hongx', 'hongx@gmail.com', 'A'),
+       ('kimx', 'kimx@gmail.com', 'B');
 
 INSERT INTO Board(hit, id, createdAt, updatedAt, writer, title)
 VALUES (0, 1, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title01'),
@@ -14,7 +14,7 @@ VALUES (0, 1, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title01'),
        (0, 9, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title9'),
        (0, 10, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title10');
 
-INSERT INTO BoardContent(board, id, createdAt, updatedAt, content)
+INSERT INTO `BoardContent`(board, id, createdAt, updatedAt, content)
 VALUES (1, 1, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx'),
        (2, 2, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx'),
        (3, 3, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx'),
@@ -26,7 +26,7 @@ VALUES (1, 1, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx'),
        (9, 9, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx'),
        (10, 10, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 'xxx');
 
-INSERT INTO Reply(board, id, createdAt, updatedAt, replyer, reply)
+INSERT INTO `Reply`(board, id, createdAt, updatedAt, replyer, reply)
 VALUES (1, 1, '2025-07-29 07:22:06', '2025-07-29 07:22:06', 2, 'Reply1'),
        (1, 2, '2025-07-29 07:22:06', '2025-07-29 07:22:06', 2, 'Reply2'),
        (1, 3, '2025-07-29 07:22:06', '2025-07-29 07:22:06', 2, 'Reply3'),
