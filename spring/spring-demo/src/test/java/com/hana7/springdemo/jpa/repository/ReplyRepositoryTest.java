@@ -2,7 +2,6 @@ package com.hana7.springdemo.jpa.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -57,12 +56,10 @@ class ReplyRepositoryTest extends RepositoryTest {
 	@Order(4)
 	void deleteTest() {
 		// List<Reply> rrr = repository.findByReply("RRRRR");
-		// List<Reply> rrr = repository.findByReply("RRRRR");
 		Reply reply = repository.findFirstByReply("RRRRR").orElseThrow();
 		System.out.println("reply = " + reply);
 		repository.delete(reply);
 	}
-
 
 	private Board getBoard() {
 		Optional<Board> optionalBoard = boardRepository.findById(1);
