@@ -11,14 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.annotation.Rollback;
 
 import com.hana7.springdemo.jpa.entity.BloodType;
 import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.entity.BoardContent;
 import com.hana7.springdemo.jpa.entity.Member;
 
-@Rollback(false)
+// @Rollback(false)
 class BoardRepositoryTest extends RepositoryTest {
 	private static final int LIMIT = 10;
 	@Autowired
