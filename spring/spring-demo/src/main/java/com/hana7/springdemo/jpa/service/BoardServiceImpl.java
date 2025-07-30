@@ -14,15 +14,19 @@ import com.hana7.springdemo.jpa.dto.PageResponseDTO;
 import com.hana7.springdemo.jpa.dto.ReplyResponseDTO;
 import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.entity.BoardContent;
+import com.hana7.springdemo.jpa.entity.Member;
 import com.hana7.springdemo.jpa.entity.Reply;
 import com.hana7.springdemo.jpa.repository.BoardRepository;
+import com.hana7.springdemo.jpa.repository.MemberRepository;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	private final BoardRepository repository;
+	private final MemberRepository memberRepository;
 
-	public BoardServiceImpl(BoardRepository repository) {
+	public BoardServiceImpl(BoardRepository repository, MemberRepository memberRepository) {
 		this.repository = repository;
+		this.memberRepository = memberRepository;
 	}
 
 	@Override
@@ -104,5 +108,9 @@ public class BoardServiceImpl implements BoardService {
 			.replyer(reply.getReplyer())
 			.board(toDTO(reply.getBoard()))
 			.build();
+	}
+
+	private Member getMember(long memberId) {
+		return memberRepository.findById(memberId).orElseThrow();
 	}
 }
