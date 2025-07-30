@@ -1,7 +1,6 @@
 package com.hana7.springdemo.jpa.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,16 +16,13 @@ import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.entity.BoardContent;
 import com.hana7.springdemo.jpa.entity.Reply;
 import com.hana7.springdemo.jpa.repository.BoardRepository;
-import com.hana7.springdemo.jpa.repository.ReplyRepository;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	private final BoardRepository repository;
-	private final ReplyRepository replyRepository;
 
-	public BoardServiceImpl(BoardRepository repository, ReplyRepository replyRepository) {
+	public BoardServiceImpl(BoardRepository repository) {
 		this.repository = repository;
-		this.replyRepository = replyRepository;
 	}
 
 	@Override
@@ -40,14 +36,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardResponseDTO getBoard(int id) {
 		Board board = repository.findById(id).orElseThrow();
-		List<Reply> replies = replyRepository.findAllByBoard(board);
-
-		BoardDetailResponseDTO boardDto = toDetailDTO(board);
-		boardDto.setReplies(
-			replies.stream().map(BoardServiceImpl::toReplyDTO).toList()
-		);
-
-		return boardDto;
+		return toDetailDTO(board);
 	}
 
 	@Override
@@ -101,15 +90,19 @@ public class BoardServiceImpl implements BoardService {
 			.content(board.getContent().getContent())
 			.createdAt(board.getCreatedAt())
 			.updatedAt(board.getUpdatedAt())
+			.replies(board.getReplies().stream()
+				.map(BoardServiceImpl::toReplyDTO)
+				.toList()
+			)
 			.build();
 	}
 
 	public static ReplyResponseDTO toReplyDTO(Reply reply) {
 		return ReplyResponseDTO.builder()
-				.id(reply.getId())
-			    .reply(reply.getReply())
-			    .replyer(reply.getReplyer())
-				.board(toDTO(reply.getBoard()))
+			.id(reply.getId())
+			.reply(reply.getReply())
+			.replyer(reply.getReplyer())
+			.board(toDTO(reply.getBoard()))
 			.build();
 	}
 }
