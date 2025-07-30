@@ -1,8 +1,12 @@
 package com.hana7.springdemo.jpa.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +14,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -25,8 +30,9 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-@ToString(callSuper = true)
+@Getter
+@Setter
+@ToString(callSuper = true, exclude = {"boards"})
 @EqualsAndHashCode(callSuper = true)
 public class Member extends BaseEntity {
 	@Id
@@ -49,4 +55,7 @@ public class Member extends BaseEntity {
 	@Transient
 	@Builder.Default
 	private int auth = 9;
+
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+	private List<Board> boards = new ArrayList<>();
 }
