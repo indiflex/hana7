@@ -3,6 +3,7 @@ package com.hana7.springdemo.jpa.dto;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +28,19 @@ public class SearchCond {
 	@Builder.Default
 	private String sortDirection = "desc";
 
+	public boolean needSearch() {
+		return StringUtils.hasText(searchNickname) || StringUtils.hasText(searchEmail);
+	}
+
 	public Pageable getPager() {
+		setDefault();
+
+		Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
+
+		return PageRequest.of(page - 1, size, sort);
+	}
+
+	private void setDefault() {
 		if (page == null)
 			page = 1;
 		if (size == null)
@@ -36,9 +49,5 @@ public class SearchCond {
 			sortField = "id";
 		if (sortDirection == null)
 			sortDirection = "desc";
-
-		Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
-
-		return PageRequest.of(page - 1, size, sort);
 	}
 }
