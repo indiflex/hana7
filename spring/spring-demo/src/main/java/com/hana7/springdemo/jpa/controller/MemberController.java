@@ -33,7 +33,7 @@ public class MemberController {
 	}
 
 	@DeleteMapping("{id}")
-	int remove(@PathVariable Long id) {
+	long remove(@PathVariable Long id) {
 		return service.remove(id);
 	}
 }
