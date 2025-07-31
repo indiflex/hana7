@@ -11,9 +11,11 @@ import com.hana7.springdemo.jpa.dto.SearchCond;
 import com.hana7.springdemo.jpa.entity.Member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class MemberServiceImpl implements MemberService {
 	private final MemberDAO dao;
 
@@ -32,12 +34,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO findOne(long id) {
-		return null;
+		return toDTO(dao.findOne(id));
 	}
 
 	@Override
 	public int remove(long id) {
-		return 0;
+		log.debug("id={}", id);
+		return dao.remove(id);
 	}
 
 	public static MemberDTO toDTO(Member member) {

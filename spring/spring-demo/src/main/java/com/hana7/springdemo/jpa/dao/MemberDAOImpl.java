@@ -45,8 +45,12 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int delete(long id) {
-		return 0;
+	public int remove(long id) {
+		// if (repository.findById(id).isPresent()) {
+		// 	repository.deleteById(id);
+		// 	return 1;
+		// }
+		return repository.removeById(id);
 	}
 
 }

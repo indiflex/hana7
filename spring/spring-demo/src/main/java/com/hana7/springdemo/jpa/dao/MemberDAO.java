@@ -14,5 +14,5 @@ public interface MemberDAO {
 
 	Member findOne(long id);
 
-	int delete(long id);
+	int remove(long id);
 }
