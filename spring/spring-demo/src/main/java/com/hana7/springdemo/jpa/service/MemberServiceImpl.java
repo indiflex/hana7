@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.hana7.springdemo.jpa.dao.MemberDAO;
 import com.hana7.springdemo.jpa.dto.MemberDTO;
+import com.hana7.springdemo.jpa.dto.MemberDetailResponseDTO;
 import com.hana7.springdemo.jpa.dto.MemberResponseDTO;
 import com.hana7.springdemo.jpa.dto.SearchCond;
 import com.hana7.springdemo.jpa.entity.Member;
@@ -34,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO findOne(long id) {
-		return toDTO(dao.findOne(id));
+		return toDetailDTO(dao.findOne(id));
 	}
 
 	@Override
@@ -47,7 +48,19 @@ public class MemberServiceImpl implements MemberService {
 		return MemberResponseDTO.builder()
 			.id(member.getId())
 			.nickname(member.getNickname())
+			.email(member.getEmail())
 			.bloodType(member.getBloodType())
+			.build();
+	}
+
+	private static MemberDTO toDetailDTO(Member member) {
+		return MemberDetailResponseDTO.builder()
+			.id(member.getId())
+			.nickname(member.getNickname())
+			.email(member.getEmail())
+			.bloodType(member.getBloodType())
+			.auth(member.getAuth())
+			.boards(member.getBoards().stream().map(BoardServiceImpl::toDetailDTO).toList())
 			.build();
 	}
 }
