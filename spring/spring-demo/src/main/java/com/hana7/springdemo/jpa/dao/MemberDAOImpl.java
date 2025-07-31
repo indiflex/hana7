@@ -41,7 +41,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public Member findOne(long id) {
-		return null;
+		return repository.findById(id).orElse(null);
 	}
 
 	@Override
