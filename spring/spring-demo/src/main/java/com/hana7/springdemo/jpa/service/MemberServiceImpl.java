@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.hana7.springdemo.jpa.dao.MemberDAO;
 import com.hana7.springdemo.jpa.dto.MemberDTO;
-import com.hana7.springdemo.jpa.dto.MemberRequestDTO;
 import com.hana7.springdemo.jpa.dto.MemberResponseDTO;
+import com.hana7.springdemo.jpa.dto.SearchCond;
 import com.hana7.springdemo.jpa.entity.Member;
 
 import lombok.RequiredArgsConstructor;
@@ -18,26 +18,29 @@ public class MemberServiceImpl implements MemberService {
 	private final MemberDAO dao;
 
 	@Override
-	public List<MemberDTO> findAll() {
-		return List.of();
+	public List<MemberDTO> findAll(SearchCond searchCond) {
+		List<Member> members;
+		if (searchCond.needSearch()) {
+			members = dao.findAll(searchCond);
+		} else {
+			members = dao.findAll(searchCond.getPager());
+		}
+
+		return members.stream()
+			.map(MemberServiceImpl::toDTO).toList();
 	}
 
 	@Override
-	public MemberDTO findOne() {
+	public MemberDTO findOne(long id) {
 		return null;
 	}
 
 	@Override
-	public MemberDTO save(MemberRequestDTO dto) {
-		return null;
+	public int remove(long id) {
+		return 0;
 	}
 
-	@Override
-	public void remove() {
-
-	}
-
-	public static MemberResponseDTO toDTO(Member member) {
+	public static MemberDTO toDTO(Member member) {
 		return MemberResponseDTO.builder()
 			.id(member.getId())
 			.nickname(member.getNickname())
