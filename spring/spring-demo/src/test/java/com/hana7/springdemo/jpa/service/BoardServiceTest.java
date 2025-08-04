@@ -46,7 +46,5 @@ class BoardServiceTest {
 
 		Assertions.assertEquals(board.getTitle(), createdBoard.getTitle());
 		Assertions.assertEquals((board.getWriter().getId()), createdBoard.getWriter().getId());
-
-		// verify(service.createBoard(any()));
 	}
 }
