@@ -2,6 +2,8 @@ package com.hana7.springdemo.jpa.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +58,11 @@ public class MemberController {
 	}
 
 	@DeleteMapping("{id}")
-	long remove(@PathVariable Long id) {
-		return service.remove(id);
+	ResponseEntity<?> remove(@PathVariable Long id) {
+		long ret = service.remove(id);
+		if (ret > 0)
+			return ResponseEntity.ok(ret);
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id + "is Not Found!");
 	}
 }
