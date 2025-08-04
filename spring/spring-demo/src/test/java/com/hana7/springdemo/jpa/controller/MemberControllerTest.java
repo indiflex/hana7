@@ -40,8 +40,9 @@ class MemberControllerTest {
 	@Order(1)
 	void listTest() throws Exception {
 		int size = 2;
-		mockMvc.perform(get("/members?size=" + size)
+		mockMvc.perform(get("/members")
 				.param("page", "1")
+				.param("size", String.valueOf(size))
 			).andExpect(status().isOk())
 			.andExpect(jsonPath("$.length()").value(size))
 			.andExpect(jsonPath("$[0].id").value(2))
