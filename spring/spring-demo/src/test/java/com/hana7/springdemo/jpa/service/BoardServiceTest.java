@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.AdditionalAnswers;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
 import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
@@ -40,7 +42,8 @@ class BoardServiceTest {
 
 	@Test
 	void boardListTest() {
-		Mockito.when()
+		Mockito.when(repository.findAll(ArgumentMatchers.any(Pageable.class)))
+			.thenReturn(new PageImpl<>(List.of(board, board)));
 
 		List<BoardResponseDTO> pageList = service.getPageList(1, 2);
 		System.out.println("pageList = " + pageList);
