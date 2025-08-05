@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +67,8 @@ public class MemberController {
 				String savedFname = uuid + "_" + orgFname;
 				Path upfilePath = Paths.get(uploadPath, savedFname);
 				try {
-					Path uploadDir = Paths.get(uploadPath);
+					// Path uploadDir = Paths.get(uploadPath);
+					Path uploadDir = getTodayPath(uploadPath);
 					if (!Files.exists(uploadDir)) {
 						Files.createDirectories(uploadDir);
 					}
@@ -92,6 +94,13 @@ public class MemberController {
 		}
 
 		return upfiles;
+	}
+
+	private Path getTodayPath(String uploadPath) {
+		LocalDateTime now = LocalDateTime.now();
+		String path = String.format("%4d/%02d/%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+		System.out.println("path = " + path);
+		return Paths.get(path);
 	}
 
 	@Tag(name = "Download File")
