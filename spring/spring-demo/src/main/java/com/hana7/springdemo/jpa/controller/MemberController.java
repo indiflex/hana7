@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
 import com.hana7.springdemo.jpa.dto.MemberDTO;
+import com.hana7.springdemo.jpa.dto.MemberImageDTO;
 import com.hana7.springdemo.jpa.dto.SearchCond;
 import com.hana7.springdemo.jpa.dto.UploadRequestDTO;
-import com.hana7.springdemo.jpa.dto.UploadResponseDTO;
 import com.hana7.springdemo.jpa.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,11 +54,11 @@ public class MemberController {
 
 	@Tag(name = "file upload")
 	@Operation(summary = "Upload POST Member")
-	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public List<UploadResponseDTO> upload(UploadRequestDTO dto) {
+	@PostMapping(value = "/{id}/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public List<MemberImageDTO> upload(UploadRequestDTO dto, @PathVariable Long id) {
 		log.info("upfileDto={}", dto);
 		log.info("uploadPath={}", uploadPath);
-		List<UploadResponseDTO> upfiles = new ArrayList<>();
+		List<MemberImageDTO> upfiles = new ArrayList<>();
 
 		if (dto.getFiles() != null) {
 			dto.getFiles().forEach(file -> {
@@ -65,10 +66,10 @@ public class MemberController {
 				log.info("orgName={}", orgFname + "::" + file.getSize() / 1024);
 				String uuid = UUID.randomUUID().toString();
 				String savedFname = uuid + "_" + orgFname;
-				Path upfilePath = Paths.get(uploadPath, savedFname);
 				try {
-					// Path uploadDir = Paths.get(uploadPath);
-					Path uploadDir = getTodayPath(uploadPath);
+					String savedir = getTodayPath();
+					Path uploadDir = Paths.get(uploadPath + File.separator + savedir);
+					Path upfilePath = Paths.get(uploadPath + File.separator + savedir + File.separator + savedFname);
 					if (!Files.exists(uploadDir)) {
 						Files.createDirectories(uploadDir);
 					}
@@ -76,14 +77,15 @@ public class MemberController {
 
 					boolean isImage = Files.probeContentType(upfilePath).startsWith("image");
 					if (isImage) {
-						File thumbnail = new File(uploadPath, "thumb_" + uuid + "_" + orgFname);
+						File thumbnail = new File(uploadPath + File.separator + savedir + File.separator,
+							"thumb_" + uuid + "_" + orgFname);
 						Thumbnailator.createThumbnail(upfilePath.toFile(), thumbnail, 200, 200);
 					}
 
-					upfiles.add(UploadResponseDTO.builder()
-						.orgFname(orgFname)
-						.fname(savedFname)
-						.isImage(isImage)
+					upfiles.add(MemberImageDTO.builder()
+						.orgname(orgFname)
+						.savename(savedFname)
+						.savedir(savedir)
 						.build());
 
 				} catch (IOException e) {
@@ -93,21 +95,24 @@ public class MemberController {
 			});
 		}
 
+		if (!upfiles.isEmpty()) {
+			service.uploadImages(id, upfiles);
+		}
+
 		return upfiles;
 	}
 
-	private Path getTodayPath(String uploadPath) {
+	private String getTodayPath() {
 		LocalDateTime now = LocalDateTime.now();
-		String path = String.format("%4d/%02d/%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-		System.out.println("path = " + path);
-		return Paths.get(path);
+		return String.format("%4d/%02d/%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
 	}
 
 	@Tag(name = "Download File")
 	@Operation(summary = "Download Image")
 	@GetMapping("/view/{fileName}")
-	public ResponseEntity<Resource> viewFile(@PathVariable String fileName) throws IOException {
-		Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+	public ResponseEntity<Resource> viewFile(@PathVariable String fileName,
+		@RequestParam(required = true) String savedir) throws IOException {
+		Resource resource = new FileSystemResource(uploadPath + File.separator + savedir + File.separator + fileName);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(resource.getFile().toPath()));
 
