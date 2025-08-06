@@ -28,7 +28,7 @@ public class JwtUtil {
 		return jwtStr;
 	}
 
-	public static Map<String, Object> validateToke(String token) {
+	public static Map<String, Object> validateToken(String token) {
 		Map<String, Object> claim = null;
 		SecretKey key = null;
 
