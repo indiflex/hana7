@@ -27,9 +27,14 @@ public class CustomSecurityConfig {
 		System.out.println("** SecurityConfig.filgerChain");
 
 		http
+			// .httpBasic(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(config -> config.configurationSource(corsConfigurationSource()))
-			.sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+			.sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.formLogin(form -> form
+					.loginPage("/api/subscriber/login")
+				// .loginProcessingUrl("/api/subscriber/login")
+			);
 
 		return http.build();
 	}
