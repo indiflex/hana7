@@ -1,11 +1,18 @@
 @baseUrl=http://localhost:8081
 
-### login
+### login - success
 POST {{baseUrl}}/api/subscriber/login
 Content-Type: application/x-www-form-urlencoded
 
 username = sample@gmail.com &
 password = pwd00
+
+### login - failure
+POST {{baseUrl}}/api/subscriber/login
+Content-Type: application/x-www-form-urlencoded
+
+username = sample@gmail.com &
+password = pwd00x
 
 
 ### textbook
