@@ -28,7 +28,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		"/api/subscriber/login",
 		"/api/subscriber/signup",
 		"/api/public/**",
+		"/favicon.ico",
 		"/actuator/**",
+		"/*.html",
 		"/swagger-ui/**",
 		"/v3/api-docs/**"
 	};
@@ -37,8 +39,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
 		String path = request.getRequestURI();
 		System.out.println("** path = " + path);
-		return Arrays.stream(excludePatterns)
+		boolean isNotNeed = Arrays.stream(excludePatterns)
 			.anyMatch(pattern -> pathMatcher.match(pattern, path));
+		System.out.println("isNotNeed = " + isNotNeed);
+		return isNotNeed;
 	}
 
 	@Override
