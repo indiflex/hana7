@@ -9,7 +9,11 @@ import javax.crypto.SecretKey;
 
 import com.hana7.springdemo.security.exception.CustomJwtException;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.WeakKeyException;
 
@@ -32,14 +36,22 @@ public class JwtUtil {
 		SecretKey key = null;
 
 		try {
-			// key = Keys.hmacShaKeyFor(JwtUtil.KEY.getBytes(StandardCharsets.UTF_8));
-			// key = Keys.hmacShaKeyFor(JwtUtil.KEY.getBytes());
 			claim = Jwts.parserBuilder()
 				.setSigningKey(K)
 				.build()
 				.parseClaimsJws(token).getBody();
 		} catch (WeakKeyException e) {
 			throw new CustomJwtException("WeakException");
+		} catch (MalformedJwtException e) {
+			throw new CustomJwtException("MalFormed");
+		} catch (ExpiredJwtException e) {
+			throw new CustomJwtException("Expired");
+		} catch (InvalidClaimException e) {
+			throw new CustomJwtException("Invalid");
+		} catch (JwtException e) {
+			throw new CustomJwtException("JwtError");
+		} catch (Exception e) {
+			throw new CustomJwtException("UnknownError");
 		}
 
 		return claim;
