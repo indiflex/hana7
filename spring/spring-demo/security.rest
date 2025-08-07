@@ -1,5 +1,7 @@
 @baseUrl=http://localhost:8081
 
+###
+GET {{baseUrl}}/members
 
 ### login - success
 POST {{baseUrl}}/api/subscriber/login
@@ -12,7 +14,7 @@ password = pwd00
     client.global.set("auth_token", response.body.accessToken);
 %}
 
-###
+### token valid test
 GET {{baseUrl}}/members
 Authorization: Bearer {{auth_token}}
 

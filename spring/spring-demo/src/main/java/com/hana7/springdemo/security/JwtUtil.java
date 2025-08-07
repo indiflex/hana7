@@ -14,12 +14,10 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.WeakKeyException;
 
 public class JwtUtil {
-	private static final SecretKey K = Keys.hmacShaKeyFor("yek".getBytes(StandardCharsets.UTF_8));
+	private static final SecretKey K = Keys.hmacShaKeyFor(
+		"asdlkjsa232sa;ljdsf$#$asdfdsaf!@!asdfdsafsdfsdaf".getBytes(StandardCharsets.UTF_8));
 
 	public static String generateToken(Map<String, Object> valueMap, int min) {
-		// SecretKey key = Keys.hmacShaKeyFor(KEY.getBytes(StandardCharsets.UTF_8));
-		// SecretKey key = Keys.hmacShaKeyFor(JwtUtil.KEY.getBytes());
-
 		String jwtStr = Jwts.builder().setHeader(Map.of("typ", "JWT"))
 			.setClaims(valueMap)
 			.setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
