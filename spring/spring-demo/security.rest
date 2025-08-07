@@ -9,6 +9,16 @@ password = pwd00
 
 > {%
     client.global.set("auth_token", response.body.accessToken);
+    client.global.set("refresh_token", response.body.refreshToken);
+%}
+
+### refresh token
+GET {{baseUrl}}/api/subscriber/refresh?refreshToken={{refresh_token}}
+Authorization: Bearer {{auth_token}}
+
+> {%
+    client.global.set("auth_token", response.body.accessToken);
+    client.global.set("refresh_token", response.body.refreshToken);
 %}
 
 ### token valid test
