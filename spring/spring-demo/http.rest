@@ -1,6 +1,9 @@
 @baseUrl=http://localhost:8081
 #@baseUrl=https://a.com
 
+### batch
+GET {{baseUrl}}/api/public/batch
+
 ### user - all
 GET {{baseUrl}}/users
 
