@@ -32,7 +32,7 @@ public class MemoServiceImpl implements MemoService {
 		return jobLauncher.run(csvJob, jobParameters).getStatus();
 	}
 
-	@Scheduled(cron = "0/5 * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void updateStateBatch() throws Exception {
 		MemoState state = MemoState.PAYED;
 		while (state != MemoState.DELIVERED) {
