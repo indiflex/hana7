@@ -5,6 +5,8 @@ truncate table Board;
 truncate table Member;
 SET FOREIGN_KEY_CHECKS = 1;
 
+SET time_zone = 'Asia/Seoul';
+
 insert into Member(nickname, email, bloodType)
 values ('hongx', 'hongx@gmail.com', 'A'),
        ('kimx', 'kimx@gmail.com', 'B');

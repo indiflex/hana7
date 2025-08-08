@@ -61,6 +61,14 @@ public class BatchConfig {
 			}}).build();
 	}
 
+	// @Bean
+	// @StepScope
+	// public RepositoryItemReader repReader() {
+	// 	return new RepositoryItemReaderBuilder<Member>(MemberRepository )
+	// 		.methodName("findAll")
+	// 		.build();
+	// }
+
 	@Bean
 	public RepositoryItemWriter<Memo> memoWriter(CrudRepository<Memo, Integer> repository) {
 		return new RepositoryItemWriterBuilder<Memo>()

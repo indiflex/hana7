@@ -3,6 +3,7 @@ package com.hana7.springdemo.jpa.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@DynamicInsert
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
