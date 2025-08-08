@@ -32,7 +32,7 @@ public class MemoServiceImpl implements MemoService {
 		return jobLauncher.run(csvJob, jobParameters).getStatus();
 	}
 
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "0 5 * * * *")
 	public void updateStateBatch() throws Exception {
 		MemoState state = MemoState.PAYED;
 		while (state != MemoState.DELIVERED) {
@@ -43,7 +43,7 @@ public class MemoServiceImpl implements MemoService {
 				"--> " + state + ", " + state.getNextState() + ": " + now.minusSeconds(state.stateInterval()));
 			int affectedRowCount = repository.updateStateBatch(
 				state, state.getNextState(),
-				now.minusSeconds(state.stateInterval()));
+				now.minusMinutes(state.stateInterval()));
 			System.out.println(" ==> affectedRowCount = " + affectedRowCount);
 
 			state = state.getNextState();
