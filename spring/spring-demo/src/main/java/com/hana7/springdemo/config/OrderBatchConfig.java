@@ -1,5 +1,7 @@
 package com.hana7.springdemo.config;
 
+import java.util.List;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -7,29 +9,32 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.data.RepositoryItemWriter;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.support.ListItemReader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.hana7.springdemo.jpa.entity.Memo;
-import com.hana7.springdemo.jpa.repository.MemoRepository;
+import com.hana7.springdemo.jpa.entity.OrderItem;
+import com.hana7.springdemo.jpa.entity.SaleItemStat;
+import com.hana7.springdemo.jpa.entity.SaleStat;
+import com.hana7.springdemo.jpa.repository.OrderRepository;
+import com.hana7.springdemo.jpa.repository.SaleStatRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
 public class OrderBatchConfig {
-	private final MemoRepository memoRepository;
+	private final OrderRepository orderRepository;
+	private final SaleStatRepository statRepository;
 
 	@Bean
-	public Job statJob(JobRepository jobRepository, Step step) {
+	public Job statJob(JobRepository jobRepository, Step statStep) {
 		return new JobBuilder("statJob", jobRepository)
 			.incrementer(new RunIdIncrementer())
 			.start(statStep)
@@ -38,43 +43,64 @@ public class OrderBatchConfig {
 
 	@Bean
 	public Step statStep(JobRepository jobRepository,
-		PlatformTransactionManager transactionManager, MemoRepository memoRepository) {
-		return new StepBuilder("csvStep", jobRepository)
-			.<Memo, Memo>chunk(5, transactionManager)
-			.reader(memoReader()) // StepScope로 CSV 경로 받음
-			.writer(memoWriter(memoRepository))
+		PlatformTransactionManager transactionManager) {
+		return new StepBuilder("statStep", jobRepository)
+			.<SaleStat, SaleStat>chunk(5, transactionManager)
+			.reader(statReader(null)) // StepScope로 CSV 경로 받음
+			.processor(statProcessor(null))
+			.writer(statWriter())
+			.build();
+	}
+
+	@Bean
+	public ItemWriter<SaleStat> statWriter() {
+		return new RepositoryItemWriterBuilder<SaleStat>()
+			.repository(statRepository)
+			.methodName("save")
 			.build();
 	}
 
 	@Bean
 	@StepScope
-	// memoReader(@Value("#{jobParameters['filePath']}") String filePath) {
-	protected FlatFileItemReader<Memo> memoReader() {
-		return new FlatFileItemReaderBuilder<Memo>()
-			.name("memoReader")
-			.resource(new ClassPathResource("memos.csv"))
-			.linesToSkip(1)
-			.delimited()
-			.names("memoText", "state")
-			.fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
-				setTargetType(Memo.class);
-			}}).build();
+	public ItemProcessor<SaleStat, SaleStat> statProcessor(@Value("#{jobParameters['saledt']}") String saledt) {
+		System.out.println("xxx - saledt = " + saledt);
+		return stat -> {
+			SaleStat todayStat = SaleStat.builder()
+				.saledt(saledt)
+				.ordercnt(stat.getOrdercnt())
+				.build();
+			System.out.println("bbb - todayStat = " + todayStat);
+
+			List<OrderItem> oitems = orderRepository.getTodayItemStat(saledt);
+			List<SaleItemStat> todayItems = oitems.stream()
+				.map(oi -> SaleItemStat.builder()
+					.saledt(todayStat)
+					.item(oi.getItem())
+					.amt(oi.getAmt())
+					.cnt(oi.getCnt())
+					.build())
+				.toList();
+			System.out.println("bbb - todayItems = " + todayItems);
+
+			todayStat.setSaleItemStats(todayItems);
+			int sum = todayItems.stream().mapToInt(SaleItemStat::getAmt).sum();
+			todayStat.setTotamt(sum);
+
+			return todayStat;
+		};
 	}
 
-	// @Bean
-	// @StepScope
-	// public RepositoryItemReader repReader() {
-	// 	return new RepositoryItemReaderBuilder<Member>(MemberRepository )
-	// 		.methodName("findAll")
-	// 		.build();
-	// }
-
 	@Bean
-	public RepositoryItemWriter<Memo> memoWriter(CrudRepository<Memo, Integer> repository) {
-		return new RepositoryItemWriterBuilder<Memo>()
-			.repository(repository)
-			.methodName("save")
-			.build();
+	@StepScope
+	public ItemReader<SaleStat> statReader(@Value("#{jobParameters['saledt']}") String saledt) {
+		// SaleStat stat = SaleStat.builder()
+		// 	.saledt(saledt)
+		// 	.ordercnt(2)
+		// 	.totamt(1000)
+		// 	.build();
+		SaleStat todayStat = orderRepository.getTodayStat(saledt);
+		System.out.println("bbr - todayStat = " + todayStat);
+		return new ListItemReader<>(List.of(todayStat));
 	}
 
 }

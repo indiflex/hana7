@@ -55,3 +55,24 @@ values ('sample@gmail.com', 'sub0', '$2a$10$DG261y/zDkAJw/.6gHExcuBWTLc/MkQUypiU
 insert into SubscriberRole(role, email)
 values (0, 'sample@gmail.com'),
        (2, 'sample@gmail.com');
+
+
+insert into Item(name, price)
+values ('Apple', 1000),
+       ('Banana', 1000),
+       ('Melon', 3000),
+       ('Tomato', 500);
+
+insert into Orders(member)
+values (1);
+insert into Orders(member)
+values (2);
+
+insert into OrderItem(orders, item, cnt, amt)
+select 1, id, id, id * price
+from Item;
+
+insert into OrderItem(orders, item, cnt, amt)
+select 2, id, id, id * price
+from Item
+where id < 3;

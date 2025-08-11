@@ -21,4 +21,10 @@ public class PublicController {
 		BatchStatus batchStatus = memoService.runBatch();
 		return ResponseEntity.ok("Batch Result: " + batchStatus);
 	}
+
+	@GetMapping("/statbatch")
+	public ResponseEntity<?> runStatBatch() throws Exception {
+		BatchStatus batchStatus = memoService.runStatBatch();
+		return ResponseEntity.ok("Batch Result: " + batchStatus);
+	}
 }
