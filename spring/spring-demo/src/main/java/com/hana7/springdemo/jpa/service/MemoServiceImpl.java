@@ -1,5 +1,6 @@
 package com.hana7.springdemo.jpa.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.batch.core.BatchStatus;
@@ -21,6 +22,7 @@ public class MemoServiceImpl implements MemoService {
 	private final MemoRepository repository;
 	private final JobLauncher jobLauncher;
 	private final Job csvJob;
+	private final Job statJob;
 
 	@Override
 	// public BatchStatus runBatch(String filePath) throws Exception {
@@ -30,6 +32,16 @@ public class MemoServiceImpl implements MemoService {
 			.toJobParameters();
 
 		return jobLauncher.run(csvJob, jobParameters).getStatus();
+	}
+
+	@Override
+	// public BatchStatus runBatch(String filePath) throws Exception {
+	public BatchStatus runStatBatch() throws Exception {
+		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+			.addString("saledt", LocalDate.now().toString())
+			.toJobParameters();
+
+		return jobLauncher.run(statJob, jobParameters).getStatus();
 	}
 
 	@Scheduled(cron = "0 5 * * * *")

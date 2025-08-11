@@ -4,6 +4,9 @@
 ### batch
 GET {{baseUrl}}/api/public/batch
 
+### stat-batch
+GET {{baseUrl}}/api/public/statbatch
+
 ### user - all
 GET {{baseUrl}}/users
 
