@@ -63,7 +63,7 @@ public class MemberController {
 				"page": 1,
 				"size": 5,
 				"searchNickname": "x",
-				"searchEmail:: null,
+				"searchEmail": null,
 				"sortField": "id",
 				"sortDirection" : "asc"
 			}
