@@ -25,9 +25,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	private final String[] excludePatterns = {
-		"/api/subscriber/login",
+		"/api/subscriber/login",  // spring-security
 		"/api/subscriber/signup",
 		"/api/public/**",
+		"/api/auth/**",  // signin / signup
 		"/favicon.ico",
 		"/actuator/**",
 		"/*.html",
