@@ -93,11 +93,6 @@ public class OrderBatchConfig {
 	@Bean
 	@StepScope
 	public ItemReader<SaleStat> statReader(@Value("#{jobParameters['saledt']}") String saledt) {
-		// SaleStat stat = SaleStat.builder()
-		// 	.saledt(saledt)
-		// 	.ordercnt(2)
-		// 	.totamt(1000)
-		// 	.build();
 		SaleStat todayStat = orderRepository.getTodayStat(saledt);
 		System.out.println("bbr - todayStat = " + todayStat);
 		return new ListItemReader<>(List.of(todayStat));

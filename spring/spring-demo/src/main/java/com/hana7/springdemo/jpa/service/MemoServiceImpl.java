@@ -35,13 +35,17 @@ public class MemoServiceImpl implements MemoService {
 	}
 
 	@Override
-	// public BatchStatus runBatch(String filePath) throws Exception {
 	public BatchStatus runStatBatch() throws Exception {
 		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
 			.addString("saledt", LocalDate.now().toString())
 			.toJobParameters();
 
 		return jobLauncher.run(statJob, jobParameters).getStatus();
+	}
+
+	@Scheduled(cron = "59 59 23 * * *")
+	public void batchStatistics() throws Exception {
+		runStatBatch();
 	}
 
 	@Scheduled(cron = "0 5 * * * *")
