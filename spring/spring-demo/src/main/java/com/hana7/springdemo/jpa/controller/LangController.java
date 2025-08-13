@@ -17,10 +17,12 @@ import com.hana7.springdemo.jpa.dto.Lang;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/public")
+@Log4j2
 public class LangController {
 	private static final String SessLocale = SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME;
 
@@ -46,6 +48,7 @@ public class LangController {
 	@PostMapping("setlang")
 	public ResponseEntity<?> setLang(@RequestHeader("Accept-Language") String lang, HttpSession session) {
 		Locale locale = Locale.forLanguageTag(lang);
+		log.info("locale={}", locale);
 		session.setAttribute(SessLocale, locale);
 		return ResponseEntity.ok((Locale)session.getAttribute(SessLocale));
 	}
