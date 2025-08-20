@@ -13,6 +13,7 @@ import ItemLayout from './components/ItemLayout';
 import ItemDetail from './components/ItemDetail';
 import ItemDetailLayout from './components/ItemDetailLayout';
 import ItemEdit from './components/ItemEdit';
+import Chat from './components/Chat';
 
 function App() {
   const helloButtonRef = useRef<HTMLButtonElement>(null);
@@ -40,6 +41,7 @@ function App() {
               />
             }
           />
+          <Route path='/chat' element={<Chat />} />
           <Route path='/posts' element={<Posts />} />
           <Route path='/items' element={<ItemLayout />}>
             {/* <Route index element={<Items />} /> */}

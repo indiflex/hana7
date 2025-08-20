@@ -35,6 +35,9 @@ export default function Nav() {
           </li>
         )}
         <li>
+          <NavLink to='/chat'>Chat</NavLink>
+        </li>
+        <li>
           <NavLink to='/posts'>Posts</NavLink>
         </li>
         <li>
