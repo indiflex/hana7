@@ -1,2 +1,40 @@
 
 GET http://localhost:3000
+
+### express
+POST http://localhost:3000/uploads
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="title"
+
+타이틀이여
+--boundary123
+Content-Disposition: form-data; name="content"
+
+콘텐트여
+--boundary123
+Content-Disposition: form-data; name="image"; filename="3.jpg"
+Content-Type: image/jpeg
+
+< ./tmp/3.jpg
+--boundary123--
+
+### springboot
+POST http://localhost:8081/api/public/uploads
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="title"
+
+타이틀이여
+--boundary123
+Content-Disposition: form-data; name="content"
+
+콘텐트여
+--boundary123
+Content-Disposition: form-data; name="image"; filename="1.jpg"
+Content-Type: image/jpeg
+
+< ./1.jpg
+--boundary123--
