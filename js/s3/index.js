@@ -53,7 +53,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
 app.get('/view/:key', (req, res) => {
   const { key } = req.params;
   res.send(`
-    <img src="https://${bucket}.s3.${region}.amazonaws.com/${key}" alt="${key}" />
+    <img src="https://${bucket}.s3.${region}.amazonaws.com/${key}" alt="${key}" style="height: 100%;" />
   `);
 });
 
