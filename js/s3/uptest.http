@@ -17,7 +17,7 @@ Content-Disposition: form-data; name="content"
 Content-Disposition: form-data; name="image"; filename="3.jpg"
 Content-Type: image/jpeg
 
-< ./tmp/3.jpg
+< ./3.jpg
 --boundary123--
 
 ### springboot
