@@ -7,9 +7,9 @@ jobs:
   start_pwd:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        
       - name: echo
         run: echo "Start Ci/CD"
-      - name: pwd
-        run: pwd
       - name: ls
         run: ls -al
