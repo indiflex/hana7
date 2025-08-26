@@ -11,9 +11,6 @@ src/main/resources/static/upload
 !**/src/test/**/build/
 
 application-secret.properties
-abc.txt
-bbb.txt
-ccc.txt
 
 ### STS ###
 .apt_generated
