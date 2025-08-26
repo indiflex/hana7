@@ -4,8 +4,8 @@ on:
     branches:
       - master
 jobs:
-  echo:
+  start_pwd:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Start Ci/CD"
-      - run: date
+      - run: pwd
