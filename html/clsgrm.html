@@ -1,0 +1,160 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 스타일 정의 -->
+  <defs>
+    <style>
+      .class-box {
+        fill: #f8f9fa;
+        stroke: #333;
+        stroke-width: 2;
+      }
+
+      .abstract-class {
+        fill: #e3f2fd;
+        stroke: #1976d2;
+        stroke-width: 2;
+      }
+
+      .interface {
+        fill: #fff3e0;
+        stroke: #f57c00;
+        stroke-width: 2;
+      }
+
+      .class-name {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        text-anchor: middle;
+        fill: #333;
+      }
+
+      .abstract-name {
+        font-style: italic;
+        fill: #1976d2;
+      }
+
+      .interface-name {
+        fill: #f57c00;
+      }
+
+      .method-text {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        text-anchor: middle;
+        fill: #555;
+      }
+
+      .arrow {
+        fill: none;
+        stroke: #333;
+        stroke-width: 1;
+        marker-end: url(#arrowhead);
+      }
+
+      .inheritance-arrow {
+        fill: none;
+        stroke: #333;
+        stroke-width: 1.5;
+        marker-end: url(#inheritance-head);
+      }
+
+      .implements-arrow {
+        fill: none;
+        stroke: #333;
+        stroke-width: 1;
+        stroke-dasharray: 6, 4;
+        marker-end: url(#implements-head);
+      }
+    </style>
+
+    <!-- 화살표 마커 정의 -->
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 12 4, 0 8" fill="#333" />
+    </marker>
+
+    <marker id="inheritance-head" markerWidth="14" markerHeight="12" refX="13" refY="6" orient="auto"
+      markerUnits="strokeWidth">
+      <polygon points="0 0, 14 6, 0 12" fill="white" stroke="#333" stroke-width="1.5" stroke-linejoin="miter" />
+    </marker>
+
+    <marker id="implements-head" markerWidth="14" markerHeight="12" refX="13" refY="6" orient="auto"
+      markerUnits="strokeWidth">
+      <polygon points="0 0, 14 6, 0 12" fill="white" stroke="#333" stroke-width="1.5" stroke-linejoin="miter" />
+    </marker>
+  </defs>
+
+  <!-- AppStore 클래스 -->
+  <rect x="50" y="50" width="120" height="110" class="class-box" />
+  <text x="110" y="70" class="class-name">AppShape</text>
+  <line x1="50" y1="80" x2="170" y2="80" stroke="#333" stroke-width="1" />
+  <text x="110" y="100" class="method-text">calcArea()</text>
+  <text x="110" y="115" class="method-text">calcPerimeter()</text>
+  <text x="110" y="130" class="method-text">resize()</text>
+  <text x="110" y="145" class="method-text">getShape()</text>
+
+  <!-- Shape 인터페이스 -->
+  <rect x="300" y="50" width="120" height="80" class="interface" />
+  <text x="360" y="70" class="class-name interface-name">&lt;&lt;interface&gt;&gt;</text>
+  <text x="360" y="85" class="class-name interface-name">Shape</text>
+  <line x1="300" y1="90" x2="420" y2="90" stroke="#f57c00" stroke-width="1" />
+  <text x="360" y="110" class="method-text">calcArea()</text>
+
+  <!-- Resizable 인터페이스 -->
+  <rect x="50" y="200" width="120" height="80" class="interface" />
+  <text x="110" y="220" class="class-name interface-name">&lt;&lt;interface&gt;&gt;</text>
+  <text x="110" y="235" class="class-name interface-name">Resizable</text>
+  <line x1="50" y1="240" x2="170" y2="240" stroke="#f57c00" stroke-width="1" />
+  <text x="110" y="260" class="method-text">resize()</text>
+
+  <!-- Triangle 클래스 -->
+  <rect x="550" y="70" width="120" height="30" class="class-box" />
+  <text x="610" y="90" class="class-name">Triangle</text>
+
+  <!-- Circle 클래스 -->
+  <rect x="250" y="200" width="120" height="45" class="class-box" />
+  <text x="310" y="220" class="class-name">Circle</text>
+
+  <!-- Rectangle 클래스 -->
+  <rect x="450" y="200" width="120" height="60" class="class-box" />
+  <text x="510" y="220" class="class-name">Rectangle</text>
+
+  <!-- ResizableCircle 클래스 -->
+  <rect x="200" y="350" width="140" height="80" class="class-box" />
+  <text x="270" y="370" class="class-name">ResizableCircle</text>
+  <line x1="200" y1="380" x2="340" y2="380" stroke="#333" stroke-width="1" />
+
+  <!-- ResizableRectangle 클래스 -->
+  <rect x="400" y="350" width="150" height="80" class="class-box" />
+  <text x="475" y="370" class="class-name">ResizableRectangle</text>
+  <line x1="400" y1="380" x2="550" y2="380" stroke="#333" stroke-width="1" />
+
+  <!-- 관계선들 -->
+  <!-- AppStore -> Shape (uses) -->
+  <line x1="170" y1="90" x2="300" y2="90" class="arrow" />
+
+  <!-- Shape 구현 관계들 -->
+  <line x1="420" y1="90" x2="550" y2="90" class="implements-arrow" />
+  <line x1="360" y1="130" x2="310" y2="200" class="implements-arrow" />
+  <line x1="380" y1="130" x2="490" y2="200" class="implements-arrow" />
+
+  <!-- Resizable 구현 관계들 -->
+  <line x1="170" y1="240" x2="250" y2="240" class="implements-arrow" />
+  <line x1="170" y1="250" x2="450" y2="250" class="implements-arrow" />
+  <line x1="130" y1="280" x2="250" y2="350" class="implements-arrow" />
+  <line x1="150" y1="280" x2="430" y2="350" class="implements-arrow" />
+
+  <!-- 상속 관계들 -->
+  <line x1="270" y1="350" x2="310" y2="280" class="inheritance-arrow" />
+  <line x1="475" y1="350" x2="510" y2="280" class="inheritance-arrow" />
+
+  <!-- 범례 -->
+  <g transform="translate(600, 300)">
+    <text x="0" y="0" class="class-name">범례</text>
+    <line x1="0" y1="20" x2="40" y2="20" class="inheritance-arrow" />
+    <text x="50" y="25" class="method-text">상속</text>
+    <line x1="0" y1="40" x2="40" y2="40" class="implements-arrow" />
+    <text x="50" y="45" class="method-text">구현</text>
+    <line x1="0" y1="60" x2="40" y2="60" class="arrow" />
+    <text x="50" y="65" class="method-text">사용</text>
+  </g>
+</svg>
