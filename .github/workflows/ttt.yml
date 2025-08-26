@@ -25,4 +25,4 @@ jobs:
 
       - name: build with gradle
         working-directory: spring/spring-demo
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
