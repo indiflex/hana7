@@ -7,5 +7,9 @@ jobs:
   start_pwd:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Start Ci/CD"
-      - run: pwd
+      - name: echo
+        run: echo "Start Ci/CD"
+      - name: pwd
+        run: pwd
+      - name: ls
+        run: ls -al
