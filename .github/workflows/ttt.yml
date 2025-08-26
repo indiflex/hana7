@@ -26,3 +26,15 @@ jobs:
       - name: build with gradle
         working-directory: spring/spring-demo
         run: ./gradlew clean build -x test
+
+      - name: setup ssh
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.WAS }} >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: scp jar to was
+        run: |
+          scp spring/spring-demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/
