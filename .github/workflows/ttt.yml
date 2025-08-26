@@ -8,8 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        
+
       - name: echo
         run: echo "Start Ci/CD"
       - name: ls
         run: ls -al
+
+      - uses: actions/setup-java@v5.0.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: grant exe to gradlew
+        working-directory: spring/spring-demo
+        run: chmod +x gradlew
+
+      - name: build with gradle
+        working-directory: spring/spring-demo
+        run: ./gradlew clean build
