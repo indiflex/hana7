@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat | hana7</title>
+  <style>
+    .red {
+      color: red;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    let isConnected = false;
+    let stompClient = null;
+
+    const emit = (msg) => {
+      const msgStr = JSON.stringify(msg);
+      const endpoint = msg.type === 'CHAT'
+        ? '/app/broadcast' : '/app/join-leave';
+      stompClient.send(endpoint, {}, msgStr);
+    };
+
+    const send = () => {
+      emit({
+        from: nickname.value,
+        text: msgInp.value,
+        type: 'CHAT'
+      });
+    }
+
+    const setMessages = (msg) => {
+      const p = document.createElement('p');
+      p.innerHTML = msg.from + ": " + msg.text;
+      msgsDiv.appendChild(p);
+    };
+
+    const connect = () => {
+      if (isConnected) return alert('Already Connected!');
+      const username = nickname.value;
+      if (!username?.trim()) return;
+
+      const socket = new SockJS('http://localhost:8081/broadcast');
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, (frame) => {
+        stompClient.subscribe('/topic/broadcast', message => {
+          setMessages(JSON.parse(message.body));
+        });
+
+        // join/leave 구독
+        stompClient.subscribe('/topic/join-leave', function (message) {
+          setMessages(JSON.parse(message.body));
+        });
+      },
+        (error) => {
+          console.log('STOMP error: ' + error);
+        }
+      );
+
+      isConnected = true;
+      const btnConnect = document.getElementById('btnConnect');
+      btnConnect.disabled = true;
+    };
+  </script>
+</head>
+
+<body class="" onload="connect()">
+  <div class="container flex flex-col border mx-auto h-screen">
+    <h1 class="text-2xl text-center">HTML Chat</h1>
+    <section class="flex-1 p-3 flex flex-col">
+      <div class="border border-b-0 flex justify-center items-center gap-3">
+        <label for="nickname">
+          nickname:
+          <input type="text" id="nickname" value="Kim" class="px-2 border rounded-md">
+        </label>
+        <button id="btnConnect" onclick="connect()"
+          class="border rounded-md bg-green-500 text-white px-2 disabled:bg-gray-300">connect</button>
+      </div>
+      <div id="msgsDiv" class="border flex-1"></div>
+      <div class="border border-t-0 flex gap-1">
+        <input id="msgInp" type="text" id="msgInp" value="YYY" class="px-2 w-full">
+        <button onclick="send()" class="border rounded-md bg-green-500 text-white px-2">send</button>
+      </div>
+    </section>
+    <footer class="">Footer</footer>
+  </div>
+</body>
+
+</html>
