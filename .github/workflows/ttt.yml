@@ -2,7 +2,7 @@ name: ttt workflow
 on:
   push:
     branches:
-      - master
+      - develop
 jobs:
   start_pwd:
     runs-on: ubuntu-latest
