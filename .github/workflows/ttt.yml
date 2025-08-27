@@ -46,26 +46,34 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        working-directory: my-app
+        working-directory: next/my-app
         run: pnpm install
 
       - name: set .env
-        working-directory: my-app
+        working-directory: next/my-app
         run: |
           echo "${{ secrets.ENV }}" > .env
 
       - name: Build with Next.js
-        working-directory: my-app
+        working-directory: next/my-app
         run: pnpm next build
 
       - name: zip next
-        working-directory: my-app
+        working-directory: next/my-app
         run: zip -rq next.zip .next
 
       - name: scp next to was
         run: |
-          scp my-app/next.zip ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana.jar
+          scp my-app/next.zip ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/
+
+      - name: restart next
+        run: |
+          ssh ec2-user@${{ secrets.WAS }} '
+            cd /home/ec2-user/workspace
+            rm -rf hana7/my-app/.next
+            unzip -q next.zip -d hana/my-app
+          '
 
       - name: scp jar to was
         run: |
-          scp spring/demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana4.jar
+          scp spring/demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana.jar
