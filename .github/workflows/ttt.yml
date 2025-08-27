@@ -19,6 +19,10 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: set props
+        working-directory: spring/spring-demo
+        run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
+
       - name: grant exe to gradlew
         working-directory: spring/spring-demo
         run: chmod +x gradlew
