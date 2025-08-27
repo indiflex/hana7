@@ -39,6 +39,17 @@ jobs:
         with:
           node-version: '22'
 
+      - name: setup node pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: setup pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
       - name: Install dependencies
         working-directory: my-app
         run: pnpm install
