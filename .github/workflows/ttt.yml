@@ -4,15 +4,10 @@ on:
     branches:
       - develop
 jobs:
-  start_pwd:
+  start_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: echo
-        run: echo "Start Ci/CD"
-      - name: ls
-        run: ls -al
 
       - uses: actions/setup-java@v5.0.0
         with:
@@ -39,6 +34,32 @@ jobs:
           ssh-keyscan ${{ secrets.WAS }} >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: my-app
+        run: pnpm install
+
+      - name: set .env
+        working-directory: my-app
+        run: |
+          echo "${{ secrets.ENV }}" > .env
+
+      - name: Build with Next.js
+        working-directory: my-app
+        run: pnpm next build
+
+      - name: zip next
+        working-directory: my-app
+        run: zip -rq next.zip .next
+
+      - name: scp next to was
+        run: |
+          scp my-app/next.zip ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana.jar
+
       - name: scp jar to was
         run: |
-          scp spring/spring-demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/
+          scp spring/demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana4.jar

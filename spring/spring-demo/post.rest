@@ -3,6 +3,9 @@
 ### all
 GET {{baseUrl}}/posts
 
+### get one
+GET {{baseUrl}}/posts/4
+
 
 ### add
 POST {{baseUrl}}/posts
