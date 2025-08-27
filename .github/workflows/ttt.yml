@@ -70,8 +70,8 @@ jobs:
         run: |
           ssh ec2-user@${{ secrets.WAS }} '
             cd /home/ec2-user/workspace
-            rm -rf hana7/my-app/.next
-            unzip -q next.zip -d hana/my-app
+            rm -rf my-app/.next
+            unzip -q next.zip -d my-app
           '
 
       - name: scp jar to was
