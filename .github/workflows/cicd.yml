@@ -32,7 +32,7 @@ jobs:
 
       - name: Debug tsconfig
         working-directory: next/my-app
-        run: cat tsconfig.json
+        run: pnpm db:gen
 
       - name: Build with Next.js
         working-directory: next/my-app
