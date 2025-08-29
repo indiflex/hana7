@@ -10,8 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: test
+      - name: test pwd
         run: pwd
+
+      - name: test ls
+        run: ls -al
 
       - uses: actions/setup-java@v5.0.0
         with:
