@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   experimental: {
     useCache: true,
   },
+  output: 'standalone',
+  webpack: (config) => {
+    config.resolve.alias['@'] = __dirname;
+    return config;
+  },
   images: {
     remotePatterns: [
       {
