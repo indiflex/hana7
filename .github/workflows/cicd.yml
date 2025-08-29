@@ -54,7 +54,7 @@ jobs:
         working-directory: next/my-app
         run: pnpm build
 
-      - name: zip next.zip
+      - name: zip next
         working-directory: next/my-app
         run: zip -rq next.zip .next public package.json pnpm-lock.yaml next.config.ts .env node_modules
 
