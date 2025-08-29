@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       if (Array.isArray(config.externals)) {
         config.externals = config.externals.filter((external: string) => {
           if (typeof external === 'string') {
-            return external !== 'styled-jsx';
+            return !external.startsWith('@swc/') && external !== 'styled-jsx';
           }
           return true;
         });
@@ -25,7 +25,8 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-  transpilePackages: ['styled-jsx'],
+  transpilePackages: ['styled-jsx', '@swc/helpers'],
+
   images: {
     remotePatterns: [
       {

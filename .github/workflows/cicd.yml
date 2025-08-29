@@ -44,8 +44,6 @@ jobs:
           pnpm install --prod --frozen-lockfile
           pnpm add styled-jsx
           pnpm add @swc/helpers
-          echo "Checking SWC dependencies..."
-          ls -la node_modules/@swc/ || echo "No @swc directory found"
 
       - name: set .env
         working-directory: next/my-app
