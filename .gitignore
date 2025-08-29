@@ -5,6 +5,7 @@ node_modules
 dist
 ttt
 *.local
+*.zip
 c.txt
 /linux/data*
 /sql/mysql
