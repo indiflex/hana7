@@ -40,7 +40,12 @@ jobs:
 
       - name: Install dependencies
         working-directory: next/my-app
-        run: pnpm install
+        run: |
+          pnpm install --prod --frozen-lockfile
+          pnpm add styled-jsx
+          pnpm add @swc/helpers
+          echo "Checking SWC dependencies..."
+          ls -la node_modules/@swc/ || echo "No @swc directory found"
 
       - name: set .env
         working-directory: next/my-app
@@ -49,11 +54,11 @@ jobs:
 
       - name: Build with Next.js
         working-directory: next/my-app
-        run: pnpm next build
+        run: pnpm build
 
       - name: zip next
         working-directory: next/my-app
-        run: zip -rq next.zip .next public node_modules package.json
+        run: zip -rq next.zip .next public package.json pnpm-lock.yaml next.config.ts .env node_modules
 
       - name: setup ssh
         run: |
