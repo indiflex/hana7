@@ -72,7 +72,8 @@ jobs:
           ssh ec2-user@${{ secrets.WAS }} '
             cd /home/ec2-user/workspace
             rm -rf my-app/.next
-            unzip -q next.zip -d my-app
+            unzip -q next.zip -d my-app  &&
+            pm2 reload hana-next
           '
       - name: scp jar to was
         run: |
