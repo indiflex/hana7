@@ -1,6 +1,5 @@
 package com.hana7.springdemo.jpa.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -64,7 +63,8 @@ public class Board extends BaseEntity {
 	private BoardContent content;
 
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-	private List<Reply> replies = new ArrayList<>();
+	private List<Reply> replies;
+	// private List<Reply> replies = new ArrayList<>();
 
 	public void setContent(BoardContent content) {
 		this.content = content;
