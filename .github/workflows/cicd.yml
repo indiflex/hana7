@@ -47,6 +47,9 @@ jobs:
         run: |
           echo "${{ secrets.ENV }}" > .env
 
+      - name: Ensure styled-jsx is installed
+        run: pnpm add styled-jsx@latest
+
       - name: Build with Next.js
         working-directory: next/my-app
         run: pnpm next build
