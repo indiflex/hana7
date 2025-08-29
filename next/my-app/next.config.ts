@@ -4,12 +4,28 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     useCache: true,
+    externalDir: true,
+    // serverComponentsExternalPackages: [],
   },
-  output: 'standalone',
-  webpack: (config) => {
+  webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = __dirname;
+
+    if (!dev && isServer) {
+      config.externals = config.externals || [];
+
+      // styled-jsx를 external에서 제외
+      if (Array.isArray(config.externals)) {
+        config.externals = config.externals.filter((external: string) => {
+          if (typeof external === 'string') {
+            return external !== 'styled-jsx';
+          }
+          return true;
+        });
+      }
+    }
     return config;
   },
+  transpilePackages: ['styled-jsx'],
   images: {
     remotePatterns: [
       {
