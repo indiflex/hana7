@@ -27,14 +27,6 @@ jobs:
         working-directory: spring/spring-demo
         run: ./gradlew clean build -x test
 
-      - name: setup ssh
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
-          ssh-keyscan ${{ secrets.WAS }} >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
       - name: Install Node
         uses: actions/setup-node@v4
         with:
@@ -63,6 +55,14 @@ jobs:
         working-directory: next/my-app
         run: zip -rq next.zip .next
 
+      - name: setup ssh
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.WAS }} >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
       - name: scp next to was
         run: |
           scp next/my-app/next.zip ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/
@@ -74,7 +74,6 @@ jobs:
             rm -rf my-app/.next
             unzip -q next.zip -d my-app
           '
-
       - name: scp jar to was
         run: |
           scp spring/spring-demo/build/libs/*.jar ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/hana.jar
