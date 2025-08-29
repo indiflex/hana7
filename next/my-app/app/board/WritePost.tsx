@@ -14,7 +14,7 @@ const MsgCreatePost = 'created-post';
 
 export default function WritePost() {
   const { data } = useSession();
-  if (!data?.user.id) throw new Error('Need Login!!');
+  if (!data?.user?.id) throw new Error('Need Login!!');
 
   const [, creatingPost, isPending] = useActionState(
     async (_pre: number, formData: FormData) => {
