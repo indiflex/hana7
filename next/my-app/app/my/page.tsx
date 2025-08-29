@@ -36,7 +36,7 @@ export default function My() {
 
   const [user, updateMyInfo, isPending] = useActionState(
     async (_pre: unknown, formData: FormData) => {
-      formData.append('id', data.user.id!);
+      formData.append('id', data?.user?.id || '');
       formData.append('image', image || '');
       try {
         const userInfo = await updateUser(formData);
