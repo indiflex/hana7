@@ -53,7 +53,7 @@ jobs:
 
       - name: zip next
         working-directory: next/my-app
-        run: zip -rq next.zip .next/standalone .next/static public
+        run: zip -rq next.zip .next/standalone .next/static public package.json
 
       - name: setup ssh
         run: |
@@ -72,8 +72,7 @@ jobs:
           ssh ec2-user@${{ secrets.WAS }} '
             cd /home/ec2-user/workspace
             rm -rf my-app/.next
-            unzip -q next.zip -d my-app  &&
-            pm2 reload hana-next
+            unzip -q next.zip -d my-app 
           '
       - name: scp jar to was
         run: |
