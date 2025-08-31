@@ -4,28 +4,30 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     useCache: true,
-    externalDir: true,
+    // externalDir: true,
     // serverComponentsExternalPackages: [],
   },
-  webpack: (config, { dev, isServer }) => {
-    config.resolve.alias['@'] = __dirname;
+  output: 'standalone',
+  compiler: { styledComponents: true },
+  // webpack: (config, { dev, isServer }) => {
+  //   config.resolve.alias['@'] = __dirname;
 
-    if (!dev && isServer) {
-      config.externals = config.externals || [];
+  //   if (!dev && isServer) {
+  //     config.externals = config.externals || [];
 
-      // styled-jsx를 external에서 제외
-      if (Array.isArray(config.externals)) {
-        config.externals = config.externals.filter((external: string) => {
-          if (typeof external === 'string') {
-            return !external.startsWith('@swc/') && external !== 'styled-jsx';
-          }
-          return true;
-        });
-      }
-    }
-    return config;
-  },
-  transpilePackages: ['styled-jsx', '@swc/helpers'],
+  //     // styled-jsx를 external에서 제외
+  //     if (Array.isArray(config.externals)) {
+  //       config.externals = config.externals.filter((external: string) => {
+  //         if (typeof external === 'string') {
+  //           return !external.startsWith('@swc/') && external !== 'styled-jsx';
+  //         }
+  //         return true;
+  //       });
+  //     }
+  //   }
+  //   return config;
+  // },
+  // transpilePackages: ['styled-jsx', '@swc/helpers'],
 
   images: {
     remotePatterns: [
