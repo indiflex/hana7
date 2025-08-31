@@ -39,7 +39,7 @@ jobs:
 
       - name: zip next
         working-directory: next/my-app
-        run: zip -rq next.zip .next .env
+        run: zip -rq next.zip .next node_modules package.json .env
 
       - name: setup ssh
         run: |
