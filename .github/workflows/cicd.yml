@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         working-directory: next/my-app
         run: |
-          pnpm install
+          pnpm install --shamefully-hoist
           pnpm add styled-jsx
           pnpm add @swc/helpers
 
