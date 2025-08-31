@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         working-directory: next/my-app
         run: |
-          pnpm install --prod
+          pnpm install
 
       - name: set .env
         working-directory: next/my-app
