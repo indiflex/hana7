@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
     //       });
     //     }
     //   }
-    //   return config;
+    return config;
   },
   // transpilePackages: ['styled-jsx', '@swc/helpers'],
 
