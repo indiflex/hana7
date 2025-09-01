@@ -41,7 +41,6 @@ jobs:
       - name: cp modules not include standalone
         working-directory: next/my-app
         run: |
-          mkdir -p .next/standalone/node_modules/prisma
           mkdir -p .next/standalone/node_modules/styled-jsx
           mkdir -p .next/standalone/node_modules/@swc/helpers
           mkdir -p .next/standalone/node_modules/@next/env
