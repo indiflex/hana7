@@ -31,15 +31,15 @@ jobs:
         run:
           echo "${{ secrets.ENV }}" > .env
 
-      - name: Build with Next.js
-        working-directory: next/my-app
-        run: pnpm build
-
       - name: generate prisma
         working-directory: next/my-app
         run:
           pnpm prisma generate
-        
+
+      - name: Build with Next.js
+        working-directory: next/my-app
+        run: pnpm build
+
       - name: cp modules not include standalone
         working-directory: next/my-app
         run: |
