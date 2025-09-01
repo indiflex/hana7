@@ -41,9 +41,8 @@ jobs:
       - name: cp modules not include standalone
         working-directory: next/my-app
         run: |
-          ls -al ./node_modules
-          cp -r ./node_modules/prisma .next/standalone/node_modules/
-          cp -r ./node_modules/styled-jsx .next/standalone/node_modules/
+          cp -r ./node_modules/.pnpm/prisma .next/standalone/node_modules/
+          cp -r ./node_modules/.pnpm/styled-jsx .next/standalone/node_modules/
           cp -r ./node_modules/@swc .next/standalone/node_modules/
           cp -r ./node_modules/@next .next/standalone/node_modules/
           cp -r .next/static .next/standalone/.next/
