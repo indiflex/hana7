@@ -7,27 +7,12 @@ const nextConfig: NextConfig = {
     // externalDir: true,
     // serverComponentsExternalPackages: [],
   },
-  // output: 'standalone',
-  // compiler: { styledComponents: true },
-  webpack: (config) => {
-    config.resolve.alias['@'] = __dirname;
-
-    //   if (!dev && isServer) {
-    //     config.externals = config.externals || [];
-
-    //     // styled-jsx를 external에서 제외
-    //     if (Array.isArray(config.externals)) {
-    //       config.externals = config.externals.filter((external: string) => {
-    //         if (typeof external === 'string') {
-    //           return !external.startsWith('@swc/') && external !== 'styled-jsx';
-    //         }
-    //         return true;
-    //       });
-    //     }
-    //   }
-    return config;
-  },
-  // transpilePackages: ['styled-jsx', '@swc/helpers'],
+  output: 'standalone',
+  compiler: { styledComponents: true },
+  // webpack: (config) => {
+  //   config.resolve.alias['@'] = __dirname;
+  //   return config;
+  // },
 
   images: {
     remotePatterns: [

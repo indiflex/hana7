@@ -39,9 +39,18 @@ jobs:
         working-directory: next/my-app
         run: pnpm build
 
+      - name: cp modules not include standalone
+        working-directory: next/my-app
+        run: |
+          cp -r ./node_modules/prisma .next/standalone/node_modules/
+          cp -r ./node_modules/styled-jsx .next/standalone/node_modules/
+          cp -r ./node_modules/@swc .next/standalone/node_modules/
+          cp -r ./node_modules/@next .next/standalone/node_modules/
+          cp -r .next/static .next/standalone/.next/
+
       - name: zip next
         working-directory: next/my-app
-        run: zip -rq next.zip .next node_modules lib prisma package.json .env
+        run: zip -rq next.zip .next/standalone
 
       - name: setup ssh
         run: |
@@ -60,5 +69,5 @@ jobs:
           ssh ec2-user@${{ secrets.WAS }} '
             cd /home/ec2-user/workspace
             rm -rf my-app
-            unzip -q next.zip -d my-app 
+            unzip -q next.zip -d my-app
           '
