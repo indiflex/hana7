@@ -20,19 +20,18 @@ jobs:
         with:
           version: 9
 
-      - name: Install dependencies
-        working-directory: next/my-app
-        run:
-          pnpm install
-
       - name: set .env
         working-directory: next/my-app
         run:
           echo "${{ secrets.ENV }}" > .env
 
-      - name: generate prisma
+      - name: Install dependencies
         working-directory: next/my-app
-        run:
+        run: |
+          pnpm install
+          pnpm add styled-jsx
+          pnpm add @swc/helpers
+          pnpm add @next/env
           pnpm prisma generate
 
       - name: Build with Next.js
