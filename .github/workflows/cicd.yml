@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         working-directory: next/my-app
         run: |
-          pnpm install --shamefully-hoist
+          pnpm install
           pnpm add styled-jsx
           pnpm add @swc/helpers
           pnpm add @next/env
@@ -41,7 +41,7 @@ jobs:
 
       - name: zip next
         working-directory: next/my-app
-        run: zip -rq next.zip .next node_modules package.json .env
+        run: zip -rq next.zip .next node_modules lib prisma package.json .env
 
       - name: setup ssh
         run: |
