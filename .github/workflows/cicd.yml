@@ -23,7 +23,9 @@ jobs:
       - name: set .env
         working-directory: next/my-app
         run: |
-          echo "${{ secrets.ENV }}" > .env
+          cat > .env <<'EOF'
+          ${{ secrets.ENV }}
+          EOF
 
       - name: debug .env
         working-directory: next/my-app
