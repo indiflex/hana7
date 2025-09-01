@@ -28,8 +28,12 @@ jobs:
 
       - name: set .env
         working-directory: next/my-app
-        run: |
+        run:
           echo "${{ secrets.ENV }}" > .env
+
+      - name: generate prisma
+        working-directory: next/my-app
+        run:
           pnpm prisma generate
 
       - name: Build with Next.js
