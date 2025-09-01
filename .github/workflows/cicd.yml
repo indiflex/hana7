@@ -22,8 +22,12 @@ jobs:
 
       - name: set .env
         working-directory: next/my-app
-        run:
+        run: |
           echo "${{ secrets.ENV }}" > .env
+
+      - name: debug .env
+        working-directory: next/my-app
+        run: cat .env
 
       - name: Install dependencies
         working-directory: next/my-app
