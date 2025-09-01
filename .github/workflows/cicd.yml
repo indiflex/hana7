@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: next/my-app
-        run: |
+        run:
           pnpm install
 
       - name: set .env
@@ -34,7 +34,7 @@ jobs:
       - name: generate prisma
         working-directory: next/my-app
         run:
-          pnpm prisma generate
+          pnpm db:gen
 
       - name: Build with Next.js
         working-directory: next/my-app
