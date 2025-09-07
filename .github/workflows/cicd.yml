@@ -20,7 +20,7 @@ jobs:
         with:
           version: 9
 
-      - name: set .env
+      - name: make .env file
         working-directory: next/my-app
         run: |
           cat > .env <<'EOF'
