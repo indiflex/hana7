@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     // serverComponentsExternalPackages: [],
   },
   output: 'standalone',
-  compiler: { styledComponents: true },
+  // compiler: { styledComponents: true },
   // webpack: (config) => {
   //   config.resolve.alias['@'] = __dirname;
   //   return config;
