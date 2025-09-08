@@ -64,10 +64,11 @@ jobs:
         run: |
           scp next/my-app/next.zip ec2-user@${{ secrets.WAS }}:/home/ec2-user/workspace/
 
-      - name: restart next
+      - name: unzip & restart next
         run: |
           ssh ec2-user@${{ secrets.WAS }} '
             cd /home/ec2-user/workspace
             rm -rf my-app
             unzip -q next.zip -d my-app
+            pm2 reload my-next-app
           '
